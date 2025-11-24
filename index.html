@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trang web cứu hộ cứu nạn mùa lũ - Thông tin khẩn cấp và hỗ trợ">
+    <title>Cứu Hộ Cứu Nạn Mùa Lũ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <div class="logo">
+                        <h1>🆘 Cứu Hộ Mùa Lũ</h1>
+                    </div>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <ul class="nav-menu" id="navMenu">
+                        <li><a href="#home">Trang chủ</a></li>
+                        <li><a href="#emergency">Khẩn cấp</a></li>
+                        <li><a href="#info">Thông tin</a></li>
+                        <li><a href="#tips">Kỹ năng</a></li>
+                        <li><a href="#contact">Liên hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Cứu Hộ Cứu Nạn Mùa Lũ</h1>
+                <p class="hero-subtitle">Sẵn sàng ứng phó - An toàn là trên hết</p>
+                <div class="hero-buttons">
+                    <a href="#emergency" class="btn btn-primary">Cần Cứu Hộ Ngay</a>
+                    <a href="#info" class="btn btn-secondary">Tìm Hiểu Thêm</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-alert" id="heroAlert">
+            <span class="alert-icon">⚠️</span>
+            <span class="alert-text">Cảnh báo: Khu vực bạn có nguy cơ lũ lụt cao!</span>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section id="emergency" class="emergency-section">
+        <div class="container">
+            <h2 class="section-title">Số Điện Thoại Khẩn Cấp</h2>
+            <div class="emergency-cards">
+                <div class="emergency-card">
+                    <div class="card-icon">🚨</div>
+                    <h3>Cứu Hộ</h3>
+                    <p class="phone-number">113</p>
+                    <button class="btn-call" onclick="makeCall('113')">Gọi Ngay</button>
+                </div>
+                <div class="emergency-card">
+                    <div class="card-icon">🚑</div>
+                    <h3>Cấp Cứu</h3>
+                    <p class="phone-number">115</p>
+                    <button class="btn-call" onclick="makeCall('115')">Gọi Ngay</button>
+                </div>
+                <div class="emergency-card">
+                    <div class="card-icon">🔥</div>
+                    <h3>PCCC</h3>
+                    <p class="phone-number">114</p>
+                    <button class="btn-call" onclick="makeCall('114')">Gọi Ngay</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section id="info" class="info-section">
+        <div class="container">
+            <h2 class="section-title">Thông Tin Lũ Lụt</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>Tình Hình Hiện Tại</h3>
+                    <p>Cập nhật thông tin mực nước và tình trạng lũ lụt tại khu vực của bạn</p>
+                    <div class="flood-status" id="floodStatus">
+                        <span class="status-label">Mức cảnh báo:</span>
+                        <span class="status-value" id="statusValue">Đang cập nhật...</span>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <h3>Khu Vực Nguy Hiểm</h3>
+                    <p>Các khu vực có nguy cơ lũ lụt cao cần di tản sớm</p>
+                    <ul class="danger-zones">
+                        <li>Khu vực ven sông</li>
+                        <li>Vùng trũng thấp</li>
+                        <li>Khu vực gần đập</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📢</div>
+                    <h3>Thông Báo Khẩn</h3>
+                    <p>Tin tức và cảnh báo mới nhất từ cơ quan chức năng</p>
+                    <div class="alert-box" id="alertBox">
+                        <p>Đăng ký nhận thông báo khẩn cấp</p>
+                        <button class="btn-alert" onclick="subscribeAlert()">Đăng Ký</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section id="tips" class="tips-section">
+        <div class="container">
+            <h2 class="section-title">Kỹ Năng Sinh Tồn</h2>
+            <div class="tips-accordion" id="tipsAccordion">
+                <div class="tip-item">
+                    <div class="tip-header" onclick="toggleTip(0)">
+                        <h3>Trước Khi Lũ Lụt</h3>
+                        <span class="tip-icon">+</span>
+                    </div>
+                    <div class="tip-content">
+                        <ul>
+                            <li>Chuẩn bị túi cứu hộ với đồ dùng thiết yếu</li>
+                            <li>Di chuyển đồ đạc và tài sản lên cao</li>
+                            <li>Theo dõi dự báo thời tiết thường xuyên</li>
+                            <li>Chuẩn bị nước uống và thực phẩm dự trữ</li>
+                            <li>Sạc đầy pin điện thoại và pin dự phòng</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-header" onclick="toggleTip(1)">
+                        <h3>Trong Khi Lũ Lụt</h3>
+                        <span class="tip-icon">+</span>
+                    </div>
+                    <div class="tip-content">
+                        <ul>
+                            <li>Tránh đi qua vùng nước lũ nếu không cần thiết</li>
+                            <li>Không đi bộ hoặc lái xe qua đường ngập nước</li>
+                            <li>Tìm nơi cao ráo và an toàn để trú ẩn</li>
+                            <li>Luôn mang theo điện thoại và giữ liên lạc</li>
+                            <li>Tuân theo chỉ dẫn của lực lượng cứu hộ</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-header" onclick="toggleTip(2)">
+                        <h3>Sau Khi Lũ Lụt</h3>
+                        <span class="tip-icon">+</span>
+                    </div>
+                    <div class="tip-content">
+                        <ul>
+                            <li>Kiểm tra nhà cửa cẩn thận trước khi vào</li>
+                            <li>Tránh tiếp xúc với nước lũ có thể bị ô nhiễm</li>
+                            <li>Không sử dụng thiết bị điện đã bị ngập nước</li>
+                            <li>Dọn dẹp và khử trùng khu vực sống</li>
+                            <li>Thông báo tình trạng cho người thân</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Yêu Cầu Hỗ Trợ</h2>
+            <div class="contact-wrapper">
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+                        <div class="form-group">
+                            <label for="name">Họ và Tên *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Số Điện Thoại *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Địa Chỉ *</label>
+                            <input type="text" id="location" name="location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Tình Trạng / Yêu Cầu *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Gửi Yêu Cầu</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <h3>Thông Tin Liên Hệ</h3>
+                    <div class="contact-item">
+                        <strong>Trung tâm Cứu hộ:</strong>
+                        <p>Hotline: 113</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Email:</strong>
+                        <p>cuuhocuunan@example.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Thời gian hoạt động:</strong>
+                        <p>24/7</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Cứu Hộ Cứu Nạn Mùa Lũ. Tất cả quyền được bảo lưu.</p>
+            <p class="footer-note">Trang web này được tạo ra để hỗ trợ cộng đồng trong mùa lũ lụt. Hãy chia sẻ thông tin này đến mọi người!</p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

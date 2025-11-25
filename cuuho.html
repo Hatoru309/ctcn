@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Danh sách yêu cầu cứu hộ cứu nạn">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Danh Sách Yêu Cầu Cứu Hộ</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Rescuer-specific styles */
+        .requests-section {
+            flex: 1;
+            padding: 2rem 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .requests-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .requests-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: 0;
+        }
+
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: var(--white);
+            padding: 0.625rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .refresh-btn:active {
+            transform: translateY(0);
+        }
+
+        .refresh-btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .requests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .request-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            animation: fadeInUp 0.4s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .request-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .request-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--danger-color);
+            transition: width 0.3s ease;
+        }
+
+        .request-card.status-processing::before {
+            background: var(--accent-color);
+        }
+
+        .request-card.status-done::before {
+            background: var(--success-color);
+        }
+
+        .request-card.status-holding::before {
+            background: var(--text-secondary);
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .request-info {
+            flex: 1;
+        }
+
+        .request-phone {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .request-time {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .request-status {
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .request-status.pending {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .request-status.processing {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .request-status.done {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .request-status.holding {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .request-urgency {
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .request-urgency.critical {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #dc2626;
+        }
+
+        .request-urgency.high {
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+        }
+
+        .request-urgency.medium {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 2px solid #3b82f6;
+        }
+
+        .request-urgency.low {
+            background: #d1fae5;
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+
+        .request-message {
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            padding: 0.875rem;
+            background: var(--light-bg);
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .request-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-map {
+            flex: 1;
+            min-width: 140px;
+            background: var(--gradient-water);
+            color: var(--white);
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-map:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-status {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 2px solid var(--secondary-color);
+            background: var(--white);
+            color: var(--secondary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        .btn-status:hover {
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--white);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .empty-state-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state-subtext {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--white);
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid var(--white);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .status-selector button {
+            padding: 0.5rem 0.875rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 2px solid transparent;
+            background: var(--light-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .status-selector button.active {
+            background: var(--secondary-color);
+            color: var(--white);
+            border-color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .requests-section {
+                padding: 1.5rem 0;
+            }
+
+            .requests-title {
+                font-size: 1.5rem;
+            }
+
+            .request-card {
+                padding: 1.25rem;
+            }
+
+            .request-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .request-actions {
+                flex-direction: column;
+            }
+
+            .btn-map,
+            .btn-status {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .requests-title {
+                font-size: 1.25rem;
+            }
+
+            .request-card {
+                padding: 1rem;
+                border-radius: 12px;
+            }
+
+            .request-phone {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🚑 Danh Sách Yêu Cầu Cứu Hộ</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Requests Section -->
+    <section class="requests-section">
+        <div class="container">
+            <div class="requests-header">
+                <h2 class="requests-title">Yêu Cầu Cứu Hộ</h2>
+                <button class="refresh-btn" id="refreshBtn" onclick="loadRequests()">
+                    <span>🔄</span>
+                    <span>Tải Lại</span>
+                </button>
+            </div>
+
+            <div id="requestsContainer">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>Đang tải danh sách...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api';
+
+        // Load requests on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadRequests();
+            // Auto-refresh every 30 seconds
+            setInterval(loadRequests, 30000);
+        });
+
+        // Load requests from API
+        async function loadRequests() {
+            const container = document.getElementById('requestsContainer');
+            const refreshBtn = document.getElementById('refreshBtn');
+            
+            refreshBtn.classList.add('loading');
+            refreshBtn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/rescue/list`);
+                const data = await response.json();
+
+                if (data.ok && data.reports) {
+                    displayRequests(data.reports);
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">⚠️</div>
+                            <div class="empty-state-text">Không thể tải danh sách</div>
+                            <div class="empty-state-subtext">Vui lòng thử lại sau</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading requests:', error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <div class="empty-state-text">Lỗi kết nối</div>
+                        <div class="empty-state-subtext">Không thể kết nối đến server</div>
+                    </div>
+                `;
+            } finally {
+                refreshBtn.classList.remove('loading');
+                refreshBtn.disabled = false;
+            }
+        }
+
+        // Display requests in the UI
+        function displayRequests(reports) {
+            const container = document.getElementById('requestsContainer');
+
+            if (!reports || reports.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <div class="empty-state-text">Chưa có yêu cầu nào</div>
+                        <div class="empty-state-subtext">Danh sách sẽ được cập nhật khi có yêu cầu mới</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sắp xếp: nhiệm vụ chưa hoàn thành lên đầu (ưu tiên Critical -> Low), nhiệm vụ đã hoàn thành xuống cuối
+            const urgencyOrder = {
+                'Critical': 0,
+                'High': 1,
+                'Medium': 2,
+                'Low': 3
+            };
+
+            const sortedReports = [...reports].sort((a, b) => {
+                const statusA = a.status || 'pending';
+                const statusB = b.status || 'pending';
+
+                const isDoneA = statusA === 'done';
+                const isDoneB = statusB === 'done';
+
+                // Nhiệm vụ chưa hoàn thành (không phải 'done') ở trên, 'done' xuống dưới
+                if (isDoneA !== isDoneB) {
+                    return isDoneA ? 1 : -1;
+                }
+
+                // Với các nhiệm vụ chưa hoàn thành, sắp theo mức độ ưu tiên Critical -> High -> Medium -> Low
+                const urgencyA = a.urgency || 'Medium';
+                const urgencyB = b.urgency || 'Medium';
+
+                const orderA = urgencyOrder[urgencyA] ?? 99;
+                const orderB = urgencyOrder[urgencyB] ?? 99;
+
+                if (orderA !== orderB) {
+                    return orderA - orderB;
+                }
+
+                // Nếu cùng mức độ ưu tiên, giữ nguyên thứ tự theo thời gian (mới hơn trước)
+                // (giả sử created_at là ISO string; sort giảm dần theo thời gian)
+                const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+                const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+                return timeB - timeA;
+            });
+
+            container.innerHTML = `
+                <div class="requests-list">
+                    ${sortedReports.map(report => createRequestCard(report)).join('')}
+                </div>
+            `;
+        }
+
+        // Create HTML for a single request card
+        function createRequestCard(report) {
+            const status = report.status || 'pending';
+            const statusText = {
+                'pending': 'Chờ xử lý',
+                'processing': 'Đang xử lý',
+                'done': 'Hoàn thành',
+                'holding': 'Tạm hoãn'
+            };
+
+            const timeAgo = formatTimeAgo(report.created_at);
+            const address = report.meta?.address || `${report.lat}, ${report.lng}`;
+
+            const urgency = report.urgency || 'Medium';
+            const urgencyText = {
+                'Critical': 'Khẩn cấp',
+                'High': 'Cao',
+                'Medium': 'Trung bình',
+                'Low': 'Thấp'
+            };
+
+            return `
+                <div class="request-card status-${status}">
+                    <div class="request-header">
+                        <div class="request-info">
+                            <div class="request-phone">
+                                📞 ${report.phone || 'N/A'}
+                            </div>
+                            <div class="request-time">
+                                🕐 ${timeAgo}
+                            </div>
+                            <div class="request-urgency ${urgency.toLowerCase()}">
+                                ⚠️ Mức độ: ${urgencyText[urgency] || urgency}
+                            </div>
+                        </div>
+                        <div class="request-status ${status}">
+                            ${statusText[status] || status}
+                        </div>
+                    </div>
+                    <div class="request-message">
+                        ${escapeHtml(report.message || 'Không có tin nhắn')}
+                    </div>
+                    <div class="request-location">
+                        📍 ${escapeHtml(address)}
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn-map" onclick="openInGoogleMaps(${report.lat}, ${report.lng}, '${escapeHtml(address)}')">
+                            🗺️ Mở Google Maps
+                        </button>
+                        <div class="status-selector">
+                            <button class="${status === 'pending' ? 'active' : ''}" onclick="updateStatus('${report.id}', 'pending')">Chờ</button>
+                            <button class="${status === 'processing' ? 'active' : ''}" onclick="updateStatus('${report.id}', 'processing')">Xử lý</button>
+                            <button class="${status === 'done' ? 'active' : ''}" onclick="updateStatus('${report.id}', 'done')">Xong</button>
+                            <button class="${status === 'holding' ? 'active' : ''}" onclick="updateStatus('${report.id}', 'holding')">Hoãn</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Open location in Google Maps
+        function openInGoogleMaps(lat, lng, address) {
+            // Try to open in Google Maps app first, fallback to web
+            const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=&travelmode=driving`;
+            
+            // For mobile devices, try to open the app
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                // Try Google Maps app URL
+                const appUrl = `comgooglemaps://?daddr=${lat},${lng}&directionsmode=driving`;
+                window.location.href = appUrl;
+                
+                // Fallback to web after a short delay if app doesn't open
+                setTimeout(() => {
+                    window.open(googleMapsUrl, '_blank');
+                }, 500);
+            } else {
+                // Desktop: open in new tab
+                window.open(googleMapsUrl, '_blank');
+            }
+        }
+
+        // Update request status
+        async function updateStatus(reportId, newStatus) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/rescue/update-status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: reportId,
+                        status: newStatus
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    // Reload requests to show updated status
+                    loadRequests();
+                } else {
+                    alert('Không thể cập nhật trạng thái: ' + (data.error || 'Lỗi không xác định'));
+                }
+            } catch (error) {
+                console.error('Error updating status:', error);
+                alert('Lỗi kết nối khi cập nhật trạng thái');
+            }
+        }
+
+        // Format time ago
+        function formatTimeAgo(timestamp) {
+            if (!timestamp) return 'Không xác định';
+            
+            const now = new Date();
+            const time = new Date(timestamp);
+            const diffMs = now - time;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'Vừa xong';
+            if (diffMins < 60) return `${diffMins} phút trước`;
+            if (diffHours < 24) return `${diffHours} giờ trước`;
+            if (diffDays < 7) return `${diffDays} ngày trước`;
+            
+            return time.toLocaleDateString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
+

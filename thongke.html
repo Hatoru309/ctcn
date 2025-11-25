@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Theo dõi các nhiệm vụ cứu hộ đã hoàn thành">
+    <title>Danh Sách Nhiệm Vụ Hoàn Thành</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+        }
+
+        .page {
+            padding: 2rem 0 4rem;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.75);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(14px);
+        }
+
+        .header .container {
+            padding: 1.4rem 0 1.6rem;
+            transition: padding 0.2s ease;
+        }
+
+        .requests-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.85rem;
+            text-align: center;
+        }
+
+        .requests-title {
+            margin: 0;
+            font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #0f172a;
+            text-shadow: 0 2px 6px rgba(148, 163, 184, 0.45);
+        }
+
+        .header--compact .container {
+            padding: 0.5rem 0 0.7rem;
+        }
+
+        .header--compact .requests-title {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            letter-spacing: 0.22em;
+            opacity: 0.9;
+        }
+
+        .header-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .back-link,
+        .refresh-btn,
+        .export-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border-radius: 999px;
+            padding: 0.6rem 1.25rem;
+            border: 2px solid #000000;
+            color: #111827;
+            background: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover,
+        .refresh-btn:hover,
+        .export-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .refresh-btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            padding: 1.5rem;
+            color: #fff;
+            box-shadow: var(--shadow-lg, 0 12px 30px rgba(0,0,0,0.25));
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.75;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .mission-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg, 0 12px 30px rgba(0,0,0,0.12));
+        }
+
+        .mission-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .mission-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+            color: #0f172a;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .mission-body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .info-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            font-size: 0.95rem;
+            color: #1f2937;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #94a3b8;
+        }
+
+        .note {
+            padding: 1rem;
+            border-radius: 12px;
+            background: #f1f5f9;
+            font-size: 0.95rem;
+            color: #0f172a;
+            margin-top: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: #fff;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .timeline span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        @media (max-width: 640px) {
+            .mission-body {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="requests-header">
+                <h1 class="requests-title">Nhiệm Vụ Đã Hoàn Thành</h1>
+                <div class="header-actions">
+                    <a class="back-link" href="cuuho.html">⬅️ Quay lại danh sách yêu cầu</a>
+                    <button id="refreshBtn" class="refresh-btn" onclick="loadCompletedMissions()">🔄 Tải lại</button>
+                    <button class="export-btn" onclick="exportCsv()">📄 Xuất CSV</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="page">
+        <div class="container">
+            <div class="stats-grid" id="statsContainer">
+                <div class="stat-card">
+                    <div class="stat-label">Tổng nhiệm vụ</div>
+                    <div class="stat-value" id="totalMissions">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Trong 24 giờ</div>
+                    <div class="stat-value" id="lastDayMissions">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Thời gian xử lý TB</div>
+                    <div class="stat-value" id="avgDuration">--</div>
+                </div>
+            </div>
+
+            <section id="missionsContainer">
+                <div class="empty-state">
+                    <div class="empty-state-icon">⏳</div>
+                    <p>Đang tải dữ liệu hoàn thành...</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api';
+        let cachedMissions = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCompletedMissions();
+            setInterval(loadCompletedMissions, 60000);
+
+            // Thu gọn/giãn header khi cuộn trang
+            const headerEl = document.querySelector('.header');
+            let lastScrollY = window.scrollY;
+
+            window.addEventListener('scroll', () => {
+                const currentY = window.scrollY;
+
+                if (currentY > 40 && currentY > lastScrollY) {
+                    // Khi cuộn xuống và đã rời khỏi đỉnh trang
+                    headerEl.classList.add('header--compact');
+                } else if (currentY < 20) {
+                    // Khi quay lại gần đỉnh trang
+                    headerEl.classList.remove('header--compact');
+                }
+
+                lastScrollY = currentY;
+            });
+        });
+
+        async function loadCompletedMissions() {
+            const container = document.getElementById('missionsContainer');
+            const refreshBtn = document.getElementById('refreshBtn');
+
+            refreshBtn.classList.add('loading');
+            refreshBtn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/rescue/list`);
+                const data = await response.json();
+
+                if (!data.ok || !Array.isArray(data.reports)) {
+                    throw new Error('Không nhận được dữ liệu hợp lệ');
+                }
+
+                cachedMissions = data.reports.filter(report => report.status === 'done');
+                renderStats(cachedMissions);
+                renderMissionList(cachedMissions);
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <p>Không thể tải dữ liệu hoàn thành.</p>
+                        <small>Hãy kiểm tra lại kết nối hoặc server API.</small>
+                    </div>
+                `;
+            } finally {
+                refreshBtn.classList.remove('loading');
+                refreshBtn.disabled = false;
+            }
+        }
+
+        function renderStats(missions) {
+            const total = missions.length;
+            const dayAgo = Date.now() - (24 * 60 * 60 * 1000);
+            const lastDay = missions.filter(m => new Date(m.updated_at || m.created_at).getTime() >= dayAgo).length;
+
+            const durations = missions
+                .map(m => {
+                    const start = new Date(m.created_at).getTime();
+                    const end = new Date(m.updated_at || m.created_at).getTime();
+                    return end - start;
+                })
+                .filter(diff => !Number.isNaN(diff) && diff > 0);
+
+            const avgDurationMs = durations.length
+                ? Math.round(durations.reduce((sum, cur) => sum + cur, 0) / durations.length)
+                : null;
+
+            document.getElementById('totalMissions').textContent = total;
+            document.getElementById('lastDayMissions').textContent = lastDay;
+            document.getElementById('avgDuration').textContent = avgDurationMs ? formatDuration(avgDurationMs) : '--';
+        }
+
+        function renderMissionList(missions) {
+            const container = document.getElementById('missionsContainer');
+
+            if (!missions.length) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">✅</div>
+                        <p>Chưa có nhiệm vụ nào hoàn thành.</p>
+                        <small>Khi một đội cứu hộ đánh dấu "Xong" ở trang yêu cầu, nhiệm vụ sẽ xuất hiện tại đây.</small>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="list">
+                    ${missions
+                        .map(mission => createMissionCard(mission))
+                        .join('')}
+                </div>
+            `;
+        }
+
+        function createMissionCard(mission) {
+            const address = mission.meta?.address || `${mission.lat}, ${mission.lng}`;
+            const duration = getMissionDuration(mission);
+            const updatedText = formatTimeAgo(mission.updated_at || mission.created_at);
+
+            return `
+                <article class="mission-card">
+                    <div class="mission-header">
+                        <div>
+                            <p class="mission-title">📞 ${mission.phone || 'Không rõ liên hệ'}</p>
+                            <div class="timeline">
+                                <span>🕒 ${formatDateTime(mission.created_at)}</span>
+                                <span>✔️ Cập nhật ${updatedText}</span>
+                                ${duration ? `<span>⏱️ ${duration}</span>` : ''}
+                            </div>
+                        </div>
+                        <span class="status-pill">ĐÃ HOÀN THÀNH</span>
+                    </div>
+                    <div class="mission-body">
+                        <div class="info-block">
+                            <span class="info-label">Địa điểm</span>
+                            <span>${escapeHtml(address)}</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Mức độ</span>
+                            <span>${mapUrgency(mission.urgency)}</span>
+                        </div>
+                        <div class="info-block">
+                            <span class="info-label">Tọa độ</span>
+                            <span>${mission.lat}, ${mission.lng}</span>
+                        </div>
+                    </div>
+                    <p class="note">${escapeHtml(mission.message || 'Không có ghi chú')}</p>
+                </article>
+            `;
+        }
+
+        function exportCsv() {
+            if (!cachedMissions.length) {
+                alert('Chưa có nhiệm vụ hoàn thành để xuất.');
+                return;
+            }
+
+            const header = ['Phone', 'Address', 'Urgency', 'Message', 'Latitude', 'Longitude', 'CreatedAt', 'UpdatedAt'];
+            const rows = cachedMissions.map(m => ([
+                safeCsv(m.phone),
+                safeCsv(m.meta?.address || `${m.lat}, ${m.lng}`),
+                safeCsv(mapUrgency(m.urgency)),
+                safeCsv(m.message),
+                m.lat,
+                m.lng,
+                m.created_at,
+                m.updated_at || ''
+            ]));
+
+            const csvContent = [header, ...rows].map(row => row.join(',')).join('\r\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `missions-done-${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function safeCsv(value = '') {
+            const text = String(value ?? '');
+            return `"${text.replace(/"/g, '""')}"`;
+        }
+
+        function mapUrgency(urgency = 'Medium') {
+            const dictionary = {
+                Critical: 'Khẩn cấp',
+                High: 'Cao',
+                Medium: 'Trung bình',
+                Low: 'Thấp'
+            };
+            return dictionary[urgency] || urgency;
+        }
+
+        function getMissionDuration(mission) {
+            const start = new Date(mission.created_at).getTime();
+            const end = new Date(mission.updated_at || mission.created_at).getTime();
+            if (Number.isNaN(start) || Number.isNaN(end) || end <= start) return '';
+            return formatDuration(end - start);
+        }
+
+        function formatDuration(ms) {
+            const minutes = Math.floor(ms / 60000);
+            const hours = Math.floor(minutes / 60);
+            const remainingMinutes = minutes % 60;
+            if (hours > 0) {
+                return `${hours} giờ ${remainingMinutes} phút`;
+            }
+            return `${Math.max(1, remainingMinutes)} phút`;
+        }
+
+        function formatTimeAgo(timestamp) {
+            if (!timestamp) return 'không rõ';
+            const now = Date.now();
+            const time = new Date(timestamp).getTime();
+            const diff = now - time;
+            const mins = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (mins < 1) return 'vừa xong';
+            if (mins < 60) return `${mins} phút trước`;
+            if (hours < 24) return `${hours} giờ trước`;
+            if (days < 7) return `${days} ngày trước`;
+
+            return new Date(timestamp).toLocaleDateString('vi-VN');
+        }
+
+        function formatDateTime(timestamp) {
+            if (!timestamp) return 'Không rõ thời gian';
+            return new Date(timestamp).toLocaleString('vi-VN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                day: '2-digit',
+                month: '2-digit'
+            });
+        }
+
+        function escapeHtml(text = '') {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
+

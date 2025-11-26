@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: rescue-api
+    env: python
+    region: singapore # Optional: Choose a region close to Vietnam (singapore is closest)
+    plan: free # Optional: Explicitly state the plan
+    
+    # 1. Install dependencies
+    buildCommand: pip install -r requirements.txt
+    
+    # 2. Start the app using Gunicorn
+    # syntax: gunicorn filename:flask_variable_name
+    startCommand: gunicorn app:app
+    
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0

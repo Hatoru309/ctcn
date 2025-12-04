@@ -14,7 +14,7 @@ def create_report(data):
         "ts": data.get("ts"),
         "meta": data.get("meta", {}),
         "status": "pending",  # default
-        "created_at": datetime.utcnow().isoformat()
+        "created_at": datetime.utcnow().isoformat() + "Z"
     }
     REPORTS.append(new_report)
     return new_report
@@ -26,6 +26,7 @@ def update_report(data):
             r["lat"] = data.get("lat", r["lat"])
             r["lng"] = data.get("lng", r["lng"])
             r["meta"] = data.get("meta", r["meta"])
+            r["updated_at"] = datetime.utcnow().isoformat() + "Z"
             return r
     return None
 
@@ -36,5 +37,6 @@ def update_status(report_id, status):
     for r in REPORTS:
         if r["id"] == report_id:
             r["status"] = status
+            r["updated_at"] = datetime.utcnow().isoformat() + "Z"
             return r
     return None

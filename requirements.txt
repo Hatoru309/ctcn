@@ -5,3 +5,4 @@ joblib>=1.2.0
 flask
 flask-cors
 gunicorn
+psycopg2-binary

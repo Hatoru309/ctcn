@@ -9,14 +9,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Danh Sách Yêu Cầu Cứu Hộ</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-          crossorigin=""/>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-            crossorigin=""></script>
     <style>
         /* Rescuer-specific styles */
         .requests-section {
@@ -70,108 +62,6 @@
         .refresh-btn.loading {
             opacity: 0.7;
             cursor: not-allowed;
-        }
-
-        .open-map-btn {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: var(--white);
-            padding: 0.625rem 1.25rem;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .open-map-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .open-map-btn:active {
-            transform: translateY(0);
-        }
-
-        .map-section {
-            display: none;
-            width: 100%;
-            margin-top: 2rem;
-            animation: fadeInUp 0.4s ease;
-        }
-
-        .map-section.active {
-            display: block;
-        }
-
-        .map-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .map-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--white);
-            margin: 0;
-        }
-
-        .close-map-btn {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: var(--white);
-            padding: 0.625rem 1.25rem;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .close-map-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .map-container {
-            width: 100%;
-            height: 600px;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            background: #e5e7eb;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Ensure Leaflet map fills container */
-        .map-container .leaflet-container {
-            width: 100% !important;
-            height: 100% !important;
-            border-radius: 16px;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .requests-list {
@@ -513,20 +403,6 @@
                     <span>🔄</span>
                     <span>Tải Lại</span>
                 </button>
-                <button class="open-map-btn">
-                    <span>open Map</span>
-                </button>
-            </div>
-             <!-- Map Section -->
-             <div class="map-section" id="mapSection">
-                <div class="map-header">
-                    <h3 class="map-title">🗺️ Bản Đồ Yêu Cầu Cứu Hộ</h3>
-                    <button class="close-map-btn" id="closeMapBtn">
-                        <span>✕</span>
-                        <span>Đóng Bản Đồ</span>
-                    </button>
-                </div>
-                <div class="map-container" id="mapContainer"></div>
             </div>
 
             <div id="requestsContainer">
@@ -535,47 +411,17 @@
                     <p>Đang tải danh sách...</p>
                 </div>
             </div>
-
-           
         </div>
     </section>
 
     <script>
         const API_BASE_URL = 'https://ctcn-2.onrender.com/api';
-        let map = null;
-        let markers = [];
-        let allReports = [];
 
         // Load requests on page load
         document.addEventListener('DOMContentLoaded', () => {
             loadRequests();
             // Auto-refresh every 30 seconds
             setInterval(loadRequests, 30000);
-            
-            // Map button handlers
-            const openMapBtn = document.querySelector('.open-map-btn');
-            const closeMapBtn = document.getElementById('closeMapBtn');
-            const mapSection = document.getElementById('mapSection');
-            
-            openMapBtn.addEventListener('click', () => {
-                mapSection.classList.add('active');
-                // Wait for element to be visible before initializing map
-                setTimeout(() => {
-                    if (!map) {
-                        initMap();
-                    } else {
-                        // Force recalculate map size when container becomes visible
-                        setTimeout(() => {
-                            map.invalidateSize();
-                            drawMarkersOnMap();
-                        }, 100);
-                    }
-                }, 200);
-            });
-            
-            closeMapBtn.addEventListener('click', () => {
-                mapSection.classList.remove('active');
-            });
         });
 
         // Load requests from API
@@ -591,12 +437,7 @@
                 const data = await response.json();
 
                 if (data.ok && data.reports) {
-                    allReports = data.reports;
                     displayRequests(data.reports);
-                    // Update map if it's visible
-                    if (map && document.getElementById('mapSection').classList.contains('active')) {
-                        updateMapMarkers();
-                    }
                 } else {
                     container.innerHTML = `
                         <div class="empty-state">
@@ -636,47 +477,10 @@
                 return;
             }
 
-            // Sắp xếp: nhiệm vụ chưa hoàn thành lên đầu (ưu tiên Critical -> Low), nhiệm vụ đã hoàn thành xuống cuối
-            const urgencyOrder = {
-                'Critical': 0,
-                'High': 1,
-                'Medium': 2,
-                'Low': 3
-            };
-
-            const sortedReports = [...reports].sort((a, b) => {
-                const statusA = a.status || 'pending';
-                const statusB = b.status || 'pending';
-
-                const isDoneA = statusA === 'done';
-                const isDoneB = statusB === 'done';
-
-                // Nhiệm vụ chưa hoàn thành (không phải 'done') ở trên, 'done' xuống dưới
-                if (isDoneA !== isDoneB) {
-                    return isDoneA ? 1 : -1;
-                }
-
-                // Với các nhiệm vụ chưa hoàn thành, sắp theo mức độ ưu tiên Critical -> High -> Medium -> Low
-                const urgencyA = a.urgency || 'Medium';
-                const urgencyB = b.urgency || 'Medium';
-
-                const orderA = urgencyOrder[urgencyA] ?? 99;
-                const orderB = urgencyOrder[urgencyB] ?? 99;
-
-                if (orderA !== orderB) {
-                    return orderA - orderB;
-                }
-
-                // Nếu cùng mức độ ưu tiên, giữ nguyên thứ tự theo thời gian (mới hơn trước)
-                // (giả sử created_at là ISO string; sort giảm dần theo thời gian)
-                const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
-                const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
-                return timeB - timeA;
-            });
-
+            // Display reports in the order received from the backend
             container.innerHTML = `
                 <div class="requests-list">
-                    ${sortedReports.map(report => createRequestCard(report)).join('')}
+                    ${reports.map(report => createRequestCard(report)).join('')}
                 </div>
             `;
         }
@@ -823,157 +627,7 @@
             div.textContent = text;
             return div.innerHTML;
         }
-
-        // Initialize Leaflet Map
-        function initMap() {
-            const mapContainer = document.getElementById('mapContainer');
-            
-            if (!mapContainer) {
-                console.error('Map container not found');
-                alert('Không tìm thấy container bản đồ');
-                return;
-            }
-
-            if (typeof L === 'undefined') {
-                console.error('Leaflet library not loaded');
-                alert('Thư viện Leaflet chưa được tải. Vui lòng kiểm tra kết nối internet.');
-                return;
-            }
-            
-            // Default center (Vietnam - Ho Chi Minh City)
-            const defaultCenter = [10.8231, 106.6297];
-            
-            try {
-                // Create map
-                map = L.map('mapContainer', {
-                    center: defaultCenter,
-                    zoom: 10,
-                    zoomControl: true
-                });
-
-                // Add OpenStreetMap tile layer
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                    maxZoom: 19
-                }).addTo(map);
-
-                // Force size recalculation after a short delay
-                setTimeout(() => {
-                    map.invalidateSize();
-                    // Draw markers after map is ready
-                    drawMarkersOnMap();
-                }, 300);
-
-            } catch (error) {
-                console.error('Error initializing map:', error);
-                alert('Lỗi khởi tạo bản đồ: ' + error.message);
-            }
-        }
-
-        // Draw markers on map from allReports data
-        function drawMarkersOnMap() {
-            if (!map) return;
-
-            // Clear existing markers
-            markers.forEach(m => map.removeLayer(m));
-            markers = [];
-
-            if (!allReports || allReports.length === 0) {
-                console.log('No reports to draw');
-                return;
-            }
-
-            const validPositions = [];
-
-            allReports.forEach((report, index) => {
-                // Get lat/lng from report
-                const lat = parseFloat(report.lat);
-                const lng = parseFloat(report.lng);
-
-                // Skip invalid coordinates
-                if (isNaN(lat) || isNaN(lng)) {
-                    console.log(`Report ${index}: Invalid coordinates`, report.lat, report.lng);
-                    return;
-                }
-
-                // Determine color by urgency
-                const colors = {
-                    'Critical': '#dc2626',
-                    'High': '#f59e0b', 
-                    'Medium': '#3b82f6',
-                    'Low': '#10b981'
-                };
-                const urgency = report.urgency || 'Medium';
-                const color = colors[urgency] || '#3b82f6';
-
-                // Create CircleMarker (more reliable than divIcon)
-                const marker = L.circleMarker([lat, lng], {
-                    radius: 12,
-                    fillColor: color,
-                    color: '#ffffff',
-                    weight: 3,
-                    opacity: 1,
-                    fillOpacity: 0.9
-                }).addTo(map);
-
-                // Popup content
-                const status = report.status || 'pending';
-                const statusLabels = {
-                    'pending': 'Chờ xử lý',
-                    'processing': 'Đang xử lý',
-                    'done': 'Hoàn thành',
-                    'holding': 'Tạm hoãn'
-                };
-                const urgencyLabels = {
-                    'Critical': 'Khẩn cấp',
-                    'High': 'Cao',
-                    'Medium': 'Trung bình',
-                    'Low': 'Thấp'
-                };
-                const address = report.meta?.address || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-                const timeAgo = formatTimeAgo(report.created_at);
-
-                const popup = `
-                    <div style="min-width:200px;font-family:Arial,sans-serif;">
-                        <h4 style="margin:0 0 8px 0;color:#1f2937;">📞 ${escapeHtml(report.phone || 'N/A')}</h4>
-                        <p style="margin:4px 0;font-size:13px;"><b>Trạng thái:</b> ${statusLabels[status] || status}</p>
-                        <p style="margin:4px 0;font-size:13px;"><b>Mức độ:</b> <span style="color:${color};">${urgencyLabels[urgency] || urgency}</span></p>
-                        <p style="margin:4px 0;font-size:13px;"><b>Địa chỉ:</b> ${escapeHtml(address)}</p>
-                        <p style="margin:4px 0;font-size:13px;"><b>Thời gian:</b> ${timeAgo}</p>
-                        ${report.message ? `<p style="margin:8px 0 0 0;font-size:13px;border-top:1px solid #ddd;padding-top:8px;">${escapeHtml(report.message)}</p>` : ''}
-                        <button onclick="openInGoogleMaps(${lat}, ${lng}, '${escapeHtml(address).replace(/'/g, "\\'")}')" 
-                                style="margin-top:8px;padding:8px 12px;background:#3b82f6;color:white;border:none;border-radius:6px;cursor:pointer;width:100%;">
-                            🗺️ Chỉ đường
-                        </button>
-                    </div>
-                `;
-                marker.bindPopup(popup);
-
-                markers.push(marker);
-                validPositions.push([lat, lng]);
-            });
-
-            console.log(`Drew ${markers.length} markers on map`);
-
-            // Fit bounds to show all markers
-            if (validPositions.length > 0) {
-                if (validPositions.length === 1) {
-                    map.setView(validPositions[0], 15);
-                } else {
-                    map.fitBounds(validPositions, { padding: [30, 30], maxZoom: 15 });
-                }
-            }
-        }
-
-        // Wrapper function for updating markers (called from other places)
-        function updateMapMarkers() {
-            drawMarkersOnMap();
-        }
     </script>
 </body>
 </html>
-
-
-
-
 

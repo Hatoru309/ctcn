@@ -31,8 +31,120 @@
                         <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại của bạn" required>
                     </div>
                     <div class="form-group">
-                        <label for="message">Tin Nhắn *</label>
-                        <textarea id="message" name="message" rows="6" placeholder="Nhập tin nhắn của bạn" required></textarea>
+                        <label for="fullName">Họ và Tên Người Cần Giúp</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Nhập họ và tên">
+                    </div>
+                    <div class="form-group">
+                        <div class="question-accordion">
+                            <button type="button" class="question-toggle" id="waterLevelToggle" aria-expanded="false">
+                                <span>Mức Độ Nước *</span>
+                                <span class="toggle-icon">▼</span>
+                            </button>
+                            <div class="radio-group" id="waterLevelOptions" style="display: none;">
+                                <label class="radio-label">
+                                    <input type="radio" name="waterLevel" value="nửa người" required>
+                                    <span>Nửa người</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="waterLevel" value="nửa nhà" required>
+                                    <span>Nửa nhà</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="waterLevel" value="ngập qua đầu" required>
+                                    <span>Ngập qua đầu</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="waterLevel" value="ngập qua nhà" required>
+                                    <span>Ngập qua nhà</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="question-accordion">
+                            <button type="button" class="question-toggle" id="numberOfPeopleToggle" aria-expanded="false">
+                                <span>Số Người *</span>
+                                <span class="toggle-icon">▼</span>
+                            </button>
+                            <div class="radio-group" id="numberOfPeopleOptions" style="display: none;">
+                                <label class="radio-label">
+                                    <input type="radio" name="numberOfPeople" value="1" required>
+                                    <span>1</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="numberOfPeople" value="2" required>
+                                    <span>2</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="numberOfPeople" value="3" required>
+                                    <span>3</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="numberOfPeople" value="4" required>
+                                    <span>4</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="numberOfPeople" value="5" required>
+                                    <span>5</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="numberOfPeople" value="nhiều hơn" required>
+                                    <span>Nhiều hơn</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="question-accordion">
+                            <button type="button" class="question-toggle" id="elderlyChildrenToggle" aria-expanded="false">
+                                <span>Số Lượng Người Già và Trẻ Em *</span>
+                                <span class="toggle-icon">▼</span>
+                            </button>
+                            <div class="radio-group" id="elderlyChildrenOptions" style="display: none;">
+                                <label class="radio-label">
+                                    <input type="radio" name="elderlyChildren" value="1" required>
+                                    <span>1</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="elderlyChildren" value="2" required>
+                                    <span>2</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="elderlyChildren" value="3" required>
+                                    <span>3</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="elderlyChildren" value="nhiều hơn" required>
+                                    <span>Nhiều hơn</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="question-accordion">
+                            <button type="button" class="question-toggle" id="suppliesToggle" aria-expanded="false">
+                                <span>Nhu Yếu Phẩm Cần Thiết (Đồ Ăn, Nước Uống,...) *</span>
+                                <span class="toggle-icon">▼</span>
+                            </button>
+                            <div class="radio-group" id="suppliesOptions" style="display: none;">
+                                <label class="radio-label">
+                                    <input type="radio" name="supplies" value="hết sạch" required>
+                                    <span>Hết sạch</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="supplies" value="còn 1 ít" required>
+                                    <span>Còn 1 ít</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="supplies" value="đủ dùng" required>
+                                    <span>Đủ dùng</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="supplies" value="còn nhiều" required>
+                                    <span>Còn nhiều</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <input type="hidden" id="latitude" name="latitude">
                     <input type="hidden" id="longitude" name="longitude">

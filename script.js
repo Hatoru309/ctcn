@@ -122,7 +122,7 @@ async function reverseGeocode(lat, lng) {
 }
 
 // API Configuration
-const API_BASE_URL = 'https://maychu.onrender.com/';
+const API_BASE_URL = 'https://maychu.onrender.com/api';
 
 // Form Submission
 async function submitForm(event) {
@@ -143,43 +143,10 @@ async function submitForm(event) {
         // Update button text
         submitBtn.textContent = 'Đang gửi...';
         
-        // Get selected values
-        const waterLevelInput = document.querySelector('input[name="waterLevel"]:checked');
-        if (!waterLevelInput) {
-            throw new Error('Vui lòng chọn mức độ nước');
-        }
-        
-        const numberOfPeopleInput = document.querySelector('input[name="numberOfPeople"]:checked');
-        if (!numberOfPeopleInput) {
-            throw new Error('Vui lòng chọn số người');
-        }
-        
-        const elderlyChildrenInput = document.querySelector('input[name="elderlyChildren"]:checked');
-        if (!elderlyChildrenInput) {
-            throw new Error('Vui lòng chọn số lượng người già và trẻ em');
-        }
-        
-        const suppliesInput = document.querySelector('input[name="supplies"]:checked');
-        if (!suppliesInput) {
-            throw new Error('Vui lòng chọn tình trạng nhu yếu phẩm');
-        }
-        
-        // Build message with all information
-        const fullName = document.getElementById('fullName').value.trim();
-        const messageParts = [
-            `Mức độ nước: ${waterLevelInput.value}`,
-            `Số người: ${numberOfPeopleInput.value}`,
-            `Số lượng người già và trẻ em: ${elderlyChildrenInput.value}`,
-            `Nhu yếu phẩm: ${suppliesInput.value}`
-        ];
-        if (fullName) {
-            messageParts.unshift(`Họ tên: ${fullName}`);
-        }
-        
         // Prepare form data according to API requirements
         const formData = {
             phone: document.getElementById('phone').value.trim(),
-            message: messageParts.join(' | '),
+            message: document.getElementById('message').value.trim(),
             lat: location.latitude,
             lng: location.longitude
         };
@@ -237,47 +204,3 @@ async function submitForm(event) {
         submitBtn.textContent = originalBtnText;
     }
 }
-
-// Toggle question accordion - Generic function
-function setupAccordion(toggleId, optionsId) {
-    const toggleButton = document.getElementById(toggleId);
-    const optionsContainer = document.getElementById(optionsId);
-    
-    if (toggleButton && optionsContainer) {
-        toggleButton.addEventListener('click', function() {
-            const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
-            
-            if (isExpanded) {
-                // Collapse
-                toggleButton.setAttribute('aria-expanded', 'false');
-                optionsContainer.style.display = 'none';
-            } else {
-                // Expand
-                toggleButton.setAttribute('aria-expanded', 'true');
-                optionsContainer.style.display = 'grid';
-            }
-        });
-        
-        // Auto-expand when a radio button is selected
-        const radioButtons = optionsContainer.querySelectorAll('input[type="radio"]');
-        radioButtons.forEach(radio => {
-            radio.addEventListener('change', function() {
-                const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
-                if (!isExpanded) {
-                    toggleButton.setAttribute('aria-expanded', 'true');
-                    optionsContainer.style.display = 'grid';
-                }
-            });
-        });
-    }
-}
-
-// Initialize all accordions
-document.addEventListener('DOMContentLoaded', function() {
-    setupAccordion('waterLevelToggle', 'waterLevelOptions');
-    setupAccordion('numberOfPeopleToggle', 'numberOfPeopleOptions');
-    setupAccordion('elderlyChildrenToggle', 'elderlyChildrenOptions');
-    setupAccordion('suppliesToggle', 'suppliesOptions');
-});
-
-

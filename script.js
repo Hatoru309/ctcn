@@ -122,7 +122,7 @@ async function reverseGeocode(lat, lng) {
 }
 
 // API Configuration
-const API_BASE_URL = 'https://maychu.onrender.com/api';
+const API_BASE_URL = 'https://maychu.onrender.com/';
 
 // Form Submission
 async function submitForm(event) {
@@ -279,4 +279,5 @@ document.addEventListener('DOMContentLoaded', function() {
     setupAccordion('elderlyChildrenToggle', 'elderlyChildrenOptions');
     setupAccordion('suppliesToggle', 'suppliesOptions');
 });
+
 

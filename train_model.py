@@ -10,7 +10,7 @@ import re
 
 # Load the dataset
 print("Loading dataset...")
-df = pd.read_csv('dataset.csv')
+df = pd.read_csv('training_dataset.csv')
 
 # Clean the data
 print("Cleaning data...")
@@ -107,7 +107,26 @@ print("  - label_encoder.pkl")
 # Test prediction function
 def predict_label(message):
     """Function to predict label for a new message"""
-    message_tfidf = vectorizer.transform([message])
+    # Input validation: Check if message is valid
+    if not message or not isinstance(message, str):
+        return "Low", 1.0, {"Low": 1.0}
+    
+    # Clean the message
+    cleaned_message = message.strip()
+    
+    # Check if message is only numbers or too short to be meaningful
+    if not cleaned_message or len(cleaned_message) < 3:
+        return "Low", 1.0, {"Low": 1.0}
+    
+    # Check if message contains only digits (like "123123123")
+    if cleaned_message.isdigit():
+        return "Low", 1.0, {"Low": 1.0}
+    
+    # Check if message has at least some alphabetic characters
+    if not any(c.isalpha() for c in cleaned_message):
+        return "Low", 1.0, {"Low": 1.0}
+    
+    message_tfidf = vectorizer.transform([cleaned_message])
     prediction = svm_model.predict(message_tfidf)
     probability = svm_model.predict_proba(message_tfidf)[0]
     
@@ -125,7 +144,9 @@ test_messages = [
     "Nhà tôi bị ngập rồi, tôi cần phải di chuyển đến nơi an toàn hơn",
     "Tôi bị thương nặng, tôi cần cấp cứu",
     "Mất điện rồi, tôi cần đèn pin",
-    "Tôi đang tát nước ra khỏi nhà"
+    "Tôi đang tát nước ra khỏi nhà",
+    "123123123",
+    "333333333333"
 ]
 
 for msg in test_messages:

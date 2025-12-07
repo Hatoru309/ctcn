@@ -1,0 +1,2264 @@
+﻿Message,Label
+nhà ngập hết pin,Critical
+"nhà có người gà và trẻ em, không thoát dc",Critical
+"đang trên noc nhà, nhà 5 người k chạy dc",Low
+có bà bầu và trẻ nhỏ lên cứu với,Critical
+"Nhà tôi bị ngập rồi, tôi cần phải di chuyển đến nơi an toàn hơn",Critical
+Tôi bị mắc kẹt trong nhà,Critical
+Tôi đang ở trên mái nhà,High
+Nhà tôi sắp bị sập,Low
+"Nước lũ đang dâng cao, tôi không thể ra ngoài",Critical
+Nhà tôi hết nước sạch rồi,High
+"Nhà tôi bị hư hỏng nặng, tôi cần hỗ trợ",Medium
+"Mất điện rồi, tôi cần đèn pin",Medium
+Tôi cần di chuyển đến nơi an toàn,High
+Nước lũ đang đe dọa tính mạng tôi,Critical
+"Tôi cần hỗ trợ y tế, giúp tôi",Low
+Tôi đang tát nước ra khỏi nhà,Low
+"Tôi bị mắc kẹt trong xe, cứu tôi",Critical
+"Tôi cần hỗ trợ tìm người thân, tôi đã mất liên lạc với họ rồi",Medium
+"Tôi cần thức ăn, giúp tôi",Low
+"Tôi cần hỗ trợ tâm lý, giúp tôi",Medium
+Nhà tôi bị sập rồi,Low
+"Tôi cần giúp đỡ, nước lũ đang dâng",Critical
+"Tôi bị cô lập, cần hỗ trợ",Low
+"Tôi cần hỗ trợ sửa chữa nhà, giúp tôi với",Low
+"Tôi cần nước uống, giúp tôi",High
+Nước lũ đang tràn vào nhà tôi,Critical
+"Tôi cần hỗ trợ di dời, giúp tôi",High
+"Tôi bị thương nặng, tôi cần cấp cứu",Critical
+"Cứu tôi, tôi đang ở trong nhà tắm",Critical
+"Nhà tôi bị ngập rồi, tôi cằn phải di chuyển đến nơi an toàn hơn",Critical
+Tôi bị mắt kẹt trong nhà,Critical
+Tôi đang ỡ trên mái nhà,High
+Nhà tôi sấp bị sập,Low
+"Nước lũ đang dâng cao, tôi không thể ra ngoài",Critical
+Nhà tôi hết nước sạch rồii,High
+Nhà tôi bị hư hỏng nặng,Medium
+"Mất điện rồi, tôi cần đèn bin",Medium
+Tôi cần di chuyển đến nơi an toàn,High
+Nước lũ đan đe dọa tính mạng tôi,Critical
+"Tôi cần hỗ trợ y tế, giúp tôi",Low
+Tôi đang tác nước ra khỏi nhà,Low
+"Tui bị mắc kẹt trông xe, cứu tôi",Critical
+"Tôi cần hỗ trợ tìm người thân, tôi đã mất liên lạc với họ rồi",Medium
+"Tui cần thức ăn, giúp tôi",Low
+"Tôi cần hỗ trợ tâm lý, giúp tôi",Medium
+Nhà tôi bị xập rồi,Low
+"Tôi cần giúp đỡ, nước lũ đang dân",Critical
+"Tui bị cô lập, cần hổ trợ",Low
+"Tôi cần hỗ trợ sữa chữa nhà, giúp tôi với",Low
+"Tôi cần nước uống, giúp tôi",High
+Nước lũ đang tràn vào nhà tôi,Critical
+"Tôi cần hỗ trợ di chuyển, giúp tôi",High
+"Tôi bị thương nặng, tôi cần cấp cứu",Critical
+"Cứu tôi , tôi kẹt ở trong nhà",Critical
+Cứu Nước dâng quá nhanh,Critical
+Chúng tôi bị mắc kẹt trên mái nhà.,Critical
+Xin hãy gửi thuyền cứu hộ ngay.,Critical
+Cần người đưa chúng tôi ra khỏi đây.,Low
+Lũ lớn Nhà sắp sập rồi,Critical
+Trôi dạt Cần phao hoặc dây.,Medium
+Có người bị thương nặng ở đây.,Critical
+Xin cung cấp vị trí chính xác của tôi.,Low
+Không còn chỗ an toàn. Cứu,Critical
+Sập nhà Cần đội tìm kiếm.,Medium
+"Gia đình 5 người, kẹt tại gác mái",Critical
+có 3 trẻ em và người già.,High
+Cầu cứu . Không có lối thoát.,Critical
+"Chúng tôi trên cây, gần cột điện",Low
+tầng trệt ngập hoàn toàn.,Critical
+Kẹt ở đồi. Hết thức ăn.,Critical
+cầu cứu cho 2 người lớn.,Critical
+Đang ở gần suối. Lực nước chảy xiết.,Low
+Đang lạc trong rừng/đất trống cần định vị.,Low
+Trẻ sơ sinh cần sữa và tã.,High
+"Người già yếu, không thể di chuyển.",High
+"Người bệnh nặng, cần máy thở/oxy.",Critical
+"Vết thương hở, nhiễm trùng, cần y tá.",Low
+"Mẹ bầu sắp sinh, cần hỗ trợ.",Critical
+Thuốc huyết áp/tim mạch đã hết.,Low
+Có người bị sốt cao và mất nước.,Low
+Xin nước sạch và dụng cụ sơ cứu,Critical
+Cần hỗ trợ tâm lý cho trẻ em.,High
+Hết sạch nước uống và thức ăn.,High
+Xin tiếp tế lương khô và đèn pin.,Medium
+Cần chăn ấm và quần áo khô.,Medium
+"Bị cô lập, hết gas và củi.",Low
+Xin thuốc phòng muỗi và chống kiết lị.,Low
+Cần vật liệu làm sạch nước.,Medium
+"Hết pin điện thoại, cần sạc dự phòng.",Medium
+Xin màng bạt/áo mưa che chắn.,Medium
+Cần bộ đàm hoặc thiết bị liên lạc.,Medium
+Nước đã ô nhiễm nặng.,Low
+Xin cứu vật nuôi bị nhốt trên mái.,Critical
+"Tài sản chìm hết, cần hỗ trợ tài chính",Low
+Mất hết giấy tờ tùy thân quan trọng.,Low
+Xin giúp di dời tài sản còn lại.,High
+"Chuồng trại bị cuốn trôi, cứu gia súc.",Critical
+Cần bảo vệ chống trộm cắp sau lũ.,Low
+"Thiệt hại quá lớn, cần thống kê.",Low
+Xin giúp làm sạch nhà cửa bùn lầy,Medium
+Cần hỗ trợ tái thiết nhà sau lũ.,Low
+Đang cố giữ mái nhà.,High
+Cứu Nước dâng Kẹt trên gác mái.,Critical
+Gửi thuyền Chúng tôi mắc kẹt tại,Critical
+"Cần thức ăn, nước uống. Đang ở",High
+Có người bị thương Xin y tế khẩn cấp.,Critical
+Lũ lớn Cần cứu người già và trẻ em.,Critical
+Cầu cứu Không có liên lạc. Xin giúp đỡ,Critical
+Chúng tôi ở đây,Low
+"Xin hỗ trợ Nước rút chậm, cần di tản",High
+Nguy hiểm Cứu mạng chúng tôi ngay,Critical
+Sống sót nhờ cần cứu giúp,Critical
+"Nhà tôi bị ngập rồi, tôi cần phải di chuyển đến nơi an toàn",Critical
+Nhà tui bị ngập r,Critical
+"Tui bị mắc kẹt, cần cứu hộ gắp",Critical
+"Nước lũ tràn vào nhà,",Critical
+"Tui đang ở trên mái nhà, cứu tôi liền đi",Critical
+"Tui bị cô lập, ko có lương thực j hết",Low
+"Nước lũ quá cao, ko thể ra ngoài đc",Critical
+Tui cần nc sạch,Medium
+"Nhà tui bị hư hỏng nặng, cần hỗ trợ",Medium
+"Mất điện rồi, t cần giúp đỡ liền",Medium
+Nước lũ đang đe dọa tính mạng,Critical
+"Nhà tui bj ngập, cần tát nước liền",Critical
+Tui bị mắc kẹt trong xe rồi cứu,Critical
+Cần hỗ trợ tìm người thân mất liên lạc,Medium
+"Tui cần thức ăn, giúp tôi",Low
+"Nước lũ dâng nhank quá, tui ko thể phản ứng kjpp",Critical
+"Tui cần hỗ trợ tâm lý, giúp tui vớii",Medium
+"Nhà tui bị sập,",Low
+"Help, nước lũ đang dâng cao",Critical
+"T cần hỗ trợ sửa chữa nhà, giúp tuiii",Low
+"Tui cần nc uống, giúp tui với",Low
+"Nước lũ đang tràn vào nhà, cứu tui cứu tui",Critical
+"Tui cần hỗ trợ di dời, giúp tui",High
+"Tui bị thương nặng, cần cấp cứu liền",Critical
+Tôi bị mắc kẹt trông nhà,Critical
+Tôi đang ở trên mái nhà,High
+Nhà sắp bị sập,Low
+"Nc lũ đang dâng cao, tôi kh thể ra ngòi",Low
+Nhà tui hết nước sạck r,High
+"Nhà mink bị hư hỏng nặng, tôi cần hỗ trợ",Medium
+"Mấc điện rồi, mik cần đèn pin",Medium
+Tui cần di chuyển đến nơi an tòn,High
+Nc lũ đang đe dọa tín mạng tôi,Low
+"Tôi cần hỗ trợ i tée, giúp tôi",Low
+Tôi đag tát nước ra khỏi nhầ,Low
+"Tôi bị mắc kẹt trong se, cứu tôi",Critical
+Tôi cần thứk ăn,Low
+Nhà t bị sập ròi,Low
+"Héppp, nước lũ đang dâng",Critical
+"Tôi cần hỗ trợ sửa chữa nhà, giúp tôi vs",Low
+"Toi cần nước uống, giúp toi",High
+Nước lũ đang tràn vào nhà tuii,Critical
+"Tôi cần hỗ trợ di dời, giúp tui",High
+"Tôi bị thương nặng, tôi cần cấp cíu",Critical
+"Cứu tôi, tôi đang ở trong day",Critical
+Tuk cần có ánh sáng hépp mi,Low
+Tui bị mắc kẹt trong nhà rùii t cần thoát re qua cửa sổ,Critical
+tui cần giúp đỡ để có nc sạch để uống và sik hoạt,Medium
+tui cần giúp đỡ để có chỗ ở tạm thời cho ngưi trẻ,Low
+tui cần tìm động vật của nhè tuii,Low
+Tui cần giúp đỡ để có nơi an toàng cho người già và trẻ em,High
+T cần giúp đỡ để có liên lạc vs ng dân ở địa phương,Medium
+Toii cần giúp đỡ để có thức ăn cho người vô gia cw,Low
+tui cần giúp đỡ để có phương tiện di chuyển cho ng khuyết tật,High
+tui cần giúp đỡ để có thông tin về tình hình lũ lụt ở khu vựt khác,Low
+tui cần liên lạc với người thân ở nc ngoài,Medium
+Tui cần giúp đỡ để có hỗ trợ tâm lý cho ngừi bị ãnh hưởng,Medium
+"tui cần có chỗ ở cho độg vật""*",Low
+Tui cần giúp đỡ để có phương tiện di chuyển cho người già và trẻ elm,High
+tui cần giúp đỡ để cs thông tin về tình hình lũ lụt ở khu vực lân cận,Low
+tui cần giúp đỡ để có liên lạc vs cơ quan chức năng ở địa phương,Medium
+tui cần giúp đỡ để có hỗ trợ về tài chín cho ng bị ảnh hưởng,Low
+tui cần giúp đỡ để có chỗ ở tạm thời cho người bệnh,High
+T cần trợ cấp lương thực,Low
+"tui bị mắc kẹt trong nhà, cần giúp để thoát ra ngòa",Critical
+"nước lũ đang tràn vào nhà, cần giúp để bảo vệ tài sảng",Critical
+"tui bị thương, cần giúp đỡ để sơ cứu",Critical
+tui cần có thức ăn,Low
+"tui bị mắc kẹt trong xe, tui cần hỗ trợ để thoát ra",Critical
+cần giúp đỡ để sửa chữa nhà,Low
+Tui cần giúp đở để di dời đén nơi an toàn,High
+"Nước lũ đang đe dọa tính mạng, cần thoát khỏiii",Critical
+tui cần giúp đỡ để có thuốc men,Low
+"tui bị mất giấy tờ quang trọng, cần giúp đỡ để làm lại",Low
+Tui cần giúp đỡ để có chỗ ở tạm thời,Low
+tui cần giúp đỡ để di dời tài sản cụa t,High
+Tui cần có thông tin về tình hình lũ lụt ngây bây h,Low
+nhà tôi sắp sập,High
+tôi k còn nước,Low
+tôi k còn thức ăn,Low
+tôi cần đồ ăn,Low
+tôi cần nước,Low
+hãy giúp tôi di chuyển,High
+nhà có trẻ em nước ngập đến đầu gối,Critical
+nhà có người già cần trợ giúp di dời,High
+tôi cần đồ ăn và thức uống,Low
+tôi cần thuốc kháng sinh,Low
+tôi cần ánh sáng,Low
+ở đây mất điện tôi cần đèn pin,Medium
+tôi cần mì tôm,Low
+ở đây có người đang hấp hối,Low
+có người bị chìm,Low
+cứu với tôi thấy có người bị đuối,Critical
+cần quần áo sạch,Medium
+lũ trẻ đang cảm lạnh,Low
+t cần nước uống,High
+t cần thức ăn,Low
+t cần di chuyển đến nơi khác,High
+tôi cần cứu hộ gấp con tôi đang bị sốt,Critical
+tôi cần liên lạc với người thân,Medium
+tôi đang trên mái nhà,High
+t đang trên mái nhà,High
+t dg trên mái nhà,High
+tôi đang bị lạnh,Low
+t đang bị lạnh,Low
+t dg bị lạnh,Low
+t đang bị sốt,Low
+tôi đang sốt,Low
+tôi đang bị sốt,Low
+t dg bị sốt,Low
+tôi dg bị sốt,Low
+ở đây có người già,High
+ở đây có người thiệt mạng,Low
+ở đây có người chết,Critical
+ở đây có người qua đời,Low
+nước dâng cao quá,Critical
+tôi cần y tá,Low
+tôi cần bác sĩ,Low
+vết thương tôi đang đau nhức,Critical
+vợ tôi sắp sinh,Critical
+tôi bị gãy tay,Low
+tôi bị gãy chân,Low
+tôi bị đột quỵ,Low
+tôi bị đau đầu,Critical
+tôi bị tai biến,Low
+tôi sắp sinh,Critical
+vợ t sắp sinh,Critical
+tôi bị trật tay,Low
+tôi bị trật chân,Low
+sập chuồn heo,Low
+tôi cần heo của tôi,Low
+học phí của tôi,Low
+két sắt tôi trôi rồi,Low
+nước ngập đến mái nhà,Critical
+nước ngập đến cổ,Critical
+cây đổ vào nhà,Low
+đang bị mắc kẹt,Critical
+tôi bị mắc kẹt,Critical
+t bị kẹt rồi,Critical
+giúp t thoát ra với t bị kẹt,Critical
+nhà đã bị sập,Low
+bay mái nhà,High
+mưa chảy từ tầng 2,Low
+ngập từ tầng 2,Critical
+tôi cần dụng cụ lau dọn,Low
+tôi cần lg thực,Low
+con tôi đang rét,Low
+con tôi đang lạnh,Low
+tôi cần bảo quản thức ăn,Low
+con tôi bị sốt,Low
+con tôi bị đói,High
+Kẹt trong nhà,Critical
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Cứu với lũ lớn,Critical
+Điện cắt rồi,Medium
+Có trẻ nhỏ cứu,Critical
+Nguy hiểm quá,Critical
+Nguy hiểm quá,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt cả nhà,Critical
+Nhà ngập rồi cứu,Critical
+Nước lên nhanh,Low
+Lũ bao vây rồi,Critical
+Điện cắt rồi,Medium
+Nguy hiểm quá,Critical
+Lũ mạnh quá,Critical
+Cứu với lũ lớn,Critical
+Kẹt cả nhà,Critical
+Xin cứu gấp,Critical
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Nhà chìm nước,Critical
+Nhà ngập rồi cứu,Critical
+Nước lên nhanh,Low
+Nhà ngập rồi cứu,Critical
+Điện cắt rồi,Medium
+Nước vào nhà,Low
+Ngập tới gối rồi,Critical
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt lũ cứu gấp,Critical
+Nước lên nhanh,Low
+Kẹt cả nhà,Critical
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Không thoát được,Critical
+Có trẻ nhỏ cứu,Critical
+Nguy hiểm quá,Critical
+Nguy hiểm quá,Critical
+Lũ bao vây rồi,Critical
+Nhà ngập rồi cứu,Critical
+Nước lên nhanh,Low
+Ngập sâu cứu hộ,Critical
+Không thoát được,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Điện cắt rồi,Medium
+Điện cắt rồi,Medium
+Nhà ngập rồi cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Nước dâng nhanh quá,Critical
+Kẹt cả nhà,Critical
+Lũ mạnh quá,Critical
+Xin cứu gấp,Critical
+Nguy hiểm quá,Critical
+Ngập sâu cứu hộ,Critical
+Không liên lạc được,Medium
+Nước lên nhanh,Low
+Nước lên nhanh,Low
+Nhà chìm nước,Critical
+Kẹt cả nhà,Critical
+Kẹt cả nhà,Critical
+Nguy hiểm quá,Critical
+Cứu với lũ lớn,Critical
+Nhà chìm nước,Critical
+Nhà ngập rồi cứu,Critical
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Lũ bao vây rồi,Critical
+Nguy hiểm quá,Critical
+Nguy hiểm quá,Critical
+Không liên lạc được,Medium
+Ngập tới gối rồi,Critical
+Có trẻ nhỏ cứu,Critical
+Nước lên nhanh,Low
+Lũ bao vây rồi,Critical
+Kẹt cả nhà,Critical
+Nước vào nhà,Low
+Cứu với lũ lớn,Critical
+Xin cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Nguy hiểm quá,Critical
+Lũ bao vây rồi,Critical
+Lũ bao vây rồi,Critical
+Không liên lạc được,Medium
+Lũ mạnh quá,Critical
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Ngập sâu cứu hộ,Critical
+Có người già kẹt,Critical
+Cứu với lũ lớn,Critical
+Xin cứu gấp,Critical
+Kẹt cả nhà,Critical
+Điện cắt rồi,Medium
+Lũ bao vây rồi,Critical
+Không liên lạc được,Medium
+Có trẻ nhỏ cứu,Critical
+Điện cắt rồi,Medium
+Nước lên nhanh,Low
+Nước vào nhà,Low
+Xin cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Nhà chìm nước,Critical
+Ngập tới gối rồi,Critical
+Nước lên nhanh,Low
+Kẹt cả nhà,Critical
+Lũ mạnh quá,Critical
+Nhà ngập rồi cứu,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Nhà ngập rồi cứu,Critical
+Nước dâng nhanh quá,Critical
+Điện cắt rồi,Medium
+Kẹt lũ cứu gấp,Critical
+Kẹt cả nhà,Critical
+Nhà chìm nước,Critical
+Điện cắt rồi,Medium
+Nước vào nhà,Low
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Ngập tới gối rồi,Critical
+Điện cắt rồi,Medium
+Nguy hiểm quá,Critical
+Kẹt cả nhà,Critical
+Nguy hiểm quá,Critical
+Không liên lạc được,Medium
+Ngập tới gối rồi,Critical
+Nhà ngập rồi cứu,Critical
+Không liên lạc được,Medium
+Xin cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Điện cắt rồi,Medium
+Không thoát được,Critical
+Kẹt lũ cứu gấp,Critical
+Nước lên nhanh,Low
+Không thoát được,Critical
+Nước lên nhanh,Low
+Ngập sâu cứu hộ,Critical
+Ngập tới gối rồi,Critical
+Nước dâng nhanh quá,Critical
+Nước vào nhà,Low
+Ngập sâu cứu hộ,Critical
+Ngập sâu cứu hộ,Critical
+Nhà chìm nước,Critical
+Nhà chìm nước,Critical
+Kẹt cả nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Nước dâng nhanh quá,Critical
+Lũ mạnh quá,Critical
+Nhà ngập rồi cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Không thoát được,Critical
+Nước dâng nhanh quá,Critical
+Cứu với lũ lớn,Critical
+Không liên lạc được,Medium
+Điện cắt rồi,Medium
+Nước lên nhanh,Low
+Xin cứu gấp,Critical
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Không thoát được,Critical
+Lũ mạnh quá,Critical
+Kẹt cả nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Không thoát được,Critical
+Nước lên nhanh,Low
+Không liên lạc được,Medium
+Nguy hiểm quá,Critical
+Xin cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt cả nhà,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt cả nhà,Critical
+Xin cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Nguy hiểm quá,Critical
+Nhà ngập rồi cứu,Critical
+Nguy hiểm quá,Critical
+Có trẻ nhỏ cứu,Critical
+Nước lên nhanh,Low
+Nước vào nhà,Low
+Nguy hiểm quá,Critical
+Ngập sâu cứu hộ,Critical
+Có người già kẹt,Critical
+Lũ bao vây rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Nguy hiểm quá,Critical
+Nhà chìm nước,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Không liên lạc được,Medium
+Kẹt lũ cứu gấp,Critical
+Kẹt trong nhà,Critical
+Nguy hiểm quá,Critical
+Nhà chìm nước,Critical
+Ngập sâu cứu hộ,Critical
+Lũ bao vây rồi,Critical
+Nước vào nhà,Low
+Có người già kẹt,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Điện cắt rồi,Medium
+Xin cứu gấp,Critical
+Lũ mạnh quá,Critical
+Điện cắt rồi,Medium
+Có trẻ nhỏ cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ bao vây rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Nước lên nhanh,Low
+Nhà ngập rồi cứu,Critical
+Lũ mạnh quá,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt cả nhà,Critical
+Không liên lạc được,Medium
+Nước vào nhà,Low
+Không thoát được,Critical
+Nhà ngập rồi cứu,Critical
+Không liên lạc được,Medium
+Xin cứu gấp,Critical
+Không thoát được,Critical
+Không thoát được,Critical
+Có người già kẹt,Critical
+Không thoát được,Critical
+Nguy hiểm quá,Critical
+Nước dâng nhanh quá,Critical
+Lũ bao vây rồi,Critical
+Không thoát được,Critical
+Nước dâng nhanh quá,Critical
+Ngập tới gối rồi,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Không thoát được,Critical
+Nước lên nhanh,Low
+Ngập tới gối rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ bao vây rồi,Critical
+Nước dâng nhanh quá,Critical
+Có người già kẹt,Critical
+Không thoát được,Critical
+Kẹt cả nhà,Critical
+Nước dâng nhanh quá,Critical
+Xin cứu gấp,Critical
+Lũ mạnh quá,Critical
+Không thoát được,Critical
+Không liên lạc được,Medium
+Không thoát được,Critical
+Ngập tới gối rồi,Critical
+Không liên lạc được,Medium
+Nguy hiểm quá,Critical
+Không liên lạc được,Medium
+Lũ mạnh quá,Critical
+Không thoát được,Critical
+Lũ bao vây rồi,Critical
+Có người già kẹt,Critical
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt trong nhà,Critical
+Nguy hiểm quá,Critical
+Cứu với lũ lớn,Critical
+Nước dâng nhanh quá,Critical
+Kẹt cả nhà,Critical
+Xin cứu gấp,Critical
+Có người già kẹt,Critical
+Lũ bao vây rồi,Critical
+Nước vào nhà,Low
+Lũ bao vây rồi,Critical
+Có người già kẹt,Critical
+Kẹt trong nhà,Critical
+Có người già kẹt,Critical
+Nhà ngập rồi cứu,Critical
+Nguy hiểm quá,Critical
+Nhà chìm nước,Critical
+Điện cắt rồi,Medium
+Lũ mạnh quá,Critical
+Lũ mạnh quá,Critical
+Ngập sâu cứu hộ,Critical
+Cứu với lũ lớn,Critical
+Kẹt trong nhà,Critical
+Nước dâng nhanh quá,Critical
+Kẹt trong nhà,Critical
+Ngập sâu cứu hộ,Critical
+Lũ bao vây rồi,Critical
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Xin cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Không thoát được,Critical
+Xin cứu gấp,Critical
+Có người già kẹt,Critical
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Nhà ngập rồi cứu,Critical
+Lũ bao vây rồi,Critical
+Lũ mạnh quá,Critical
+Nguy hiểm quá,Critical
+Kẹt lũ cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Nước vào nhà,Low
+Nguy hiểm quá,Critical
+Ngập tới gối rồi,Critical
+Nguy hiểm quá,Critical
+Không liên lạc được,Medium
+Nước vào nhà,Low
+Xin cứu gấp,Critical
+Nước vào nhà,Low
+Xin cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Cứu với lũ lớn,Critical
+Điện cắt rồi,Medium
+Xin cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Có người già kẹt,Critical
+Ngập sâu cứu hộ,Critical
+Nhà ngập rồi cứu,Critical
+Lũ mạnh quá,Critical
+Không thoát được,Critical
+Nước dâng nhanh quá,Critical
+Ngập tới gối rồi,Critical
+Cứu với lũ lớn,Critical
+Lũ bao vây rồi,Critical
+Điện cắt rồi,Medium
+Lũ bao vây rồi,Critical
+Cứu với lũ lớn,Critical
+Kẹt trong nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Lũ mạnh quá,Critical
+Có người già kẹt,Critical
+Có trẻ nhỏ cứu,Critical
+Nhà chìm nước,Critical
+Nhà chìm nước,Critical
+Lũ mạnh quá,Critical
+Điện cắt rồi,Medium
+Nước dâng nhanh quá,Critical
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Kẹt cả nhà,Critical
+Không liên lạc được,Medium
+Nguy hiểm quá,Critical
+Nước dâng nhanh quá,Critical
+Cứu với lũ lớn,Critical
+Nhà chìm nước,Critical
+Ngập sâu cứu hộ,Critical
+Nước dâng nhanh quá,Critical
+Kẹt cả nhà,Critical
+Có người già kẹt,Critical
+Lũ mạnh quá,Critical
+Ngập tới gối rồi,Critical
+Lũ bao vây rồi,Critical
+Xin cứu gấp,Critical
+Kẹt cả nhà,Critical
+Nhà ngập rồi cứu,Critical
+Nước lên nhanh,Low
+Có người già kẹt,Critical
+Kẹt trong nhà,Critical
+Không thoát được,Critical
+Nước lên nhanh,Low
+Ngập tới gối rồi,Critical
+Cứu với lũ lớn,Critical
+Nước dâng nhanh quá,Critical
+Xin cứu gấp,Critical
+Kẹt cả nhà,Critical
+Nhà chìm nước,Critical
+Nhà ngập rồi cứu,Critical
+Có người già kẹt,Critical
+Kẹt lũ cứu gấp,Critical
+Xin cứu gấp,Critical
+Xin cứu gấp,Critical
+Nhà chìm nước,Critical
+Ngập tới gối rồi,Critical
+Nhà ngập rồi cứu,Critical
+Nước dâng nhanh quá,Critical
+Có trẻ nhỏ cứu,Critical
+Ngập sâu cứu hộ,Critical
+Nhà chìm nước,Critical
+Kẹt trong nhà,Critical
+Nước lên nhanh,Low
+Kẹt trong nhà,Critical
+Không liên lạc được,Medium
+Điện cắt rồi,Medium
+Nhà ngập rồi cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Xin cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Nước lên nhanh,Low
+Không liên lạc được,Medium
+Kẹt trong nhà,Critical
+Nhà chìm nước,Critical
+Cứu với lũ lớn,Critical
+Có người già kẹt,Critical
+Có người già kẹt,Critical
+Lũ mạnh quá,Critical
+Nguy hiểm quá,Critical
+Cứu với lũ lớn,Critical
+Nhà chìm nước,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Không thoát được,Critical
+Kẹt trong nhà,Critical
+Nước lên nhanh,Low
+Không thoát được,Critical
+Lũ bao vây rồi,Critical
+Ngập tới gối rồi,Critical
+Không thoát được,Critical
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Điện cắt rồi,Medium
+Nhà chìm nước,Critical
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Xin cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Nước lên nhanh,Low
+Xin cứu gấp,Critical
+Kẹt trong nhà,Critical
+Có người già kẹt,Critical
+Không liên lạc được,Medium
+Nước vào nhà,Low
+Ngập tới gối rồi,Critical
+Kẹt cả nhà,Critical
+Nguy hiểm quá,Critical
+Nước lên nhanh,Low
+Kẹt lũ cứu gấp,Critical
+Có người già kẹt,Critical
+Nhà chìm nước,Critical
+Không liên lạc được,Medium
+Có người già kẹt,Critical
+Nước vào nhà,Low
+Có người già kẹt,Critical
+Nguy hiểm quá,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Có trẻ nhỏ cứu,Critical
+Nước dâng nhanh quá,Critical
+Kẹt trong nhà,Critical
+Kẹt trong nhà,Critical
+Nhà ngập rồi cứu,Critical
+Nhà ngập rồi cứu,Critical
+Xin cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Không liên lạc được,Medium
+Có người già kẹt,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt trong nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Điện cắt rồi,Medium
+Nước vào nhà,Low
+Kẹt lũ cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Không thoát được,Critical
+Ngập sâu cứu hộ,Critical
+Có người già kẹt,Critical
+Cứu với lũ lớn,Critical
+Không thoát được,Critical
+Điện cắt rồi,Medium
+Nhà chìm nước,Critical
+Nguy hiểm quá,Critical
+Nhà chìm nước,Critical
+Có người già kẹt,Critical
+Không liên lạc được,Medium
+Kẹt trong nhà,Critical
+Ngập tới gối rồi,Critical
+Lũ bao vây rồi,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt trong nhà,Critical
+Ngập tới gối rồi,Critical
+Nước vào nhà,Low
+Nước lên nhanh,Low
+Cứu với lũ lớn,Critical
+Không thoát được,Critical
+Xin cứu gấp,Critical
+Nhà chìm nước,Critical
+Nước dâng nhanh quá,Critical
+Lũ bao vây rồi,Critical
+Kẹt trong nhà,Critical
+Không liên lạc được,Medium
+Nguy hiểm quá,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Có người già kẹt,Critical
+Ngập sâu cứu hộ,Critical
+Điện cắt rồi,Medium
+Điện cắt rồi,Medium
+Không thoát được,Critical
+Nhà ngập rồi cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Không thoát được,Critical
+Điện cắt rồi,Medium
+Lũ mạnh quá,Critical
+Lũ mạnh quá,Critical
+Không liên lạc được,Medium
+Kẹt trong nhà,Critical
+Nguy hiểm quá,Critical
+Kẹt lũ cứu gấp,Critical
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Nhà chìm nước,Critical
+Kẹt lũ cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Kẹt cả nhà,Critical
+Lũ mạnh quá,Critical
+Điện cắt rồi,Medium
+Không liên lạc được,Medium
+Nước lên nhanh,Low
+Lũ mạnh quá,Critical
+Lũ bao vây rồi,Critical
+Có trẻ nhỏ cứu,Critical
+Ngập tới gối rồi,Critical
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Kẹt cả nhà,Critical
+Lũ mạnh quá,Critical
+Nhà chìm nước,Critical
+Lũ bao vây rồi,Critical
+Nhà ngập rồi cứu,Critical
+Ngập tới gối rồi,Critical
+Kẹt cả nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Kẹt cả nhà,Critical
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Lũ mạnh quá,Critical
+Ngập tới gối rồi,Critical
+Ngập tới gối rồi,Critical
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Không thoát được,Critical
+Không liên lạc được,Medium
+Nhà chìm nước,Critical
+Nước lên nhanh,Low
+Nhà chìm nước,Critical
+Có trẻ nhỏ cứu,Critical
+Nước dâng nhanh quá,Critical
+Có trẻ nhỏ cứu,Critical
+Nước vào nhà,Low
+Lũ mạnh quá,Critical
+Nguy hiểm quá,Critical
+Kẹt lũ cứu gấp,Critical
+Nước dâng nhanh quá,Critical
+Điện cắt rồi,Medium
+Có người già kẹt,Critical
+Nước vào nhà,Low
+Không thoát được,Critical
+Cứu với lũ lớn,Critical
+Cứu với lũ lớn,Critical
+Ngập sâu cứu hộ,Critical
+Ngập tới gối rồi,Critical
+Lũ mạnh quá,Critical
+Lũ bao vây rồi,Critical
+Xin cứu gấp,Critical
+Nhà chìm nước,Critical
+Có người già kẹt,Critical
+Ngập sâu cứu hộ,Critical
+Ngập tới gối rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Nước dâng nhanh quá,Critical
+Không thoát được,Critical
+Kẹt cả nhà,Critical
+Lũ mạnh quá,Critical
+Kẹt trong nhà,Critical
+Không thoát được,Critical
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Điện cắt rồi,Medium
+Cứu với lũ lớn,Critical
+Có trẻ nhỏ cứu,Critical
+Cứu với lũ lớn,Critical
+Nước vào nhà,Low
+Lũ mạnh quá,Critical
+Ngập tới gối rồi,Critical
+Nước vào nhà,Low
+Nước lên nhanh,Low
+Kẹt trong nhà,Critical
+Lũ bao vây rồi,Critical
+Cứu với lũ lớn,Critical
+Nhà ngập rồi cứu,Critical
+Nước vào nhà,Low
+Nước vào nhà,Low
+Xin cứu gấp,Critical
+Lũ mạnh quá,Critical
+Nhà ngập rồi cứu,Critical
+Ngập tới gối rồi,Critical
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Xin cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Kẹt cả nhà,Critical
+Kẹt cả nhà,Critical
+Cứu với lũ lớn,Critical
+Ngập tới gối rồi,Critical
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Có trẻ nhỏ cứu,Critical
+Kẹt trong nhà,Critical
+Lũ mạnh quá,Critical
+Xin cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Cứu với lũ lớn,Critical
+Nguy hiểm quá,Critical
+Ngập tới gối rồi,Critical
+Nhà ngập rồi cứu,Critical
+Ngập tới gối rồi,Critical
+Không liên lạc được,Medium
+Cứu với lũ lớn,Critical
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Kẹt trong nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Cứu với lũ lớn,Critical
+Nước lên nhanh,Low
+Không thoát được,Critical
+Lũ mạnh quá,Critical
+Có trẻ nhỏ cứu,Critical
+Không liên lạc được,Medium
+Xin cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Xin cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt lũ cứu gấp,Critical
+Nước vào nhà,Low
+Nhà chìm nước,Critical
+Nước lên nhanh,Low
+Nhà chìm nước,Critical
+Kẹt cả nhà,Critical
+Điện cắt rồi,Medium
+Kẹt cả nhà,Critical
+Không thoát được,Critical
+Không liên lạc được,Medium
+Có người già kẹt,Critical
+Cứu với lũ lớn,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ mạnh quá,Critical
+Kẹt cả nhà,Critical
+Cứu với lũ lớn,Critical
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Có người già kẹt,Critical
+Kẹt cả nhà,Critical
+Cứu với lũ lớn,Critical
+Điện cắt rồi,Medium
+Nguy hiểm quá,Critical
+Ngập sâu cứu hộ,Critical
+Nhà chìm nước,Critical
+Lũ bao vây rồi,Critical
+Lũ mạnh quá,Critical
+Nhà chìm nước,Critical
+Nhà chìm nước,Critical
+Nhà ngập rồi cứu,Critical
+Không thoát được,Critical
+Nhà ngập rồi cứu,Critical
+Ngập tới gối rồi,Critical
+Nước dâng nhanh quá,Critical
+Cứu với lũ lớn,Critical
+Cứu với lũ lớn,Critical
+Ngập tới gối rồi,Critical
+Không thoát được,Critical
+Nước dâng nhanh quá,Critical
+Kẹt lũ cứu gấp,Critical
+Nước dâng nhanh quá,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Nước vào nhà,Low
+Nước lên nhanh,Low
+Kẹt cả nhà,Critical
+Có người già kẹt,Critical
+Ngập sâu cứu hộ,Critical
+Cứu với lũ lớn,Critical
+Nước lên nhanh,Low
+Nước dâng nhanh quá,Critical
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Nước dâng nhanh quá,Critical
+Không liên lạc được,Medium
+Kẹt cả nhà,Critical
+Nhà chìm nước,Critical
+Xin cứu gấp,Critical
+Ngập tới gối rồi,Critical
+Không liên lạc được,Medium
+Lũ bao vây rồi,Critical
+Cứu với lũ lớn,Critical
+Nhà ngập rồi cứu,Critical
+Lũ mạnh quá,Critical
+Điện cắt rồi,Medium
+Lũ bao vây rồi,Critical
+Nguy hiểm quá,Critical
+Lũ bao vây rồi,Critical
+Nhà ngập rồi cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Kẹt lũ cứu gấp,Critical
+Nhà chìm nước,Critical
+Kẹt trong nhà,Critical
+Nước dâng nhanh quá,Critical
+Có trẻ nhỏ cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Nhà ngập rồi cứu,Critical
+Nước vào nhà,Low
+Có người già kẹt,Critical
+Nguy hiểm quá,Critical
+Kẹt trong nhà,Critical
+Ngập tới gối rồi,Critical
+Nước dâng nhanh quá,Critical
+Nhà chìm nước,Critical
+Không thoát được,Critical
+Ngập tới gối rồi,Critical
+Điện cắt rồi,Medium
+Kẹt lũ cứu gấp,Critical
+Nhà ngập rồi cứu,Critical
+Nước dâng nhanh quá,Critical
+Xin cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Nhà ngập rồi cứu,Critical
+Ngập sâu cứu hộ,Critical
+Nguy hiểm quá,Critical
+Ngập tới gối rồi,Critical
+Nhà ngập rồi cứu,Critical
+Xin cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Điện cắt rồi,Medium
+Điện cắt rồi,Medium
+Nhà chìm nước,Critical
+Xin cứu gấp,Critical
+Không thoát được,Critical
+Nước vào nhà,Low
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Lũ bao vây rồi,Critical
+Nhà chìm nước,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Nước lên nhanh,Low
+Kẹt cả nhà,Critical
+Cứu với lũ lớn,Critical
+Nước vào nhà,Low
+Điện cắt rồi,Medium
+Điện cắt rồi,Medium
+Nước dâng nhanh quá,Critical
+Không liên lạc được,Medium
+Nhà ngập rồi cứu,Critical
+Ngập tới gối rồi,Critical
+Cứu với lũ lớn,Critical
+Không thoát được,Critical
+Ngập tới gối rồi,Critical
+Kẹt cả nhà,Critical
+Nhà ngập rồi cứu,Critical
+Có người già kẹt,Critical
+Điện cắt rồi,Medium
+Lũ bao vây rồi,Critical
+Lũ bao vây rồi,Critical
+Kẹt trong nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Nguy hiểm quá,Critical
+Lũ mạnh quá,Critical
+Không liên lạc được,Medium
+Có người già kẹt,Critical
+Kẹt trong nhà,Critical
+Kẹt trong nhà,Critical
+Nước lên nhanh,Low
+Kẹt lũ cứu gấp,Critical
+Nhà chìm nước,Critical
+Kẹt lũ cứu gấp,Critical
+Nước lên nhanh,Low
+Kẹt trong nhà,Critical
+Không thoát được,Critical
+Cứu với lũ lớn,Critical
+Không thoát được,Critical
+Lũ mạnh quá,Critical
+Điện cắt rồi,Medium
+Nước lên nhanh,Low
+Lũ bao vây rồi,Critical
+Kẹt trong nhà,Critical
+Điện cắt rồi,Medium
+Nước lên nhanh,Low
+Không thoát được,Critical
+Không thoát được,Critical
+Lũ bao vây rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Có người già kẹt,Critical
+Lũ mạnh quá,Critical
+Lũ bao vây rồi,Critical
+Điện cắt rồi,Medium
+Nhà ngập rồi cứu,Critical
+Không liên lạc được,Medium
+Nước lên nhanh,Low
+Ngập sâu cứu hộ,Critical
+Không liên lạc được,Medium
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Điện cắt rồi,Medium
+Kẹt trong nhà,Critical
+Nhà chìm nước,Critical
+Nước dâng nhanh quá,Critical
+Lũ mạnh quá,Critical
+Nước vào nhà,Low
+Kẹt lũ cứu gấp,Critical
+Nguy hiểm quá,Critical
+Kẹt trong nhà,Critical
+Nhà chìm nước,Critical
+Ngập sâu cứu hộ,Critical
+Không liên lạc được,Medium
+Lũ mạnh quá,Critical
+Nguy hiểm quá,Critical
+Xin cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Điện cắt rồi,Medium
+Nhà chìm nước,Critical
+Nước dâng nhanh quá,Critical
+Nước dâng nhanh quá,Critical
+Nhà ngập rồi cứu,Critical
+Xin cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Xin cứu gấp,Critical
+Ngập tới gối rồi,Critical
+Có trẻ nhỏ cứu,Critical
+Nhà chìm nước,Critical
+Ngập tới gối rồi,Critical
+Lũ mạnh quá,Critical
+Nguy hiểm quá,Critical
+Điện cắt rồi,Medium
+Ngập sâu cứu hộ,Critical
+Nước vào nhà,Low
+Nước lên nhanh,Low
+Ngập tới gối rồi,Critical
+Không liên lạc được,Medium
+Kẹt cả nhà,Critical
+Nước lên nhanh,Low
+Cứu với lũ lớn,Critical
+Nước dâng nhanh quá,Critical
+Có người già kẹt,Critical
+Điện cắt rồi,Medium
+Nước vào nhà,Low
+Ngập tới gối rồi,Critical
+Nguy hiểm quá,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Lũ mạnh quá,Critical
+Nhà chìm nước,Critical
+Điện cắt rồi,Medium
+Lũ bao vây rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Nước vào nhà,Low
+Xin cứu gấp,Critical
+Kẹt cả nhà,Critical
+Lũ bao vây rồi,Critical
+Không liên lạc được,Medium
+Cứu với lũ lớn,Critical
+Không liên lạc được,Medium
+Nguy hiểm quá,Critical
+Lũ mạnh quá,Critical
+Nhà chìm nước,Critical
+Nước vào nhà,Low
+Có người già kẹt,Critical
+Lũ mạnh quá,Critical
+Ngập sâu cứu hộ,Critical
+Nhà ngập rồi cứu,Critical
+Không thoát được,Critical
+Không liên lạc được,Medium
+Lũ bao vây rồi,Critical
+Lũ bao vây rồi,Critical
+Ngập tới gối rồi,Critical
+Lũ mạnh quá,Critical
+Kẹt lũ cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Có người già kẹt,Critical
+Cứu với lũ lớn,Critical
+Nhà chìm nước,Critical
+Nước vào nhà,Low
+Ngập tới gối rồi,Critical
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Không liên lạc được,Medium
+Kẹt lũ cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Nhà ngập rồi cứu,Critical
+Lũ mạnh quá,Critical
+Kẹt trong nhà,Critical
+Không thoát được,Critical
+Nhà ngập rồi cứu,Critical
+Nước vào nhà,Low
+Lũ mạnh quá,Critical
+Lũ mạnh quá,Critical
+Kẹt cả nhà,Critical
+Nguy hiểm quá,Critical
+Kẹt cả nhà,Critical
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Có trẻ nhỏ cứu,Critical
+Lũ bao vây rồi,Critical
+Lũ mạnh quá,Critical
+Ngập sâu cứu hộ,Critical
+Xin cứu gấp,Critical
+Kẹt trong nhà,Critical
+Kẹt trong nhà,Critical
+Nguy hiểm quá,Critical
+Không thoát được,Critical
+Ngập tới gối rồi,Critical
+Nước vào nhà,Low
+Cứu với lũ lớn,Critical
+Ngập tới gối rồi,Critical
+Kẹt trong nhà,Critical
+Ngập sâu cứu hộ,Critical
+Nhà chìm nước,Critical
+Điện cắt rồi,Medium
+Điện cắt rồi,Medium
+Nước lên nhanh,Low
+Nước vào nhà,Low
+Xin cứu gấp,Critical
+Không thoát được,Critical
+Nước lên nhanh,Low
+Nước vào nhà,Low
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Nhà chìm nước,Critical
+Không liên lạc được,Medium
+Cứu với lũ lớn,Critical
+Ngập sâu cứu hộ,Critical
+Nhà ngập rồi cứu,Critical
+Nước vào nhà,Low
+Ngập tới gối rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Xin cứu gấp,Critical
+Kẹt trong nhà,Critical
+Kẹt trong nhà,Critical
+Nước dâng nhanh quá,Critical
+Nguy hiểm quá,Critical
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Nguy hiểm quá,Critical
+Nước lên nhanh,Low
+Nước vào nhà,Low
+Lũ mạnh quá,Critical
+Cứu với lũ lớn,Critical
+Ngập tới gối rồi,Critical
+Điện cắt rồi,Medium
+Không thoát được,Critical
+Nước dâng nhanh quá,Critical
+Có người già kẹt,Critical
+Có người già kẹt,Critical
+Nước dâng nhanh quá,Critical
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Ngập tới gối rồi,Critical
+Cứu với lũ lớn,Critical
+Cứu với lũ lớn,Critical
+Lũ mạnh quá,Critical
+Nhà chìm nước,Critical
+Không liên lạc được,Medium
+Có người già kẹt,Critical
+Kẹt cả nhà,Critical
+Nhà chìm nước,Critical
+Nhà ngập rồi cứu,Critical
+Nguy hiểm quá,Critical
+Nước vào nhà,Low
+Có trẻ nhỏ cứu,Critical
+Có người già kẹt,Critical
+Cứu với lũ lớn,Critical
+Xin cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt lũ cứu gấp,Critical
+Có người già kẹt,Critical
+Điện cắt rồi,Medium
+Nước dâng nhanh quá,Critical
+Kẹt trong nhà,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Có người già kẹt,Critical
+Xin cứu gấp,Critical
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Nhà ngập rồi cứu,Critical
+Ngập tới gối rồi,Critical
+Kẹt trong nhà,Critical
+Điện cắt rồi,Medium
+Điện cắt rồi,Medium
+Cứu với lũ lớn,Critical
+Kẹt cả nhà,Critical
+Không liên lạc được,Medium
+Kẹt cả nhà,Critical
+Kẹt trong nhà,Critical
+Lũ mạnh quá,Critical
+Nước dâng nhanh quá,Critical
+Nước lên nhanh,Low
+Nguy hiểm quá,Critical
+Nguy hiểm quá,Critical
+Nhà ngập rồi cứu,Critical
+Nước dâng nhanh quá,Critical
+Xin cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Lũ mạnh quá,Critical
+Nước vào nhà,Low
+Kẹt trong nhà,Critical
+Điện cắt rồi,Medium
+Lũ mạnh quá,Critical
+Nước vào nhà,Low
+Nguy hiểm quá,Critical
+Nguy hiểm quá,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt trong nhà,Critical
+Nguy hiểm quá,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Nước dâng nhanh quá,Critical
+Có người già kẹt,Critical
+Kẹt lũ cứu gấp,Critical
+Nguy hiểm quá,Critical
+Lũ mạnh quá,Critical
+Nước vào nhà,Low
+Nước lên nhanh,Low
+Nhà ngập rồi cứu,Critical
+Kẹt trong nhà,Critical
+Lũ mạnh quá,Critical
+Kẹt trong nhà,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt trong nhà,Critical
+Lũ bao vây rồi,Critical
+Nước vào nhà,Low
+Có trẻ nhỏ cứu,Critical
+Xin cứu gấp,Critical
+Lũ mạnh quá,Critical
+Kẹt lũ cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Xin cứu gấp,Critical
+Ngập tới gối rồi,Critical
+Kẹt cả nhà,Critical
+Nước dâng nhanh quá,Critical
+Ngập tới gối rồi,Critical
+Xin cứu gấp,Critical
+Lũ mạnh quá,Critical
+Ngập sâu cứu hộ,Critical
+Xin cứu gấp,Critical
+Kẹt cả nhà,Critical
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Kẹt cả nhà,Critical
+Không thoát được,Critical
+Nguy hiểm quá,Critical
+Nhà chìm nước,Critical
+Không thoát được,Critical
+Ngập sâu cứu hộ,Critical
+Nhà ngập rồi cứu,Critical
+Nguy hiểm quá,Critical
+Xin cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Nước vào nhà,Low
+Nước lên nhanh,Low
+Nước lên nhanh,Low
+Lũ mạnh quá,Critical
+Không thoát được,Critical
+Cứu với lũ lớn,Critical
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Điện cắt rồi,Medium
+Không liên lạc được,Medium
+Nhà chìm nước,Critical
+Không thoát được,Critical
+Không thoát được,Critical
+Cứu với lũ lớn,Critical
+Có trẻ nhỏ cứu,Critical
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Xin cứu gấp,Critical
+Nước dâng nhanh quá,Critical
+Không liên lạc được,Medium
+Nhà ngập rồi cứu,Critical
+Nguy hiểm quá,Critical
+Điện cắt rồi,Medium
+Điện cắt rồi,Medium
+Kẹt cả nhà,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Điện cắt rồi,Medium
+Nước vào nhà,Low
+Có trẻ nhỏ cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ mạnh quá,Critical
+Nước vào nhà,Low
+Không liên lạc được,Medium
+Cứu với lũ lớn,Critical
+Lũ bao vây rồi,Critical
+Có trẻ nhỏ cứu,Critical
+Nước vào nhà,Low
+Có trẻ nhỏ cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ mạnh quá,Critical
+Nước dâng nhanh quá,Critical
+Có người già kẹt,Critical
+Kẹt cả nhà,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Ngập tới gối rồi,Critical
+Nước lên nhanh,Low
+Có trẻ nhỏ cứu,Critical
+Điện cắt rồi,Medium
+Không liên lạc được,Medium
+Kẹt trong nhà,Critical
+Điện cắt rồi,Medium
+Kẹt cả nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Ngập tới gối rồi,Critical
+Nước vào nhà,Low
+Có người già kẹt,Critical
+Lũ mạnh quá,Critical
+Nguy hiểm quá,Critical
+Kẹt trong nhà,Critical
+Lũ mạnh quá,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt trong nhà,Critical
+Nhà ngập rồi cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Nước vào nhà,Low
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Không thoát được,Critical
+Nước vào nhà,Low
+Ngập tới gối rồi,Critical
+Không thoát được,Critical
+Không liên lạc được,Medium
+Nhà chìm nước,Critical
+Xin cứu gấp,Critical
+Kẹt cả nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Ngập tới gối rồi,Critical
+Kẹt trong nhà,Critical
+Nước dâng nhanh quá,Critical
+Nước dâng nhanh quá,Critical
+Không thoát được,Critical
+Không liên lạc được,Medium
+Nước lên nhanh,Low
+Nhà chìm nước,Critical
+Kẹt trong nhà,Critical
+Nhà ngập rồi cứu,Critical
+Cứu với lũ lớn,Critical
+Cứu với lũ lớn,Critical
+Kẹt trong nhà,Critical
+Kẹt trong nhà,Critical
+Nhà ngập rồi cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Nước dâng nhanh quá,Critical
+Lũ bao vây rồi,Critical
+Cứu với lũ lớn,Critical
+Có người già kẹt,Critical
+Kẹt trong nhà,Critical
+Kẹt lũ cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Điện cắt rồi,Medium
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Kẹt lũ cứu gấp,Critical
+Xin cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Nhà chìm nước,Critical
+Nước dâng nhanh quá,Critical
+Lũ bao vây rồi,Critical
+Kẹt trong nhà,Critical
+Nước dâng nhanh quá,Critical
+Kẹt lũ cứu gấp,Critical
+Nước dâng nhanh quá,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Nguy hiểm quá,Critical
+Nhà chìm nước,Critical
+Lũ mạnh quá,Critical
+Không liên lạc được,Medium
+Ngập tới gối rồi,Critical
+Không thoát được,Critical
+Kẹt trong nhà,Critical
+Nhà ngập rồi cứu,Critical
+Nguy hiểm quá,Critical
+Kẹt trong nhà,Critical
+Nhà ngập rồi cứu,Critical
+Nguy hiểm quá,Critical
+Kẹt cả nhà,Critical
+Không thoát được,Critical
+Kẹt cả nhà,Critical
+Điện cắt rồi,Medium
+Nước dâng nhanh quá,Critical
+Nguy hiểm quá,Critical
+Kẹt cả nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Không liên lạc được,Medium
+Điện cắt rồi,Medium
+Kẹt cả nhà,Critical
+Nước vào nhà,Low
+Kẹt cả nhà,Critical
+Nhà chìm nước,Critical
+Ngập sâu cứu hộ,Critical
+Nhà ngập rồi cứu,Critical
+Không thoát được,Critical
+Nguy hiểm quá,Critical
+Nguy hiểm quá,Critical
+Không thoát được,Critical
+Kẹt trong nhà,Critical
+Nhà chìm nước,Critical
+Nước lên nhanh,Low
+Ngập sâu cứu hộ,Critical
+Nước dâng nhanh quá,Critical
+Nước lên nhanh,Low
+Không liên lạc được,Medium
+Lũ mạnh quá,Critical
+Xin cứu gấp,Critical
+Xin cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Nước vào nhà,Low
+Không thoát được,Critical
+Ngập sâu cứu hộ,Critical
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Nước lên nhanh,Low
+Không thoát được,Critical
+Kẹt cả nhà,Critical
+Nước lên nhanh,Low
+Nước lên nhanh,Low
+Nước lên nhanh,Low
+Ngập sâu cứu hộ,Critical
+Kẹt lũ cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Nhà ngập rồi cứu,Critical
+Điện cắt rồi,Medium
+Lũ mạnh quá,Critical
+Nước lên nhanh,Low
+Nước vào nhà,Low
+Có người già kẹt,Critical
+Kẹt lũ cứu gấp,Critical
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Kẹt trong nhà,Critical
+Lũ bao vây rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Có người già kẹt,Critical
+Nhà ngập rồi cứu,Critical
+Ngập tới gối rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Nhà chìm nước,Critical
+Nhà chìm nước,Critical
+Lũ bao vây rồi,Critical
+Cứu với lũ lớn,Critical
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Nước dâng nhanh quá,Critical
+Kẹt lũ cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Nước dâng nhanh quá,Critical
+Lũ bao vây rồi,Critical
+Có trẻ nhỏ cứu,Critical
+Không thoát được,Critical
+Kẹt trong nhà,Critical
+Ngập tới gối rồi,Critical
+Lũ mạnh quá,Critical
+Không liên lạc được,Medium
+Có người già kẹt,Critical
+Xin cứu gấp,Critical
+Điện cắt rồi,Medium
+Kẹt trong nhà,Critical
+Kẹt cả nhà,Critical
+Có người già kẹt,Critical
+Cứu với lũ lớn,Critical
+Nguy hiểm quá,Critical
+Nước vào nhà,Low
+Kẹt trong nhà,Critical
+Nước lên nhanh,Low
+Kẹt trong nhà,Critical
+Không thoát được,Critical
+Điện cắt rồi,Medium
+Kẹt trong nhà,Critical
+Nguy hiểm quá,Critical
+Lũ mạnh quá,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt cả nhà,Critical
+Kẹt cả nhà,Critical
+Kẹt lũ cứu gấp,Critical
+Nước lên nhanh,Low
+Nước dâng nhanh quá,Critical
+Không thoát được,Critical
+Có người già kẹt,Critical
+Nhà ngập rồi cứu,Critical
+Lũ bao vây rồi,Critical
+Xin cứu gấp,Critical
+Nguy hiểm quá,Critical
+Lũ bao vây rồi,Critical
+Không liên lạc được,Medium
+Có trẻ nhỏ cứu,Critical
+Nước lên nhanh,Low
+Lũ mạnh quá,Critical
+Cứu với lũ lớn,Critical
+Ngập tới gối rồi,Critical
+Cứu với lũ lớn,Critical
+Kẹt trong nhà,Critical
+Kẹt cả nhà,Critical
+Kẹt trong nhà,Critical
+Kẹt trong nhà,Critical
+Có người già kẹt,Critical
+Kẹt trong nhà,Critical
+Kẹt cả nhà,Critical
+Cứu với lũ lớn,Critical
+Có người già kẹt,Critical
+Nước lên nhanh,Low
+Kẹt cả nhà,Critical
+Nước lên nhanh,Low
+Nước dâng nhanh quá,Critical
+Không thoát được,Critical
+Cứu với lũ lớn,Critical
+Có người già kẹt,Critical
+Nước lên nhanh,Low
+Không thoát được,Critical
+Không liên lạc được,Medium
+Có người già kẹt,Critical
+Xin cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Lũ mạnh quá,Critical
+Xin cứu gấp,Critical
+Lũ mạnh quá,Critical
+Nước lên nhanh,Low
+Kẹt trong nhà,Critical
+Ngập tới gối rồi,Critical
+Có người già kẹt,Critical
+Xin cứu gấp,Critical
+Nhà chìm nước,Critical
+Lũ mạnh quá,Critical
+Nhà chìm nước,Critical
+Lũ bao vây rồi,Critical
+Xin cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ bao vây rồi,Critical
+Nhà chìm nước,Critical
+Kẹt trong nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Không thoát được,Critical
+Ngập sâu cứu hộ,Critical
+Ngập sâu cứu hộ,Critical
+Nhà chìm nước,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt trong nhà,Critical
+Không thoát được,Critical
+Nguy hiểm quá,Critical
+Không thoát được,Critical
+Kẹt cả nhà,Critical
+Nước dâng nhanh quá,Critical
+Không thoát được,Critical
+Kẹt lũ cứu gấp,Critical
+Nguy hiểm quá,Critical
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Nước vào nhà,Low
+Điện cắt rồi,Medium
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Điện cắt rồi,Medium
+Ngập tới gối rồi,Critical
+Điện cắt rồi,Medium
+Không liên lạc được,Medium
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Không liên lạc được,Medium
+Cứu với lũ lớn,Critical
+Cứu với lũ lớn,Critical
+Cứu với lũ lớn,Critical
+Ngập tới gối rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Nước lên nhanh,Low
+Ngập tới gối rồi,Critical
+Điện cắt rồi,Medium
+Lũ mạnh quá,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Kẹt trong nhà,Critical
+Nguy hiểm quá,Critical
+Có người già kẹt,Critical
+Lũ mạnh quá,Critical
+Có người già kẹt,Critical
+Ngập sâu cứu hộ,Critical
+Nước vào nhà,Low
+Nước vào nhà,Low
+Ngập tới gối rồi,Critical
+Nhà chìm nước,Critical
+Ngập sâu cứu hộ,Critical
+Ngập sâu cứu hộ,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Nhà chìm nước,Critical
+Không thoát được,Critical
+Có người già kẹt,Critical
+Kẹt trong nhà,Critical
+Kẹt cả nhà,Critical
+Không liên lạc được,Medium
+Nguy hiểm quá,Critical
+Điện cắt rồi,Medium
+Nhà ngập rồi cứu,Critical
+Nước vào nhà,Low
+Ngập sâu cứu hộ,Critical
+Cứu với lũ lớn,Critical
+Có người già kẹt,Critical
+Cứu với lũ lớn,Critical
+Nhà ngập rồi cứu,Critical
+Cứu với lũ lớn,Critical
+Cứu với lũ lớn,Critical
+Xin cứu gấp,Critical
+Kẹt lũ cứu gấp,Critical
+Nhà ngập rồi cứu,Critical
+Có người già kẹt,Critical
+Nước vào nhà,Low
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Nước dâng nhanh quá,Critical
+Nước vào nhà,Low
+Nguy hiểm quá,Critical
+Kẹt lũ cứu gấp,Critical
+Có người già kẹt,Critical
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt lũ cứu gấp,Critical
+Nhà chìm nước,Critical
+Nguy hiểm quá,Critical
+Nguy hiểm quá,Critical
+Kẹt trong nhà,Critical
+Nhà ngập rồi cứu,Critical
+Nguy hiểm quá,Critical
+Có người già kẹt,Critical
+Nhà ngập rồi cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Cứu với lũ lớn,Critical
+Kẹt trong nhà,Critical
+Nước lên nhanh,Low
+Có trẻ nhỏ cứu,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Điện cắt rồi,Medium
+Cứu với lũ lớn,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Ngập tới gối rồi,Critical
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Có trẻ nhỏ cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Kẹt trong nhà,Critical
+Điện cắt rồi,Medium
+Ngập tới gối rồi,Critical
+Nước dâng nhanh quá,Critical
+Cứu với lũ lớn,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt lũ cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Ngập tới gối rồi,Critical
+Lũ bao vây rồi,Critical
+Điện cắt rồi,Medium
+Không thoát được,Critical
+Kẹt trong nhà,Critical
+Nước vào nhà,Low
+Kẹt trong nhà,Critical
+Nguy hiểm quá,Critical
+Lũ mạnh quá,Critical
+Nhà chìm nước,Critical
+Nhà chìm nước,Critical
+Nước dâng nhanh quá,Critical
+Không liên lạc được,Medium
+Nước lên nhanh,Low
+Kẹt lũ cứu gấp,Critical
+Nhà ngập rồi cứu,Critical
+Điện cắt rồi,Medium
+Lũ bao vây rồi,Critical
+Cứu với lũ lớn,Critical
+Xin cứu gấp,Critical
+Ngập tới gối rồi,Critical
+Ngập sâu cứu hộ,Critical
+Nước lên nhanh,Low
+Nhà chìm nước,Critical
+Nhà chìm nước,Critical
+Không thoát được,Critical
+Không liên lạc được,Medium
+Ngập tới gối rồi,Critical
+Lũ bao vây rồi,Critical
+Lũ bao vây rồi,Critical
+Kẹt trong nhà,Critical
+Nước vào nhà,Low
+Nhà chìm nước,Critical
+Nước vào nhà,Low
+Nguy hiểm quá,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Cứu với lũ lớn,Critical
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Nhà chìm nước,Critical
+Có trẻ nhỏ cứu,Critical
+Nước lên nhanh,Low
+Lũ bao vây rồi,Critical
+Lũ mạnh quá,Critical
+Điện cắt rồi,Medium
+Nguy hiểm quá,Critical
+Có trẻ nhỏ cứu,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Nhà chìm nước,Critical
+Có người già kẹt,Critical
+Có trẻ nhỏ cứu,Critical
+Không thoát được,Critical
+Có trẻ nhỏ cứu,Critical
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Nhà chìm nước,Critical
+Nước lên nhanh,Low
+Nhà ngập rồi cứu,Critical
+Nhà ngập rồi cứu,Critical
+Nhà ngập rồi cứu,Critical
+Nguy hiểm quá,Critical
+Xin cứu gấp,Critical
+Lũ mạnh quá,Critical
+Không liên lạc được,Medium
+Điện cắt rồi,Medium
+Nước vào nhà,Low
+Điện cắt rồi,Medium
+Kẹt cả nhà,Critical
+Điện cắt rồi,Medium
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Nhà chìm nước,Critical
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Có trẻ nhỏ cứu,Critical
+Nước dâng nhanh quá,Critical
+Nước lên nhanh,Low
+Có người già kẹt,Critical
+Cứu với lũ lớn,Critical
+Nước dâng nhanh quá,Critical
+Có trẻ nhỏ cứu,Critical
+Nhà ngập rồi cứu,Critical
+Ngập tới gối rồi,Critical
+Điện cắt rồi,Medium
+Nhà chìm nước,Critical
+Nhà ngập rồi cứu,Critical
+Cứu với lũ lớn,Critical
+Xin cứu gấp,Critical
+Có người già kẹt,Critical
+Không liên lạc được,Medium
+Nguy hiểm quá,Critical
+Có trẻ nhỏ cứu,Critical
+Nguy hiểm quá,Critical
+Có trẻ nhỏ cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Nước lên nhanh,Low
+Lũ bao vây rồi,Critical
+Không thoát được,Critical
+Kẹt lũ cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Kẹt trong nhà,Critical
+Kẹt trong nhà,Critical
+Ngập tới gối rồi,Critical
+Nước dâng nhanh quá,Critical
+Xin cứu gấp,Critical
+Không thoát được,Critical
+Lũ bao vây rồi,Critical
+Không liên lạc được,Medium
+Điện cắt rồi,Medium
+Nhà ngập rồi cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Nước dâng nhanh quá,Critical
+Nước lên nhanh,Low
+Xin cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt trong nhà,Critical
+Lũ mạnh quá,Critical
+Kẹt lũ cứu gấp,Critical
+Xin cứu gấp,Critical
+Xin cứu gấp,Critical
+Kẹt cả nhà,Critical
+Xin cứu gấp,Critical
+Nhà chìm nước,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Nguy hiểm quá,Critical
+Kẹt lũ cứu gấp,Critical
+Nguy hiểm quá,Critical
+Nước lên nhanh,Low
+Nhà chìm nước,Critical
+Lũ bao vây rồi,Critical
+Nước vào nhà,Low
+Có trẻ nhỏ cứu,Critical
+Ngập tới gối rồi,Critical
+Lũ mạnh quá,Critical
+Cứu với lũ lớn,Critical
+Không liên lạc được,Medium
+Xin cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Nhà chìm nước,Critical
+Nguy hiểm quá,Critical
+Không thoát được,Critical
+Lũ mạnh quá,Critical
+Kẹt lũ cứu gấp,Critical
+Không liên lạc được,Medium
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Cứu với lũ lớn,Critical
+Nguy hiểm quá,Critical
+Không thoát được,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Xin cứu gấp,Critical
+Nước vào nhà,Low
+Không thoát được,Critical
+Nhà chìm nước,Critical
+Không thoát được,Critical
+Không liên lạc được,Medium
+Kẹt cả nhà,Critical
+Có người già kẹt,Critical
+Không liên lạc được,Medium
+Có trẻ nhỏ cứu,Critical
+Nước vào nhà,Low
+Có trẻ nhỏ cứu,Critical
+Xin cứu gấp,Critical
+Xin cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Cứu với lũ lớn,Critical
+Cứu với lũ lớn,Critical
+Điện cắt rồi,Medium
+Kẹt trong nhà,Critical
+Lũ mạnh quá,Critical
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Nước vào nhà,Low
+Nguy hiểm quá,Critical
+Nhà chìm nước,Critical
+Có trẻ nhỏ cứu,Critical
+Nước vào nhà,Low
+Có người già kẹt,Critical
+Nhà chìm nước,Critical
+Lũ bao vây rồi,Critical
+Nhà chìm nước,Critical
+Nước vào nhà,Low
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Không thoát được,Critical
+Có người già kẹt,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Ngập tới gối rồi,Critical
+Có người già kẹt,Critical
+Lũ mạnh quá,Critical
+Lũ mạnh quá,Critical
+Điện cắt rồi,Medium
+Không liên lạc được,Medium
+Nhà chìm nước,Critical
+Cứu với lũ lớn,Critical
+Có trẻ nhỏ cứu,Critical
+Lũ mạnh quá,Critical
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Nước vào nhà,Low
+Nước vào nhà,Low
+Kẹt trong nhà,Critical
+Kẹt lũ cứu gấp,Critical
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Xin cứu gấp,Critical
+Kẹt trong nhà,Critical
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Nước vào nhà,Low
+Nhà ngập rồi cứu,Critical
+Nhà chìm nước,Critical
+Lũ bao vây rồi,Critical
+Kẹt trong nhà,Critical
+Nước vào nhà,Low
+Kẹt cả nhà,Critical
+Kẹt cả nhà,Critical
+Lũ bao vây rồi,Critical
+Nhà ngập rồi cứu,Critical
+Kẹt cả nhà,Critical
+Lũ bao vây rồi,Critical
+Lũ mạnh quá,Critical
+Nguy hiểm quá,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Nhà ngập rồi cứu,Critical
+Có người già kẹt,Critical
+Nước vào nhà,Low
+Không liên lạc được,Medium
+Nhà chìm nước,Critical
+Nước lên nhanh,Low
+Ngập sâu cứu hộ,Critical
+Có người già kẹt,Critical
+Ngập tới gối rồi,Critical
+Không liên lạc được,Medium
+Không thoát được,Critical
+Nước dâng nhanh quá,Critical
+Không thoát được,Critical
+Kẹt lũ cứu gấp,Critical
+Lũ bao vây rồi,Critical
+Điện cắt rồi,Medium
+Kẹt cả nhà,Critical
+Điện cắt rồi,Medium
+Lũ mạnh quá,Critical
+Không thoát được,Critical
+Ngập sâu cứu hộ,Critical
+Không thoát được,Critical
+Kẹt cả nhà,Critical
+Kẹt lũ cứu gấp,Critical
+Cứu với lũ lớn,Critical
+Không liên lạc được,Medium
+Nhà ngập rồi cứu,Critical
+Kẹt trong nhà,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt lũ cứu gấp,Critical
+Không thoát được,Critical
+Có trẻ nhỏ cứu,Critical
+Xin cứu gấp,Critical
+Nước lên nhanh,Low
+Nước dâng nhanh quá,Critical
+Không liên lạc được,Medium
+Có người già kẹt,Critical
+Có người già kẹt,Critical
+Có người già kẹt,Critical
+Nước vào nhà,Low
+Không thoát được,Critical
+Kẹt trong nhà,Critical
+Cứu với lũ lớn,Critical
+Kẹt trong nhà,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt lũ cứu gấp,Critical
+Điện cắt rồi,Medium
+Nước dâng nhanh quá,Critical
+Ngập tới gối rồi,Critical
+Nước dâng nhanh quá,Critical
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Nước lên nhanh,Low
+Nguy hiểm quá,Critical
+Lũ mạnh quá,Critical
+Xin cứu gấp,Critical
+Nước vào nhà,Low
+Nhà chìm nước,Critical
+Kẹt lũ cứu gấp,Critical
+Nước dâng nhanh quá,Critical
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Kẹt cả nhà,Critical
+Nước vào nhà,Low
+Nhà ngập rồi cứu,Critical
+Điện cắt rồi,Medium
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Xin cứu gấp,Critical
+Có người già kẹt,Critical
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Ngập sâu cứu hộ,Critical
+Nhà chìm nước,Critical
+Ngập tới gối rồi,Critical
+Nhà ngập rồi cứu,Critical
+Nước vào nhà,Low
+Kẹt lũ cứu gấp,Critical
+Không liên lạc được,Medium
+Xin cứu gấp,Critical
+Nước vào nhà,Low
+Điện cắt rồi,Medium
+Cứu với lũ lớn,Critical
+Nhà chìm nước,Critical
+Kẹt lũ cứu gấp,Critical
+Nguy hiểm quá,Critical
+Điện cắt rồi,Medium
+Kẹt lũ cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Nguy hiểm quá,Critical
+Ngập tới gối rồi,Critical
+Nước lên nhanh,Low
+Xin cứu gấp,Critical
+Ngập sâu cứu hộ,Critical
+Nước lên nhanh,Low
+Điện cắt rồi,Medium
+Nước dâng nhanh quá,Critical
+Điện cắt rồi,Medium
+Điện cắt rồi,Medium
+Ngập tới gối rồi,Critical
+Xin cứu gấp,Critical
+Kẹt trong nhà,Critical
+Nhà ngập rồi cứu,Critical
+Xin cứu gấp,Critical
+Không liên lạc được,Medium
+Không liên lạc được,Medium
+Cứu với lũ lớn,Critical
+Nước lên nhanh,Low
+Ngập sâu cứu hộ,Critical
+Nhà chìm nước,Critical
+Nước lên nhanh,Low
+Không liên lạc được,Medium
+Kẹt trong nhà,Critical
+Không thoát được,Critical
+Kẹt lũ cứu gấp,Critical
+Nước dâng nhanh quá,Critical
+Ngập tới gối rồi,Critical
+Cứu với lũ lớn,Critical
+Nhà chìm nước,Critical
+Không thoát được,Critical
+Không liên lạc được,Medium
+Điện cắt rồi,Medium
+Nhà ngập rồi cứu,Critical
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Không thoát được,Critical
+Nước lên nhanh,Low
+Có người già kẹt,Critical
+Điện cắt rồi,Medium
+Lũ bao vây rồi,Critical
+Ngập tới gối rồi,Critical
+Nguy hiểm quá,Critical
+Lũ bao vây rồi,Critical
+Không liên lạc được,Medium
+Nước dâng nhanh quá,Critical
+Nhà ngập rồi cứu,Critical
+Không thoát được,Critical
+Nước vào nhà,Low
+Nước vào nhà,Low
+Nước lên nhanh,Low
+Kẹt lũ cứu gấp,Critical
+Điện cắt rồi,Medium
+Lũ bao vây rồi,Critical
+Không liên lạc được,Medium
+Không thoát được,Critical
+Nước dâng nhanh quá,Critical
+Điện cắt rồi,Medium
+Ngập tới gối rồi,Critical
+Có người già kẹt,Critical
+Điện cắt rồi,Medium
+Nước vào nhà,Low
+Không liên lạc được,Medium
+Cứu với lũ lớn,Critical
+Ngập tới gối rồi,Critical
+Ngập tới gối rồi,Critical
+Kẹt lũ cứu gấp,Critical
+Nhà ngập rồi cứu,Critical
+Nước vào nhà,Low
+Lũ bao vây rồi,Critical
+Kẹt trong nhà,Critical
+Nước vào nhà,Low
+Nước vào nhà,Low
+Nước vào nhà,Low
+Ngập tới gối rồi,Critical
+Cứu với lũ lớn,Critical
+Lũ mạnh quá,Critical
+Xin cứu gấp,Critical
+Xin cứu gấp,Critical
+Có trẻ nhỏ cứu,Critical
+Không liên lạc được,Medium
+Nguy hiểm quá,Critical
+Ngập sâu cứu hộ,Critical
+Không thoát được,Critical
+Không thoát được,Critical
+Có trẻ nhỏ cứu,Critical
+Nhà chìm nước,Critical
+Kẹt cả nhà,Critical
+Nước vào nhà,Low
+Nước vào nhà,Low
+Kẹt cả nhà,Critical
+Không liên lạc được,Medium
+Có trẻ nhỏ cứu,Critical
+Nhà ngập rồi cứu,Critical
+Nhà ngập rồi cứu,Critical
+Có trẻ nhỏ cứu,Critical
+Không liên lạc được,Medium
+Có trẻ nhỏ cứu,Critical
+Không liên lạc được,Medium
+Kẹt trong nhà,Critical
+Kẹt trong nhà,Critical
+Không liên lạc được,Medium
+Nước vào nhà,Low
+Kẹt trong nhà,Critical
+Không thoát được,Critical
+Lũ mạnh quá,Critical
+Nước lên nhanh,Low
+Ngập sâu cứu hộ,Critical
+Lũ mạnh quá,Critical
+Nhà ngập rồi cứu,Critical
+Lũ bao vây rồi,Critical
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Nhà chìm nước,Critical
+Nước vào nhà,Low
+Lũ mạnh quá,Critical
+Nước vào nhà,Low
+Nước lên nhanh,Low
+Ngập tới gối rồi,Critical
+Có trẻ nhỏ cứu,Critical
+Điện cắt rồi,Medium
+Không liên lạc được,Medium
+Có người già kẹt,Critical
+Kẹt cả nhà,Critical
+Ngập tới gối rồi,Critical
+Không liên lạc được,Medium
+Có trẻ nhỏ cứu,Critical
+Kẹt cả nhà,Critical
+Nguy hiểm quá,Critical
+Cứu với lũ lớn,Critical
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt lũ cứu gấp,Critical
+Nước dâng nhanh quá,Critical
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Kẹt cả nhà,Critical
+Ngập sâu cứu hộ,Critical
+Ngập sâu cứu hộ,Critical
+Nhà chìm nước,Critical
+Cứu với lũ lớn,Critical
+Nước dâng nhanh quá,Critical
+Có trẻ nhỏ cứu,Critical
+Nước dâng nhanh quá,Critical
+Lũ mạnh quá,Critical
+Xin cứu gấp,Critical
+Nhà chìm nước,Critical
+Nước lên nhanh,Low
+Ngập sâu cứu hộ,Critical
+Nguy hiểm quá,Critical
+Điện cắt rồi,Medium
+Cứu với lũ lớn,Critical
+Kẹt cả nhà,Critical
+Không thoát được,Critical
+Lũ bao vây rồi,Critical
+Ngập sâu cứu hộ,Critical
+Lũ bao vây rồi,Critical
+Lũ bao vây rồi,Critical
+Nước lên nhanh,Low
+Ngập tới gối rồi,Critical
+Lũ bao vây rồi,Critical
+Điện cắt rồi,Medium
+Không liên lạc được,Medium
+Xin cứu gấp,Critical
+Không thoát được,Critical
+Cứu với lũ lớn,Critical
+Nhà chìm nước,Critical
+Ngập tới gối rồi,Critical
+Lũ bao vây rồi,Critical
+Nhà chìm nước,Critical
+Có người già kẹt,Critical
+Nước vào nhà,Low
+Điện cắt rồi,Medium
+Ngập tới gối rồi,Critical
+Kẹt cả nhà,Critical
+Cứu với lũ lớn,Critical
+Lũ bao vây rồi,Critical
+Có người già kẹt,Critical
+Điện cắt rồi,Medium
+Nước vào nhà,Low

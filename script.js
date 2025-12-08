@@ -122,7 +122,7 @@ async function reverseGeocode(lat, lng) {
 }
 
 // API Configuration
-const API_BASE_URL = 'https://ctcn-2.onrender.com';
+const API_BASE_URL = 'https://lthaibinh-rescue.hf.space';
 
 // Form Submission
 async function submitForm(event) {

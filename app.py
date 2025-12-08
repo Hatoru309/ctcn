@@ -7,13 +7,13 @@ import torch
 app = Flask(__name__)
 CORS(app)
 
+repo = 'lthaibinh/phobert-urgency-model'
 
+tokenizer = AutoTokenizer.from_pretrained(repo, use_fast=False)
+model = AutoModelForSequenceClassification.from_pretrained(repo)
 
 def predict_label(text):
-    tokenizer = AutoTokenizer.from_pretrained("./phobert-urgency-model")
-    model = AutoModelForSequenceClassification.from_pretrained("./phobert-urgency-model")
 
-  
 
     inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
     logits = model(**inputs).logits

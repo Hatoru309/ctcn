@@ -2,9 +2,32 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from db import create_report, update_report, list_reports, update_status
-
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import torch
 app = Flask(__name__)
 CORS(app)
+
+
+
+def predict_label(text):
+    tokenizer = AutoTokenizer.from_pretrained("./phobert-urgency-model")
+    model = AutoModelForSequenceClassification.from_pretrained("./phobert-urgency-model")
+
+  
+
+    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
+    logits = model(**inputs).logits
+    probs = torch.softmax(logits, dim=1)
+    label_id = torch.argmax(probs).item()
+    confidence = probs.tolist()[0][label_id]
+    if confidence < 0.5:
+        return "Low", confidence
+    if label_id == 0:
+        return "Low", probs.tolist()[0][0]
+    elif label_id == 1:
+        return "High", probs.tolist()[0][1]
+    elif label_id == 2:
+        return "Critical", probs.tolist()[0][2]
 
 # -------------------------------
 # 1. POST /api/report — gửi báo cứu hộ
@@ -16,6 +39,19 @@ def report_create():
     for field in required:
         if field not in data:
             return jsonify({"ok": False, "error": f"{field} is required"}), 400
+    
+    # Predict urgency from message using ML model
+    message = data.get("message", "")
+    predicted_label, confidence = predict_label(message)
+    
+    # Add urgency to data
+    data["urgency"] = predicted_label if confidence >= 0.8 else "Low"
+    
+    # Optionally, add prediction details to meta
+    if "meta" not in data:
+        data["meta"] = {}
+    data["meta"]["urgency_confidence"] = float(confidence)
+    
     created = create_report(data)
     return jsonify({"ok": True, "report": created}), 201
 

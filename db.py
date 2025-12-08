@@ -31,6 +31,7 @@ def init_db():
                     ts VARCHAR(50),
                     meta JSONB DEFAULT '{}',
                     status VARCHAR(20) DEFAULT 'pending',
+                    urgency VARCHAR(20),
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP
                 )
@@ -53,6 +54,7 @@ def create_report(data):
         "ts": data.get("ts"),
         "meta": data.get("meta", {}),
         "status": "pending",
+        "urgency": data.get("urgency", "Low"),
         "created_at": datetime.utcnow().isoformat() + "Z"
     }
     
@@ -60,8 +62,8 @@ def create_report(data):
     try:
         with conn.cursor() as cur:
             cur.execute("""
-                INSERT INTO reports (id, phone, lat, lng, message, ts, meta, status, created_at)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO reports (id, phone, lat, lng, message, ts, meta, status, urgency, created_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (
                 new_report["id"],
                 new_report["phone"],
@@ -71,6 +73,7 @@ def create_report(data):
                 new_report["ts"],
                 json.dumps(new_report["meta"]),
                 new_report["status"],
+                new_report["urgency"],
                 datetime.utcnow()
             ))
             conn.commit()

@@ -6,3 +6,5 @@ flask
 flask-cors
 gunicorn
 psycopg2-binary
+transformers>=4.30.0
+torch>=2.0.0

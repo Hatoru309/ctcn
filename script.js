@@ -1,3 +1,97 @@
+// Custom Alert Function
+function showAlert(message, type = 'info') {
+    // Remove existing alert if any
+    const existingAlert = document.querySelector('.alert-overlay');
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+
+    // Determine alert type based on message content if not specified
+    if (type === 'info') {
+        if (message.includes('thành công') || message.includes('Cảm ơn')) {
+            type = 'success';
+        } else if (message.includes('lỗi') || message.includes('Lỗi') || message.includes('không thể')) {
+            type = 'error';
+        }
+    }
+
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'alert-overlay';
+    
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'alert-modal';
+    
+    // Create header with icon
+    const header = document.createElement('div');
+    header.className = 'alert-header';
+    
+    const icon = document.createElement('div');
+    icon.className = `alert-icon ${type}`;
+    if (type === 'success') {
+        icon.innerHTML = '✓';
+    } else if (type === 'error') {
+        icon.innerHTML = '✕';
+    } else {
+        icon.innerHTML = 'ℹ';
+    }
+    
+    const title = document.createElement('h3');
+    title.className = 'alert-title';
+    if (type === 'success') {
+        title.textContent = 'Thành công';
+    } else if (type === 'error') {
+        title.textContent = 'Lỗi';
+    } else {
+        title.textContent = 'Thông báo';
+    }
+    
+    header.appendChild(icon);
+    header.appendChild(title);
+    
+    // Create body
+    const body = document.createElement('div');
+    body.className = 'alert-body';
+    body.textContent = message;
+    
+    // Create footer with button
+    const footer = document.createElement('div');
+    footer.className = 'alert-footer';
+    
+    const btn = document.createElement('button');
+    btn.className = 'alert-btn alert-btn-primary';
+    btn.textContent = 'OK';
+    btn.onclick = () => {
+        overlay.style.animation = 'fadeOut 0.2s ease';
+        modal.style.animation = 'slideDown 0.2s ease';
+        setTimeout(() => overlay.remove(), 200);
+    };
+    
+    footer.appendChild(btn);
+    
+    // Assemble modal
+    modal.appendChild(header);
+    modal.appendChild(body);
+    modal.appendChild(footer);
+    
+    // Assemble overlay
+    overlay.appendChild(modal);
+    
+    // Close on overlay click
+    overlay.onclick = (e) => {
+        if (e.target === overlay) {
+            btn.click();
+        }
+    };
+    
+    // Add to body
+    document.body.appendChild(overlay);
+    
+    // Focus button for accessibility
+    setTimeout(() => btn.focus(), 100);
+}
+
 // Get current location using Geolocation API
 function getCurrentLocation() {
     return new Promise((resolve, reject) => {
@@ -169,7 +263,7 @@ async function submitForm(event) {
         }
         
         // Show success message with location info
-        alert(`Cảm ơn bạn! Yêu cầu của bạn đã được gửi thành công.\n\nVị trí: ${location.address}\nTọa độ: ${location.latitude}, ${location.longitude}\n\nChúng tôi sẽ liên hệ với bạn sớm nhất có thể.`);
+        showAlert(`Cảm ơn bạn! Yêu cầu của bạn đã được gửi thành công.\n\nVị trí: ${location.address}\nTọa độ: ${location.latitude}, ${location.longitude}\n\nChúng tôi sẽ liên hệ với bạn sớm nhất có thể.`, 'success');
         
         // Reset form
         event.target.reset();
@@ -190,7 +284,7 @@ async function submitForm(event) {
             errorMessage += 'Vui lòng thử lại sau.';
         }
         
-        alert(errorMessage);
+        showAlert(errorMessage, 'error');
         
         // Show error in location status if location failed
         if (error.message && error.message.includes('vị trí')) {

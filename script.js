@@ -216,7 +216,7 @@ async function reverseGeocode(lat, lng) {
 }
 
 // API Configuration
-const API_BASE_URL = 'https://huy3009-api-for-phobert-urgency-model.hf.space';
+const API_BASE_URL = 'https://huy3009-api.hf.space/';
 
 // Form Submission
 async function submitForm(event) {
@@ -298,5 +298,6 @@ async function submitForm(event) {
         submitBtn.textContent = originalBtnText;
     }
 }
+
 
 

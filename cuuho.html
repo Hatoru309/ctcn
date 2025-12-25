@@ -75,8 +75,8 @@
             border-radius: 16px;
             padding: 1.5rem;
             box-shadow: var(--shadow-lg);
-            animation: fadeInUp 0.4s ease;
-            transition: all 0.3s ease;
+            animation: fadeInUp 0.2s ease;
+            transition: all 0.15s ease;
             position: relative;
             overflow: hidden;
         }
@@ -629,6 +629,61 @@
 
         // Update request status
         async function updateStatus(reportId, newStatus) {
+            const cardElement = document.getElementById(`request-${reportId}`);
+            const scrollPosition = window.scrollY;
+            
+            // Optimistic update: Update UI immediately
+            if (cardElement) {
+                const statusBadge = cardElement.querySelector('.request-status');
+                const statusButtons = cardElement.querySelectorAll('.status-selector button');
+                
+                // Store old values for rollback
+                const oldStatus = cardElement.className;
+                const oldStatusBadgeClass = statusBadge ? statusBadge.className : '';
+                const oldStatusBadgeText = statusBadge ? statusBadge.textContent : '';
+                
+                // Update status badge
+                const statusText = {
+                    'pending': 'Chờ xử lý',
+                    'processing': 'Đang xử lý',
+                    'done': 'Hoàn thành',
+                    'holding': 'Tạm hoãn'
+                };
+                
+                if (statusBadge) {
+                    statusBadge.className = `request-status ${newStatus}`;
+                    statusBadge.textContent = statusText[newStatus] || newStatus;
+                }
+                
+                // Update card class
+                cardElement.className = `request-card status-${newStatus}`;
+                
+                // Update active button
+                statusButtons.forEach(btn => btn.classList.remove('active'));
+                const targetButton = Array.from(statusButtons).find(btn => {
+                    const btnText = btn.textContent.trim();
+                    return (newStatus === 'pending' && btnText === 'Chờ') ||
+                           (newStatus === 'processing' && btnText === 'Xử lý') ||
+                           (newStatus === 'done' && btnText === 'Xong') ||
+                           (newStatus === 'holding' && btnText === 'Hoãn');
+                });
+                if (targetButton) targetButton.classList.add('active');
+                
+                // If status is "done", move card to bottom immediately
+                if (newStatus === 'done') {
+                    const container = document.getElementById('requestsContainer');
+                    const requestsList = container.querySelector('.requests-list');
+                    if (requestsList) {
+                        requestsList.appendChild(cardElement);
+                        // Restore scroll position
+                        requestAnimationFrame(() => {
+                            window.scrollTo(0, scrollPosition);
+                        });
+                    }
+                }
+            }
+            
+            // Call API in background
             try {
                 const response = await fetch(`${API_BASE_URL}/rescue/update-status`, {
                     method: 'PUT',
@@ -643,39 +698,40 @@
 
                 const data = await response.json();
 
-                if (data.ok) {
-                    // If status is "done", move the card to bottom with smooth animation
-                    if (newStatus === 'done') {
-                        const cardElement = document.getElementById(`request-${reportId}`);
-                        const container = document.getElementById('requestsContainer');
-                        const requestsList = container.querySelector('.requests-list');
-                        
-                        if (cardElement && requestsList) {
-                            // Store current scroll position
-                            const scrollPosition = window.scrollY;
-                            
-                            // Add fade animation
-                            cardElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                            cardElement.style.opacity = '0.5';
-                            
-                            setTimeout(() => {
-                                // Reload requests to get proper sorting (done items at bottom)
-                                loadRequestsWithoutScroll();
-                            }, 300);
-                        } else {
-                            // Fallback: reload if element not found
-                            loadRequestsWithoutScroll();
+                if (!data.ok) {
+                    // Rollback on error
+                    if (cardElement) {
+                        const statusBadge = cardElement.querySelector('.request-status');
+                        if (statusBadge) {
+                            statusBadge.className = oldStatusBadgeClass;
+                            statusBadge.textContent = oldStatusBadgeText;
                         }
-                    } else {
-                        // For other status changes, just reload
+                        cardElement.className = oldStatus;
+                    }
+                    alert('Không thể cập nhật trạng thái: ' + (data.error || 'Lỗi không xác định'));
+                    // Reload to sync with server
+                    loadRequestsWithoutScroll();
+                } else {
+                    // Sync with server data (in case of any differences)
+                    if (newStatus === 'done') {
+                        // Reload to ensure proper sorting
                         loadRequestsWithoutScroll();
                     }
-                } else {
-                    alert('Không thể cập nhật trạng thái: ' + (data.error || 'Lỗi không xác định'));
                 }
             } catch (error) {
                 console.error('Error updating status:', error);
+                // Rollback on error
+                if (cardElement) {
+                    const statusBadge = cardElement.querySelector('.request-status');
+                    if (statusBadge) {
+                        statusBadge.className = oldStatusBadgeClass;
+                        statusBadge.textContent = oldStatusBadgeText;
+                    }
+                    cardElement.className = oldStatus;
+                }
                 alert('Lỗi kết nối khi cập nhật trạng thái');
+                // Reload to sync with server
+                loadRequestsWithoutScroll();
             }
         }
 
@@ -696,10 +752,10 @@
 
                 if (data.ok && data.reports) {
                     displayRequests(data.reports);
-                    // Restore scroll position after a short delay
-                    setTimeout(() => {
+                    // Restore scroll position immediately
+                    requestAnimationFrame(() => {
                         window.scrollTo(0, scrollPosition);
-                    }, 50);
+                    });
                 } else {
                     container.innerHTML = `
                         <div class="empty-state">

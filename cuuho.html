@@ -81,6 +81,36 @@
             overflow: hidden;
         }
 
+        .delete-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(220, 38, 38, 0.1);
+            border: 2px solid rgba(220, 38, 38, 0.3);
+            color: #dc2626;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .delete-btn:hover {
+            background: rgba(220, 38, 38, 0.2);
+            border-color: #dc2626;
+            transform: scale(1.1);
+        }
+
+        .delete-btn:active {
+            transform: scale(0.95);
+        }
+
         .request-card:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-xl);
@@ -477,10 +507,38 @@
                 return;
             }
 
-            // Display reports in the order received from the backend
+            // Sort reports: priority first (critical > high > medium > low), then status "done" goes to bottom
+            const priorityOrder = {
+                'Critical': 1,
+                'High': 2,
+                'Medium': 3,
+                'Low': 4
+            };
+
+            const sortedReports = [...reports].sort((a, b) => {
+                const statusA = a.status || 'pending';
+                const statusB = b.status || 'pending';
+                
+                // If one is "done" and the other is not, "done" goes to bottom
+                if (statusA === 'done' && statusB !== 'done') {
+                    return 1; // a goes after b
+                }
+                if (statusA !== 'done' && statusB === 'done') {
+                    return -1; // a goes before b
+                }
+                
+                // If both are "done" or both are not "done", sort by priority
+                const urgencyA = a.urgency || 'Medium';
+                const urgencyB = b.urgency || 'Medium';
+                const priorityA = priorityOrder[urgencyA] || 3;
+                const priorityB = priorityOrder[urgencyB] || 3;
+                return priorityA - priorityB;
+            });
+
+            // Display reports sorted by priority (done at bottom)
             container.innerHTML = `
                 <div class="requests-list">
-                    ${reports.map(report => createRequestCard(report)).join('')}
+                    ${sortedReports.map(report => createRequestCard(report)).join('')}
                 </div>
             `;
         }
@@ -507,7 +565,8 @@
             };
 
             return `
-                <div class="request-card status-${status}">
+                <div class="request-card status-${status}" id="request-${report.id}">
+                    <button class="delete-btn" onclick="deleteRequest('${report.id}')" title="Xóa yêu cầu">×</button>
                     <div class="request-header">
                         <div class="request-info">
                             <div class="request-phone">
@@ -585,14 +644,136 @@
                 const data = await response.json();
 
                 if (data.ok) {
-                    // Reload requests to show updated status
-                    loadRequests();
+                    // If status is "done", move the card to bottom with smooth animation
+                    if (newStatus === 'done') {
+                        const cardElement = document.getElementById(`request-${reportId}`);
+                        const container = document.getElementById('requestsContainer');
+                        const requestsList = container.querySelector('.requests-list');
+                        
+                        if (cardElement && requestsList) {
+                            // Store current scroll position
+                            const scrollPosition = window.scrollY;
+                            
+                            // Add fade animation
+                            cardElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                            cardElement.style.opacity = '0.5';
+                            
+                            setTimeout(() => {
+                                // Reload requests to get proper sorting (done items at bottom)
+                                loadRequestsWithoutScroll();
+                            }, 300);
+                        } else {
+                            // Fallback: reload if element not found
+                            loadRequestsWithoutScroll();
+                        }
+                    } else {
+                        // For other status changes, just reload
+                        loadRequestsWithoutScroll();
+                    }
                 } else {
                     alert('Không thể cập nhật trạng thái: ' + (data.error || 'Lỗi không xác định'));
                 }
             } catch (error) {
                 console.error('Error updating status:', error);
                 alert('Lỗi kết nối khi cập nhật trạng thái');
+            }
+        }
+
+        // Load requests without scrolling
+        async function loadRequestsWithoutScroll() {
+            const container = document.getElementById('requestsContainer');
+            const refreshBtn = document.getElementById('refreshBtn');
+            
+            refreshBtn.classList.add('loading');
+            refreshBtn.disabled = true;
+
+            // Store current scroll position
+            const scrollPosition = window.scrollY;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/rescue/list`);
+                const data = await response.json();
+
+                if (data.ok && data.reports) {
+                    displayRequests(data.reports);
+                    // Restore scroll position after a short delay
+                    setTimeout(() => {
+                        window.scrollTo(0, scrollPosition);
+                    }, 50);
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">⚠️</div>
+                            <div class="empty-state-text">Không thể tải danh sách</div>
+                            <div class="empty-state-subtext">Vui lòng thử lại sau</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading requests:', error);
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <div class="empty-state-text">Lỗi kết nối</div>
+                        <div class="empty-state-subtext">Không thể kết nối đến server</div>
+                    </div>
+                `;
+            } finally {
+                refreshBtn.classList.remove('loading');
+                refreshBtn.disabled = false;
+            }
+        }
+
+        // Delete request
+        async function deleteRequest(reportId) {
+            if (!confirm('Bạn có chắc chắn muốn xóa yêu cầu này?')) {
+                return;
+            }
+
+            const cardElement = document.getElementById(`request-${reportId}`);
+            if (cardElement) {
+                // Add fade out animation
+                cardElement.style.opacity = '0';
+                cardElement.style.transform = 'translateY(-20px)';
+                cardElement.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    cardElement.remove();
+                    
+                    // Check if list is empty after deletion
+                    const container = document.getElementById('requestsContainer');
+                    const requestsList = container.querySelector('.requests-list');
+                    if (requestsList && requestsList.children.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📋</div>
+                                <div class="empty-state-text">Chưa có yêu cầu nào</div>
+                                <div class="empty-state-subtext">Danh sách sẽ được cập nhật khi có yêu cầu mới</div>
+                            </div>
+                        `;
+                    }
+                }, 300);
+            }
+
+            // Try to delete from API if endpoint exists
+            try {
+                const response = await fetch(`${API_BASE_URL}/rescue/delete`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: reportId
+                    })
+                });
+
+                const data = await response.json();
+                if (!data.ok) {
+                    console.warn('Delete API call failed, but card removed from UI:', data.error);
+                }
+            } catch (error) {
+                // If delete endpoint doesn't exist, just remove from UI
+                console.log('Delete endpoint not available, card removed from UI only');
             }
         }
 

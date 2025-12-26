@@ -634,9 +634,12 @@
             
             // Track processing time
             let processingTime = null;
+            let processingStartTime = null;
+            
             if (newStatus === 'processing') {
                 // Lưu thời gian bắt đầu xử lý vào localStorage (cho thiết bị hiện tại)
-                localStorage.setItem(`processing_start_${reportId}`, Date.now().toString());
+                processingStartTime = Date.now();
+                localStorage.setItem(`processing_start_${reportId}`, processingStartTime.toString());
             } else if (newStatus === 'done') {
                 // Tính thời gian xử lý
                 const startTime = localStorage.getItem(`processing_start_${reportId}`);
@@ -646,6 +649,10 @@
                     localStorage.setItem(`processing_time_${reportId}`, processingTime.toString());
                     // Xóa thời gian bắt đầu sau khi đã lưu
                     localStorage.removeItem(`processing_start_${reportId}`);
+                } else {
+                    // Nếu không có start time trong localStorage, có thể đã bị xóa hoặc từ máy khác
+                    // Thử lấy từ server nếu có
+                    console.log('Không tìm thấy thời gian bắt đầu xử lý trong localStorage');
                 }
             }
             
@@ -710,6 +717,19 @@
                 // Gửi thời gian xử lý lên server nếu có
                 if (processingTime !== null) {
                     requestBody.processing_time = processingTime;
+                    // Cũng thử gửi trong meta field
+                    requestBody.meta = {
+                        processing_time: processingTime
+                    };
+                }
+                
+                // Gửi thời gian bắt đầu xử lý nếu đang chuyển sang processing
+                if (processingStartTime !== null) {
+                    requestBody.processing_start_time = processingStartTime;
+                    if (!requestBody.meta) {
+                        requestBody.meta = {};
+                    }
+                    requestBody.meta.processing_start_time = processingStartTime;
                 }
                 
                 const response = await fetch(`${API_BASE_URL}/rescue/update-status`, {

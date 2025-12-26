@@ -328,6 +328,18 @@
                 }
 
                 cachedMissions = data.reports.filter(report => report.status === 'done');
+                
+                // Đồng bộ thời gian xử lý từ server vào localStorage
+                cachedMissions.forEach(mission => {
+                    const serverTime = mission.processing_time || mission.meta?.processing_time;
+                    if (serverTime && serverTime > 0) {
+                        const timeValue = typeof serverTime === 'number' ? serverTime : parseInt(serverTime);
+                        if (!isNaN(timeValue) && timeValue > 0) {
+                            localStorage.setItem(`processing_time_${mission.id}`, timeValue.toString());
+                        }
+                    }
+                });
+                
                 renderStats(cachedMissions);
                 renderMissionList(cachedMissions);
             } catch (error) {
@@ -382,21 +394,37 @@
             const duration = getMissionDuration(mission);
             const updatedText = formatTimeAgo(mission.updated_at || mission.created_at);
             
-            // Lấy thời gian xử lý từ server hoặc localStorage
-            let processingTime = mission.processing_time || mission.meta?.processing_time;
+            // Lấy thời gian xử lý từ nhiều nguồn (ưu tiên server)
+            let processingTime = null;
             
-            // Nếu không có trên server, fallback về localStorage
-            if (!processingTime) {
+            // 1. Ưu tiên đọc từ server: processing_time hoặc meta.processing_time
+            if (mission.processing_time) {
+                processingTime = typeof mission.processing_time === 'number' 
+                    ? mission.processing_time 
+                    : parseInt(mission.processing_time);
+            } else if (mission.meta?.processing_time) {
+                processingTime = typeof mission.meta.processing_time === 'number'
+                    ? mission.meta.processing_time
+                    : parseInt(mission.meta.processing_time);
+            }
+            
+            // 2. Nếu không có trên server, thử đọc từ localStorage (fallback)
+            if (!processingTime || processingTime <= 0) {
                 const timeStr = localStorage.getItem(`processing_time_${mission.id}`);
-                processingTime = timeStr ? parseInt(timeStr) : null;
-            } else {
-                // Nếu có trên server, cũng lưu vào localStorage để đồng bộ
-                if (typeof processingTime === 'number') {
+                if (timeStr) {
+                    processingTime = parseInt(timeStr);
+                }
+            }
+            
+            // 3. Nếu có trên server, lưu vào localStorage để cache và đồng bộ
+            if (processingTime && processingTime > 0) {
+                if (mission.processing_time || mission.meta?.processing_time) {
+                    // Chỉ lưu vào localStorage nếu dữ liệu đến từ server
                     localStorage.setItem(`processing_time_${mission.id}`, processingTime.toString());
                 }
             }
             
-            const processingTimeDisplay = processingTime ? formatDuration(processingTime) : null;
+            const processingTimeDisplay = (processingTime && processingTime > 0) ? formatDuration(processingTime) : null;
 
             return `
                 <article class="mission-card">

@@ -227,9 +227,167 @@
             gap: 0.35rem;
         }
 
+        .timer-section {
+            margin: 2rem 0;
+        }
+
+        .timer-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg, 0 12px 30px rgba(0,0,0,0.15));
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .timer-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .timer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .timer-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .timer-display {
+            text-align: center;
+            width: 100%;
+        }
+
+        .timer-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timer-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0f172a;
+            font-family: 'Courier New', monospace;
+            padding: 1rem;
+            background: #f1f5f9;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .timer-status {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .timer-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .timer-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 2px solid;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .timer-btn-start {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .timer-btn-start:hover:not(:disabled) {
+            background: #059669;
+            border-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .timer-btn-stop {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .timer-btn-stop:hover:not(:disabled) {
+            background: #dc2626;
+            border-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .timer-btn-reset {
+            background: #f59e0b;
+            color: white;
+            border-color: #f59e0b;
+        }
+
+        .timer-btn-reset:hover:not(:disabled) {
+            background: #d97706;
+            border-color: #d97706;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .timer-btn-clear {
+            background: #6b7280;
+            color: white;
+            border-color: #6b7280;
+        }
+
+        .timer-btn-clear:hover:not(:disabled) {
+            background: #4b5563;
+            border-color: #4b5563;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+
+        .timer-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         @media (max-width: 640px) {
             .mission-body {
                 grid-template-columns: 1fr;
+            }
+
+            .timer-card {
+                padding: 1.5rem;
+            }
+
+            .timer-value {
+                font-size: 2rem;
+            }
+
+            .timer-actions {
+                flex-direction: column;
+            }
+
+            .timer-btn {
+                width: 100%;
             }
         }
     </style>
@@ -265,6 +423,36 @@
                 </div>
             </div>
 
+            <!-- Timer Section -->
+            <div class="timer-section">
+                <div class="timer-card">
+                    <div class="timer-header">
+                        <h3 class="timer-title">⏱️ Đo thời gian xử lý</h3>
+                    </div>
+                    <div class="timer-body">
+                        <div class="timer-display">
+                            <div class="timer-label">Thời gian đã trôi qua:</div>
+                            <div class="timer-value" id="timerDisplay">00:00:00</div>
+                        </div>
+                        <div class="timer-status" id="timerStatus">Chưa bắt đầu</div>
+                        <div class="timer-actions">
+                            <button id="startTimerBtn" class="timer-btn timer-btn-start" onclick="startTimer()">
+                                ▶️ Xử lý
+                            </button>
+                            <button id="stopTimerBtn" class="timer-btn timer-btn-stop" onclick="stopTimer()" disabled>
+                                ⏹️ Xong
+                            </button>
+                            <button id="resetTimerBtn" class="timer-btn timer-btn-reset" onclick="resetTimer()">
+                                🔄 Đặt lại
+                            </button>
+                            <button id="clearDataBtn" class="timer-btn timer-btn-clear" onclick="clearProcessingTimes()" title="Xóa tất cả dữ liệu thời gian đã lưu">
+                                🗑️ Xóa dữ liệu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <section id="missionsContainer">
                 <div class="empty-state">
                     <div class="empty-state-icon">⏳</div>
@@ -277,6 +465,39 @@
     <script>
         const API_BASE_URL = 'https://huy3009-api-for-phobert-urgency-model.hf.space/api';
         let cachedMissions = [];
+        
+        // Timer variables
+        let timerStartTime = null;
+        let timerInterval = null;
+        let elapsedTime = 0;
+        
+        // Storage key for processing times
+        const PROCESSING_TIMES_KEY = 'processingTimes';
+        
+        // Get processing times from localStorage
+        function getProcessingTimes() {
+            try {
+                const stored = localStorage.getItem(PROCESSING_TIMES_KEY);
+                return stored ? JSON.parse(stored) : [];
+            } catch (e) {
+                console.error('Error reading processing times:', e);
+                return [];
+            }
+        }
+        
+        // Save processing time to localStorage
+        function saveProcessingTime(timeMs) {
+            try {
+                const times = getProcessingTimes();
+                times.push({
+                    time: timeMs,
+                    timestamp: Date.now()
+                });
+                localStorage.setItem(PROCESSING_TIMES_KEY, JSON.stringify(times));
+            } catch (e) {
+                console.error('Error saving processing time:', e);
+            }
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             loadCompletedMissions();
@@ -339,16 +560,10 @@
             const dayAgo = Date.now() - (24 * 60 * 60 * 1000);
             const lastDay = missions.filter(m => new Date(m.updated_at || m.created_at).getTime() >= dayAgo).length;
 
-            const durations = missions
-                .map(m => {
-                    const start = new Date(m.created_at).getTime();
-                    const end = new Date(m.updated_at || m.created_at).getTime();
-                    return end - start;
-                })
-                .filter(diff => !Number.isNaN(diff) && diff > 0);
-
-            const avgDurationMs = durations.length
-                ? Math.round(durations.reduce((sum, cur) => sum + cur, 0) / durations.length)
+            // Tính thời gian xử lý trung bình từ các lần đo đã lưu trong localStorage
+            const processingTimes = getProcessingTimes();
+            const avgDurationMs = processingTimes.length > 0
+                ? Math.round(processingTimes.reduce((sum, item) => sum + item.time, 0) / processingTimes.length)
                 : null;
 
             document.getElementById('totalMissions').textContent = total;
@@ -510,6 +725,109 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        // Timer functions
+        function startTimer() {
+            if (timerInterval) return; // Already running
+            
+            timerStartTime = Date.now() - elapsedTime;
+            const startBtn = document.getElementById('startTimerBtn');
+            const stopBtn = document.getElementById('stopTimerBtn');
+            const statusEl = document.getElementById('timerStatus');
+            
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            statusEl.textContent = 'Đang xử lý...';
+            statusEl.style.color = '#10b981';
+            
+            timerInterval = setInterval(updateTimerDisplay, 100);
+            updateTimerDisplay();
+        }
+
+        function stopTimer() {
+            if (!timerInterval) return; // Not running
+            
+            clearInterval(timerInterval);
+            timerInterval = null;
+            
+            const startBtn = document.getElementById('startTimerBtn');
+            const stopBtn = document.getElementById('stopTimerBtn');
+            const statusEl = document.getElementById('timerStatus');
+            
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            
+            const totalTime = elapsedTime;
+            const formattedTime = formatTimerTime(totalTime);
+            
+            // Lưu thời gian xử lý vào localStorage
+            if (totalTime > 0) {
+                saveProcessingTime(totalTime);
+                // Cập nhật lại thống kê
+                if (cachedMissions.length > 0) {
+                    renderStats(cachedMissions);
+                }
+            }
+            
+            statusEl.textContent = `Đã hoàn thành - Tổng thời gian: ${formattedTime}`;
+            statusEl.style.color = '#ef4444';
+        }
+
+        function resetTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
+            timerStartTime = null;
+            elapsedTime = 0;
+            
+            const startBtn = document.getElementById('startTimerBtn');
+            const stopBtn = document.getElementById('stopTimerBtn');
+            const statusEl = document.getElementById('timerStatus');
+            const displayEl = document.getElementById('timerDisplay');
+            
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            statusEl.textContent = 'Chưa bắt đầu';
+            statusEl.style.color = '#64748b';
+            displayEl.textContent = '00:00:00';
+        }
+
+        function updateTimerDisplay() {
+            if (!timerStartTime) return;
+            
+            elapsedTime = Date.now() - timerStartTime;
+            const displayEl = document.getElementById('timerDisplay');
+            displayEl.textContent = formatTimerTime(elapsedTime);
+        }
+
+        function formatTimerTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function clearProcessingTimes() {
+            if (confirm('Bạn có chắc chắn muốn xóa tất cả dữ liệu thời gian xử lý đã lưu? Hành động này không thể hoàn tác.')) {
+                try {
+                    localStorage.removeItem(PROCESSING_TIMES_KEY);
+                    // Cập nhật lại thống kê
+                    if (cachedMissions.length > 0) {
+                        renderStats(cachedMissions);
+                    } else {
+                        document.getElementById('avgDuration').textContent = '--';
+                    }
+                    alert('Đã xóa tất cả dữ liệu thời gian xử lý.');
+                } catch (e) {
+                    console.error('Error clearing processing times:', e);
+                    alert('Có lỗi xảy ra khi xóa dữ liệu.');
+                }
+            }
         }
     </script>
 </body>

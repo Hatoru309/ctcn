@@ -632,6 +632,21 @@
             const cardElement = document.getElementById(`request-${reportId}`);
             const scrollPosition = window.scrollY;
             
+            // Track processing time
+            if (newStatus === 'processing') {
+                // Lưu thời gian bắt đầu xử lý
+                localStorage.setItem(`processing_start_${reportId}`, Date.now().toString());
+            } else if (newStatus === 'done') {
+                // Tính thời gian xử lý và lưu
+                const startTime = localStorage.getItem(`processing_start_${reportId}`);
+                if (startTime) {
+                    const processingTime = Date.now() - parseInt(startTime);
+                    localStorage.setItem(`processing_time_${reportId}`, processingTime.toString());
+                    // Xóa thời gian bắt đầu sau khi đã lưu
+                    localStorage.removeItem(`processing_start_${reportId}`);
+                }
+            }
+            
             // Optimistic update: Update UI immediately
             if (cardElement) {
                 const statusBadge = cardElement.querySelector('.request-status');

@@ -142,6 +142,21 @@
             border-radius: 18px;
             padding: 1.5rem;
             box-shadow: var(--shadow-lg, 0 12px 30px rgba(0,0,0,0.12));
+            position: relative;
+        }
+
+        .processing-time-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            z-index: 1;
         }
 
         .mission-header {
@@ -339,16 +354,16 @@
             const dayAgo = Date.now() - (24 * 60 * 60 * 1000);
             const lastDay = missions.filter(m => new Date(m.updated_at || m.created_at).getTime() >= dayAgo).length;
 
-            const durations = missions
+            // Tính thời gian xử lý trung bình từ localStorage
+            const processingTimes = missions
                 .map(m => {
-                    const start = new Date(m.created_at).getTime();
-                    const end = new Date(m.updated_at || m.created_at).getTime();
-                    return end - start;
+                    const timeStr = localStorage.getItem(`processing_time_${m.id}`);
+                    return timeStr ? parseInt(timeStr) : null;
                 })
-                .filter(diff => !Number.isNaN(diff) && diff > 0);
+                .filter(time => time !== null && time > 0);
 
-            const avgDurationMs = durations.length
-                ? Math.round(durations.reduce((sum, cur) => sum + cur, 0) / durations.length)
+            const avgDurationMs = processingTimes.length > 0
+                ? Math.round(processingTimes.reduce((sum, cur) => sum + cur, 0) / processingTimes.length)
                 : null;
 
             document.getElementById('totalMissions').textContent = total;
@@ -383,9 +398,15 @@
             const address = mission.meta?.address || `${mission.lat}, ${mission.lng}`;
             const duration = getMissionDuration(mission);
             const updatedText = formatTimeAgo(mission.updated_at || mission.created_at);
+            
+            // Lấy thời gian xử lý từ localStorage
+            const processingTimeStr = localStorage.getItem(`processing_time_${mission.id}`);
+            const processingTime = processingTimeStr ? parseInt(processingTimeStr) : null;
+            const processingTimeDisplay = processingTime ? formatDuration(processingTime) : null;
 
             return `
                 <article class="mission-card">
+                    ${processingTimeDisplay ? `<div class="processing-time-badge">⏱️ ${processingTimeDisplay}</div>` : ''}
                     <div class="mission-header">
                         <div>
                             <p class="mission-title">📞 ${mission.phone || 'Không rõ liên hệ'}</p>

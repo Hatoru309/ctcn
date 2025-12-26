@@ -274,10 +274,6 @@
                     <div class="stat-label">Trong 24 giờ</div>
                     <div class="stat-value" id="lastDayMissions">0</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Thời gian xử lý TB</div>
-                    <div class="stat-value" id="avgDuration">--</div>
-                </div>
             </div>
 
             <section id="missionsContainer">
@@ -354,21 +350,8 @@
             const dayAgo = Date.now() - (24 * 60 * 60 * 1000);
             const lastDay = missions.filter(m => new Date(m.updated_at || m.created_at).getTime() >= dayAgo).length;
 
-            // Tính thời gian xử lý trung bình từ localStorage
-            const processingTimes = missions
-                .map(m => {
-                    const timeStr = localStorage.getItem(`processing_time_${m.id}`);
-                    return timeStr ? parseInt(timeStr) : null;
-                })
-                .filter(time => time !== null && time > 0);
-
-            const avgDurationMs = processingTimes.length > 0
-                ? Math.round(processingTimes.reduce((sum, cur) => sum + cur, 0) / processingTimes.length)
-                : null;
-
             document.getElementById('totalMissions').textContent = total;
             document.getElementById('lastDayMissions').textContent = lastDay;
-            document.getElementById('avgDuration').textContent = avgDurationMs ? formatDuration(avgDurationMs) : '--';
         }
 
         function renderMissionList(missions) {
@@ -399,9 +382,20 @@
             const duration = getMissionDuration(mission);
             const updatedText = formatTimeAgo(mission.updated_at || mission.created_at);
             
-            // Lấy thời gian xử lý từ localStorage
-            const processingTimeStr = localStorage.getItem(`processing_time_${mission.id}`);
-            const processingTime = processingTimeStr ? parseInt(processingTimeStr) : null;
+            // Lấy thời gian xử lý từ server hoặc localStorage
+            let processingTime = mission.processing_time || mission.meta?.processing_time;
+            
+            // Nếu không có trên server, fallback về localStorage
+            if (!processingTime) {
+                const timeStr = localStorage.getItem(`processing_time_${mission.id}`);
+                processingTime = timeStr ? parseInt(timeStr) : null;
+            } else {
+                // Nếu có trên server, cũng lưu vào localStorage để đồng bộ
+                if (typeof processingTime === 'number') {
+                    localStorage.setItem(`processing_time_${mission.id}`, processingTime.toString());
+                }
+            }
+            
             const processingTimeDisplay = processingTime ? formatDuration(processingTime) : null;
 
             return `

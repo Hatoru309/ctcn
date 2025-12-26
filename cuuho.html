@@ -633,14 +633,16 @@
             const scrollPosition = window.scrollY;
             
             // Track processing time
+            let processingTime = null;
             if (newStatus === 'processing') {
-                // Lưu thời gian bắt đầu xử lý
+                // Lưu thời gian bắt đầu xử lý vào localStorage (cho thiết bị hiện tại)
                 localStorage.setItem(`processing_start_${reportId}`, Date.now().toString());
             } else if (newStatus === 'done') {
-                // Tính thời gian xử lý và lưu
+                // Tính thời gian xử lý
                 const startTime = localStorage.getItem(`processing_start_${reportId}`);
                 if (startTime) {
-                    const processingTime = Date.now() - parseInt(startTime);
+                    processingTime = Date.now() - parseInt(startTime);
+                    // Lưu vào localStorage như backup
                     localStorage.setItem(`processing_time_${reportId}`, processingTime.toString());
                     // Xóa thời gian bắt đầu sau khi đã lưu
                     localStorage.removeItem(`processing_start_${reportId}`);
@@ -700,15 +702,22 @@
             
             // Call API in background
             try {
+                const requestBody = {
+                    id: reportId,
+                    status: newStatus
+                };
+                
+                // Gửi thời gian xử lý lên server nếu có
+                if (processingTime !== null) {
+                    requestBody.processing_time = processingTime;
+                }
+                
                 const response = await fetch(`${API_BASE_URL}/rescue/update-status`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        id: reportId,
-                        status: newStatus
-                    })
+                    body: JSON.stringify(requestBody)
                 });
 
                 const data = await response.json();

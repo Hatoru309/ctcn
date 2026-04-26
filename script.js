@@ -1,4 +1,4 @@
-// Custom Alert Function
+// Custom Alert Function 
 function showAlert(message, type = 'info') {
     // Remove existing alert if any
     const existingAlert = document.querySelector('.alert-overlay');

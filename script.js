@@ -1,5 +1,5 @@
 // Custom Alert Function
-function showAlert(message, type = 'info') {
+function showAlert(message, type = 'info', onOk = null) {
     // Remove existing alert if any
     const existingAlert = document.querySelector('.alert-overlay');
     if (existingAlert) {
@@ -65,7 +65,10 @@ function showAlert(message, type = 'info') {
     btn.onclick = () => {
         overlay.style.animation = 'fadeOut 0.2s ease';
         modal.style.animation = 'slideDown 0.2s ease';
-        setTimeout(() => overlay.remove(), 200);
+        setTimeout(() => {
+            overlay.remove();
+            if (typeof onOk === 'function') onOk();
+        }, 200);
     };
     
     footer.appendChild(btn);
@@ -238,9 +241,12 @@ async function submitForm(event) {
         submitBtn.textContent = 'Đang gửi...';
         
         // Prepare form data according to API requirements
+        const contactName = document.getElementById('contactName').value.trim();
+        const situationDesc = document.getElementById('message').value.trim();
+        
         const formData = {
             phone: document.getElementById('phone').value.trim(),
-            message: document.getElementById('message').value.trim(),
+            message: `Họ tên: ${contactName}\n\nTình trạng: ${situationDesc}`,
             lat: location.latitude,
             lng: location.longitude
         };

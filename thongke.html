@@ -7,15 +7,6 @@
     <title>Danh Sách Nhiệm Vụ Hoàn Thành</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        }
-
-        body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
-        }
-
         .page {
             padding: 2rem 0 4rem;
         }
@@ -35,34 +26,6 @@
             transition: padding 0.2s ease;
         }
 
-        .requests-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.85rem;
-            text-align: center;
-        }
-
-        .requests-title {
-            margin: 0;
-            font-size: clamp(1.35rem, 2.4vw, 1.7rem);
-            font-weight: 800;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #0f172a;
-            text-shadow: 0 2px 6px rgba(148, 163, 184, 0.45);
-        }
-
-        .header--compact .container {
-            padding: 0.5rem 0 0.7rem;
-        }
-
-        .header--compact .requests-title {
-            font-size: clamp(1.1rem, 2vw, 1.3rem);
-            letter-spacing: 0.22em;
-            opacity: 0.9;
-        }
 
         .header-actions {
             display: flex;
@@ -251,14 +214,14 @@
 </head>
 <body>
     <header class="header">
-        <div class="container">
-            <div class="requests-header">
-                <h1 class="requests-title">Nhiệm Vụ Đã Hoàn Thành</h1>
-                <div class="header-actions">
-                    <a class="back-link" href="cuuho.html">⬅️ Quay lại danh sách yêu cầu</a>
-                    <button id="refreshBtn" class="refresh-btn" onclick="loadCompletedMissions()">🔄 Tải lại</button>
-                    <button class="export-btn" onclick="exportCsv()">📄 Xuất CSV</button>
-                </div>
+        <div class="container" style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+            <div class="logo">
+                <h1>📊 Nhiệm Vụ Hoàn Thành</h1>
+            </div>
+            <div class="header-actions">
+                <a class="back-link" href="cuuho.html">⬅️ Quay lại danh sách</a>
+                <button id="refreshBtn" class="refresh-btn" onclick="loadCompletedMissions()">🔄 Tải lại</button>
+                <button class="export-btn" onclick="exportCsv()">📄 Xuất CSV</button>
             </div>
         </div>
     </header>
@@ -292,24 +255,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadCompletedMissions();
             setInterval(loadCompletedMissions, 60000);
-
-            // Thu gọn/giãn header khi cuộn trang
-            const headerEl = document.querySelector('.header');
-            let lastScrollY = window.scrollY;
-
-            window.addEventListener('scroll', () => {
-                const currentY = window.scrollY;
-
-                if (currentY > 40 && currentY > lastScrollY) {
-                    // Khi cuộn xuống và đã rời khỏi đỉnh trang
-                    headerEl.classList.add('header--compact');
-                } else if (currentY < 20) {
-                    // Khi quay lại gần đỉnh trang
-                    headerEl.classList.remove('header--compact');
-                }
-
-                lastScrollY = currentY;
-            });
         });
 
         async function loadCompletedMissions() {

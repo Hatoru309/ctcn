@@ -507,7 +507,10 @@
                 return;
             }
 
-            // Sort reports: priority first (critical > high > medium > low), then status "done" goes to bottom
+            // Filter out "done" status as they are moved to thongke.html
+            const filteredReports = reports.filter(r => r.status !== 'done');
+            
+            // Sort reports: priority first (critical > high > medium > low)
             const priorityOrder = {
                 'Critical': 1,
                 'High': 2,
@@ -515,19 +518,7 @@
                 'Low': 4
             };
 
-            const sortedReports = [...reports].sort((a, b) => {
-                const statusA = a.status || 'pending';
-                const statusB = b.status || 'pending';
-                
-                // If one is "done" and the other is not, "done" goes to bottom
-                if (statusA === 'done' && statusB !== 'done') {
-                    return 1; // a goes after b
-                }
-                if (statusA !== 'done' && statusB === 'done') {
-                    return -1; // a goes before b
-                }
-                
-                // If both are "done" or both are not "done", sort by priority
+            const sortedReports = filteredReports.sort((a, b) => {
                 const urgencyA = a.urgency || 'Medium';
                 const urgencyB = b.urgency || 'Medium';
                 const priorityA = priorityOrder[urgencyA] || 3;
@@ -693,17 +684,12 @@
                 });
                 if (targetButton) targetButton.classList.add('active');
                 
-                // If status is "done", move card to bottom immediately
+                // If status is "done", remove the card from the UI
                 if (newStatus === 'done') {
-                    const container = document.getElementById('requestsContainer');
-                    const requestsList = container.querySelector('.requests-list');
-                    if (requestsList) {
-                        requestsList.appendChild(cardElement);
-                        // Restore scroll position
-                        requestAnimationFrame(() => {
-                            window.scrollTo(0, scrollPosition);
-                        });
-                    }
+                    cardElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                    cardElement.style.opacity = '0';
+                    cardElement.style.transform = 'scale(0.95)';
+                    setTimeout(() => cardElement.remove(), 300);
                 }
             }
             

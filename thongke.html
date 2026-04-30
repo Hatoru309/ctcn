@@ -213,11 +213,14 @@
     </style>
     <script>
         // Check authentication before rendering the page
-        if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
+        const role = sessionStorage.getItem('userRole') || (sessionStorage.getItem('isAdminLoggedIn') === 'true' ? 'admin' : null);
+        
+        if (role !== 'admin' && role !== 'manager') {
             window.location.replace('login.html');
         }
         
         function handleLogout() {
+            sessionStorage.removeItem('userRole');
             sessionStorage.removeItem('isAdminLoggedIn');
             window.location.replace('login.html');
         }
@@ -265,6 +268,12 @@
         let cachedMissions = [];
 
         document.addEventListener('DOMContentLoaded', () => {
+            const role = sessionStorage.getItem('userRole') || (sessionStorage.getItem('isAdminLoggedIn') === 'true' ? 'admin' : null);
+            if (role === 'manager') {
+                const backLink = document.querySelector('.back-link');
+                if (backLink) backLink.style.display = 'none';
+            }
+            
             loadCompletedMissions();
             setInterval(loadCompletedMissions, 60000);
         });

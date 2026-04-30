@@ -415,11 +415,18 @@
     </style>
     <script>
         // Check authentication before rendering the page
-        if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
-            window.location.replace('login.html');
+        const role = sessionStorage.getItem('userRole') || (sessionStorage.getItem('isAdminLoggedIn') === 'true' ? 'admin' : null);
+        
+        if (role !== 'admin') {
+            if (role === 'manager') {
+                window.location.replace('thongke.html');
+            } else {
+                window.location.replace('login.html');
+            }
         }
         
         function handleLogout() {
+            sessionStorage.removeItem('userRole');
             sessionStorage.removeItem('isAdminLoggedIn');
             window.location.replace('login.html');
         }

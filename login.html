@@ -55,21 +55,30 @@
 
     <script>
         // Check if already logged in
-        if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+        const role = sessionStorage.getItem('userRole');
+        if (role === 'admin' || sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+            // Convert old session key if needed
+            sessionStorage.setItem('userRole', 'admin');
             window.location.href = 'cuuho.html';
+        } else if (role === 'manager') {
+            window.location.href = 'thongke.html';
         }
 
         function handleLogin(event) {
             event.preventDefault();
-            const user = document.getElementById('username').value.trim();
+            const user = document.getElementById('username').value.trim().toLowerCase();
             const pass = document.getElementById('password').value;
             const errorEl = document.getElementById('errorMessage');
 
             // Check hardcoded credentials
-            if ((user === 'admin' || user === 'Admin') && pass === 'Tumottoi9@') {
+            if (user === 'admin' && pass === 'Tumottoi9@') {
                 errorEl.style.display = 'none';
-                sessionStorage.setItem('isAdminLoggedIn', 'true');
+                sessionStorage.setItem('userRole', 'admin');
                 window.location.href = 'cuuho.html';
+            } else if (user === 'manager' && pass === 'Nhaquanlytaigioi') {
+                errorEl.style.display = 'none';
+                sessionStorage.setItem('userRole', 'manager');
+                window.location.href = 'thongke.html';
             } else {
                 errorEl.style.display = 'block';
             }

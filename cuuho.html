@@ -413,14 +413,28 @@
             }
         }
     </style>
+    <script>
+        // Check authentication before rendering the page
+        if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
+            window.location.replace('login.html');
+        }
+        
+        function handleLogout() {
+            sessionStorage.removeItem('isAdminLoggedIn');
+            window.location.replace('login.html');
+        }
+    </script>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="container">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <div class="logo">
                 <h1>🚑 Danh Sách Yêu Cầu Cứu Hộ</h1>
             </div>
+            <button onclick="handleLogout()" class="refresh-btn" style="background: rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.3); color: #ef4444; padding: 0.5rem 1rem; border-radius: 8px;">
+                🚪 Đăng Xuất
+            </button>
         </div>
     </header>
 

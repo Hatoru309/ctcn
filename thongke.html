@@ -211,6 +211,17 @@
             }
         }
     </style>
+    <script>
+        // Check authentication before rendering the page
+        if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
+            window.location.replace('login.html');
+        }
+        
+        function handleLogout() {
+            sessionStorage.removeItem('isAdminLoggedIn');
+            window.location.replace('login.html');
+        }
+    </script>
 </head>
 <body>
     <header class="header">
@@ -222,6 +233,7 @@
                 <a class="back-link" href="cuuho.html">⬅️ Quay lại danh sách</a>
                 <button id="refreshBtn" class="refresh-btn" onclick="loadCompletedMissions()">🔄 Tải lại</button>
                 <button class="export-btn" onclick="exportCsv()">📄 Xuất CSV</button>
+                <button onclick="handleLogout()" class="refresh-btn" style="background: rgba(220, 38, 38, 0.1); border-color: rgba(220, 38, 38, 0.3); color: #ef4444;">🚪 Đăng Xuất</button>
             </div>
         </div>
     </header>

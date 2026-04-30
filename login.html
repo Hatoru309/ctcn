@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Đăng Nhập Admin - Cứu Hộ Mùa Lũ</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-message {
+            color: var(--danger-color);
+            background: #fee2e2;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: none;
+            border: 1px solid #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🔐 Đăng Nhập Quản Trị</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Form Section -->
+    <section class="form-section">
+        <div class="container">
+            <div class="form-wrapper" style="max-width: 400px; padding: 2.5rem 2rem;">
+                <h2 class="form-title" style="font-size: 1.5rem; margin-bottom: 1.5rem;">Đăng Nhập</h2>
+                <div id="errorMessage" class="error-message">Sai tài khoản hoặc mật khẩu!</div>
+                <form class="contact-form" id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="username">Tên Đăng Nhập</label>
+                        <input type="text" id="username" name="username" placeholder="Nhập tên đăng nhập" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mật Khẩu</label>
+                        <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Đăng Nhập</button>
+                    <div style="text-align: center; margin-top: 1.5rem;">
+                        <a href="index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">&larr; Quay lại trang chủ</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Check if already logged in
+        if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
+            window.location.href = 'cuuho.html';
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value;
+            const errorEl = document.getElementById('errorMessage');
+
+            // Check hardcoded credentials
+            if ((user === 'admin' || user === 'Admin') && pass === 'Tumottoi9@') {
+                errorEl.style.display = 'none';
+                sessionStorage.setItem('isAdminLoggedIn', 'true');
+                window.location.href = 'cuuho.html';
+            } else {
+                errorEl.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -241,6 +241,7 @@
             background: var(--light-bg);
             border-radius: 10px;
             font-size: 0.95rem;
+            white-space: pre-wrap;
         }
 
         .request-location {
@@ -531,6 +532,58 @@
             // Filter out "done" status as they are moved to thongke.html
             const filteredReports = reports.filter(r => r.status !== 'done');
             
+            // Group by phone number
+            const groupedMap = new Map();
+            filteredReports.forEach(r => {
+                const phone = r.phone || 'N/A';
+                
+                let contactName = '';
+                let cleanMessage = r.message || 'Không có tin nhắn';
+                
+                const nameMatch = cleanMessage.match(/^Họ tên:\s*(.*?)\n/);
+                if (nameMatch && nameMatch[1]) {
+                    contactName = nameMatch[1].trim();
+                    cleanMessage = cleanMessage.replace(/^Họ tên:.*?\n+Tình trạng:\s*/, '').trim();
+                }
+
+                if (!groupedMap.has(phone)) {
+                    groupedMap.set(phone, { 
+                        ...r, 
+                        contactName: contactName, 
+                        messages: [cleanMessage],
+                        latestTime: new Date(r.created_at).getTime() || 0
+                    });
+                } else {
+                    const existing = groupedMap.get(phone);
+                    if (!existing.contactName && contactName) {
+                        existing.contactName = contactName;
+                    }
+                    if (!existing.messages.includes(cleanMessage)) {
+                        existing.messages.push(cleanMessage);
+                    }
+                    
+                    const rTime = new Date(r.created_at).getTime() || 0;
+                    if (rTime > existing.latestTime) {
+                        existing.latestTime = rTime;
+                        existing.urgency = r.urgency;
+                        existing.created_at = r.created_at;
+                    }
+                }
+            });
+
+            const groupedReports = Array.from(groupedMap.values());
+            groupedReports.forEach(r => {
+                // Xóa các dấu xuống dòng bên trong mỗi tin nhắn để gọn gàng hơn
+                const compactMessages = r.messages.map(m => m.replace(/\s*\n+\s*/g, ' ').trim());
+                
+                if (compactMessages.length > 1) {
+                    // Mỗi tin nhắn nằm trên 1 dòng, bắt đầu bằng dấu gạch ngang
+                    r.message = compactMessages.map(msg => `- ${msg}`).join('\n');
+                } else if (compactMessages.length === 1) {
+                    r.message = compactMessages[0];
+                }
+            });
+            
             // Sort reports: priority first (critical > high > medium > low)
             const priorityOrder = {
                 'Critical': 1,
@@ -539,7 +592,7 @@
                 'Low': 4
             };
 
-            const sortedReports = filteredReports.sort((a, b) => {
+            const sortedReports = groupedReports.sort((a, b) => {
                 const urgencyA = a.urgency || 'Medium';
                 const urgencyB = b.urgency || 'Medium';
                 const priorityA = priorityOrder[urgencyA] || 3;
@@ -582,7 +635,7 @@
                     <div class="request-header">
                         <div class="request-info">
                             <div class="request-phone">
-                                📞 ${report.phone || 'N/A'}
+                                📞 ${report.phone || 'N/A'} ${report.contactName ? `- 👤 ${escapeHtml(report.contactName)}` : ''}
                             </div>
                             <div class="request-time">
                                 🕐 ${timeAgo}
@@ -595,9 +648,7 @@
                             ${statusText[status] || status}
                         </div>
                     </div>
-                    <div class="request-message">
-                        ${escapeHtml(report.message || 'Không có tin nhắn')}
-                    </div>
+                    <div class="request-message">${escapeHtml(report.message || 'Không có tin nhắn')}</div>
                     <div class="request-location">
                         📍 ${escapeHtml(address)}
                     </div>

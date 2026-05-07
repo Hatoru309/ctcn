@@ -8,6 +8,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Danh Sách Yêu Cầu Cứu Hộ</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <link rel="stylesheet" href="style.css">
     <style>
         /* Rescuer-specific styles */
@@ -451,11 +454,31 @@
         <div class="container">
             <div class="requests-header">
                 <h2 class="requests-title">Yêu Cầu Cứu Hộ</h2>
-                <button class="refresh-btn" id="refreshBtn" onclick="loadRequests()">
-                    <span>🔄</span>
-                    <span>Tải Lại</span>
-                </button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="refresh-btn" id="toggleMapBtn" onclick="toggleMapMode()">
+                        <span>🗺️</span>
+                        <span id="mapBtnText">Bản Đồ</span>
+                    </button>
+                    <button class="refresh-btn" id="refreshBtn" onclick="loadRequests()">
+                        <span>🔄</span>
+                        <span>Tải Lại</span>
+                    </button>
+                </div>
             </div>
+            
+            <div id="filterSection" style="margin-bottom: 20px; background: white; padding: 15px; border-radius: 12px; box-shadow: var(--shadow-md);">
+                <input type="text" id="searchInput" placeholder="Tìm theo số điện thoại hoặc tên..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px;" oninput="applyFilters()">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="setUrgencyFilter('')" class="filter-btn active" data-urgency="" style="padding: 5px 15px; border-radius: 20px; border: 1px solid #ccc; background: #eee; cursor:pointer;">Tất cả</button>
+                    <button onclick="setUrgencyFilter('Critical')" class="filter-btn" data-urgency="Critical" style="padding: 5px 15px; border-radius: 20px; border: 1px solid #dc2626; color: #dc2626; background: #fee2e2; cursor:pointer;">Khẩn cấp</button>
+                    <button onclick="setUrgencyFilter('High')" class="filter-btn" data-urgency="High" style="padding: 5px 15px; border-radius: 20px; border: 1px solid #f97316; color: #f97316; background: #ffedd5; cursor:pointer;">Cao</button>
+                    <button onclick="setUrgencyFilter('Medium')" class="filter-btn" data-urgency="Medium" style="padding: 5px 15px; border-radius: 20px; border: 1px solid #eab308; color: #eab308; background: #fef9c3; cursor:pointer;">Trung bình</button>
+                    <button onclick="setUrgencyFilter('Low')" class="filter-btn" data-urgency="Low" style="padding: 5px 15px; border-radius: 20px; border: 1px solid #22c55e; color: #22c55e; background: #dcfce7; cursor:pointer;">Thấp</button>
+                </div>
+            </div>
+
+            <div id="rescuerMapContainer" style="display: none; height: 500px; width: 100%; border-radius: 12px; margin-bottom: 20px; box-shadow: var(--shadow-md); z-index: 1;"></div>
+
 
             <div id="requestsContainer">
                 <div class="loading-state">
@@ -468,6 +491,48 @@
 
     <script>
         const API_BASE_URL = 'https://huy3009-api-for-phobert-urgency-model.hf.space/api';
+        
+        let allReports = [];
+        let groupedReports = [];
+        let currentSearch = '';
+        let currentUrgency = '';
+        let rescuerMap = null;
+        let markersLayer = null;
+        let knownIds = new Set();
+        let isMapMode = false;
+        let audioCtx = null;
+
+        function playBeep() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // 880Hz (A5)
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // volume
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.2); // play for 0.2s
+                
+                // play second beep
+                setTimeout(() => {
+                    const osc2 = audioCtx.createOscillator();
+                    const gain2 = audioCtx.createGain();
+                    osc2.frequency.setValueAtTime(1046.50, audioCtx.currentTime); // C6
+                    gain2.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    osc2.connect(gain2);
+                    gain2.connect(audioCtx.destination);
+                    osc2.start();
+                    osc2.stop(audioCtx.currentTime + 0.3);
+                }, 250);
+            } catch(e) { console.log(e); }
+        }
 
         // Load requests on page load
         document.addEventListener('DOMContentLoaded', () => {
@@ -489,7 +554,7 @@
                 const data = await response.json();
 
                 if (data.ok && data.reports) {
-                    displayRequests(data.reports);
+                    processAndDisplayRequests(data.reports);
                 } else {
                     container.innerHTML = `
                         <div class="empty-state">
@@ -515,7 +580,8 @@
         }
 
         // Display requests in the UI
-        function displayRequests(reports) {
+        function processAndDisplayRequests(reports) {
+            allReports = reports;
             const container = document.getElementById('requestsContainer');
 
             if (!reports || reports.length === 0) {
@@ -529,12 +595,27 @@
                 return;
             }
 
-            // Filter out "done" status as they are moved to thongke.html
-            const filteredReports = reports.filter(r => r.status !== 'done');
+            // Play beep if there's a new ID
+            let hasNew = false;
+            reports.forEach(r => {
+                if (!knownIds.has(r.id)) {
+                    // Only beep if knownIds is not completely empty (i.e. not the first load)
+                    if (knownIds.size > 0) {
+                        hasNew = true;
+                    }
+                    knownIds.add(r.id);
+                }
+            });
+            if (hasNew) {
+                playBeep();
+            }
+
+            // Filter out "done" status
+            const pendingReports = reports.filter(r => r.status !== 'done');
             
             // Group by phone number
             const groupedMap = new Map();
-            filteredReports.forEach(r => {
+            pendingReports.forEach(r => {
                 const phone = r.phone || 'N/A';
                 
                 let contactName = '';
@@ -571,41 +652,160 @@
                 }
             });
 
-            const groupedReports = Array.from(groupedMap.values());
+            groupedReports = Array.from(groupedMap.values());
             groupedReports.forEach(r => {
-                // Xóa các dấu xuống dòng bên trong mỗi tin nhắn để gọn gàng hơn
                 const compactMessages = r.messages.map(m => m.replace(/\s*\n+\s*/g, ' ').trim());
-                
                 if (compactMessages.length > 1) {
-                    // Mỗi tin nhắn nằm trên 1 dòng, bắt đầu bằng dấu gạch ngang
                     r.message = compactMessages.map(msg => `- ${msg}`).join('\n');
                 } else if (compactMessages.length === 1) {
                     r.message = compactMessages[0];
                 }
             });
-            
-            // Sort reports: priority first (critical > high > medium > low)
-            const priorityOrder = {
-                'Critical': 1,
-                'High': 2,
-                'Medium': 3,
-                'Low': 4
-            };
 
-            const sortedReports = groupedReports.sort((a, b) => {
-                const urgencyA = a.urgency || 'Medium';
-                const urgencyB = b.urgency || 'Medium';
-                const priorityA = priorityOrder[urgencyA] || 3;
-                const priorityB = priorityOrder[urgencyB] || 3;
+            renderUI();
+        }
+
+        function setUrgencyFilter(urgency) {
+            currentUrgency = urgency;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            const selector = urgency === '' ? '.filter-btn[data-urgency=""]' : `.filter-btn[data-urgency="${urgency}"]`;
+            const btn = document.querySelector(selector);
+            if(btn) {
+                btn.classList.add('active');
+                document.querySelectorAll('.filter-btn').forEach(b => b.style.boxShadow = 'none');
+                btn.style.boxShadow = '0 0 0 2px var(--secondary-color)';
+            }
+            renderUI();
+        }
+
+        function applyFilters() {
+            currentSearch = document.getElementById('searchInput').value.trim().toLowerCase();
+            renderUI();
+        }
+
+        function toggleMapMode() {
+            isMapMode = !isMapMode;
+            const btnText = document.getElementById('mapBtnText');
+            const mapContainer = document.getElementById('rescuerMapContainer');
+            const listContainer = document.getElementById('requestsContainer');
+
+            if (isMapMode) {
+                btnText.textContent = 'Danh Sách';
+                mapContainer.style.display = 'block';
+                listContainer.style.display = 'none';
+                renderMap();
+                // Play silent audio to unlock AudioContext on first interaction
+                playBeep();
+            } else {
+                btnText.textContent = 'Bản Đồ';
+                mapContainer.style.display = 'none';
+                listContainer.style.display = 'block';
+            }
+        }
+
+        function renderUI() {
+            // Filter
+            let filtered = groupedReports.filter(r => {
+                const matchSearch = r.phone.toLowerCase().includes(currentSearch) || 
+                                    (r.contactName && r.contactName.toLowerCase().includes(currentSearch));
+                const matchUrgency = currentUrgency === '' || r.urgency === currentUrgency;
+                return matchSearch && matchUrgency;
+            });
+
+            // Sort reports: priority first (critical > high > medium > low)
+            const priorityOrder = { 'Critical': 1, 'High': 2, 'Medium': 3, 'Low': 4 };
+            filtered = filtered.sort((a, b) => {
+                const priorityA = priorityOrder[a.urgency || 'Medium'] || 3;
+                const priorityB = priorityOrder[b.urgency || 'Medium'] || 3;
                 return priorityA - priorityB;
             });
 
-            // Display reports sorted by priority (done at bottom)
-            container.innerHTML = `
-                <div class="requests-list">
-                    ${sortedReports.map(report => createRequestCard(report)).join('')}
-                </div>
-            `;
+            // Render List
+            const container = document.getElementById('requestsContainer');
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <div class="empty-state-text">Không tìm thấy kết quả phù hợp</div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="requests-list">
+                        ${filtered.map(report => createRequestCard(report)).join('')}
+                    </div>
+                `;
+            }
+
+            // Render Map if active
+            if (isMapMode) {
+                renderMap(filtered);
+            }
+        }
+
+        const colorMap = {
+            'Critical': '#dc2626',
+            'High': '#f97316',
+            'Medium': '#eab308',
+            'Low': '#22c55e'
+        };
+
+        function renderMap(reportsToRender = null) {
+            const data = reportsToRender || groupedReports.filter(r => {
+                const matchSearch = r.phone.toLowerCase().includes(currentSearch) || 
+                                    (r.contactName && r.contactName.toLowerCase().includes(currentSearch));
+                const matchUrgency = currentUrgency === '' || r.urgency === currentUrgency;
+                return matchSearch && matchUrgency;
+            });
+
+            if (!rescuerMap) {
+                rescuerMap = L.map('rescuerMapContainer').setView([16.047079, 108.206230], 6); // Default VN
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap'
+                }).addTo(rescuerMap);
+                markersLayer = L.layerGroup().addTo(rescuerMap);
+            }
+
+            markersLayer.clearLayers();
+
+            const bounds = L.latLngBounds();
+            let hasValidCoords = false;
+
+            data.forEach(r => {
+                if (r.lat && r.lng) {
+                    const color = colorMap[r.urgency || 'Medium'] || '#3b82f6';
+                    const markerHtml = `
+                        <div style="background-color: ${color}; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.5);"></div>
+                    `;
+                    const customIcon = L.divIcon({
+                        html: markerHtml,
+                        className: 'custom-leaflet-marker',
+                        iconSize: [24, 24],
+                        iconAnchor: [12, 12]
+                    });
+
+                    const marker = L.marker([r.lat, r.lng], { icon: customIcon });
+                    marker.bindPopup(`
+                        <div style="font-family: Inter, sans-serif;">
+                            <b>${r.contactName ? escapeHtml(r.contactName) : escapeHtml(r.phone)}</b><br>
+                            SĐT: ${escapeHtml(r.phone)}<br>
+                            Mức độ: ${escapeHtml(r.urgency || 'Medium')}<br>
+                            <button onclick="openInGoogleMaps(${r.lat}, ${r.lng}, '')" style="margin-top:10px; padding:5px 10px; background:var(--secondary-color); color:white; border:none; border-radius:5px; cursor:pointer;">Mở Google Maps</button>
+                        </div>
+                    `);
+                    markersLayer.addLayer(marker);
+                    bounds.extend([r.lat, r.lng]);
+                    hasValidCoords = true;
+                }
+            });
+
+            if (hasValidCoords) {
+                rescuerMap.fitBounds(bounds, { padding: [50, 50] });
+            }
+            
+            setTimeout(() => {
+                rescuerMap.invalidateSize();
+            }, 100);
         }
 
         // Create HTML for a single request card

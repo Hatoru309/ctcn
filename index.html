@@ -8,6 +8,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Cứu Hộ Mùa Lũ</title>
+    <link rel="manifest" href="manifest.json">
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -35,13 +39,30 @@
                         <input type="text" id="contactName" name="contactName" placeholder="Nhập họ tên của bạn" required>
                     </div>
                     <div class="form-group">
-                        <label for="message">Mô Tả Tình Trạng Hiện Tại *</label>
+                        <label>Tình Trạng Nhanh</label>
+                        <div class="quick-tags" id="quickTags">
+                            <button type="button" class="tag-btn">Có người già/trẻ nhỏ</button>
+                            <button type="button" class="tag-btn">Người bị thương</button>
+                            <button type="button" class="tag-btn">Nước ngập cao</button>
+                            <button type="button" class="tag-btn">Hết lương thực</button>
+                            <button type="button" class="tag-btn">Mất điện/nước</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mô Tả Chi Tiết *</label>
                         <textarea id="message" name="message" rows="6" placeholder="Nhập tình trạng hiện tại cần hỗ trợ" required></textarea>
                     </div>
-                    <input type="hidden" id="latitude" name="latitude">
-                    <input type="hidden" id="longitude" name="longitude">
-                    <input type="hidden" id="address" name="address">
-                    <div class="location-status" id="locationStatus"></div>
+                    <div class="form-group">
+                        <label>Xác Nhận Vị Trí Của Bạn *</label>
+                        <div class="location-status" id="locationStatus" style="margin-bottom: 10px;">
+                            <span class="info">Nhấn nút bên dưới để cấp quyền vị trí. Kéo thả ghim nếu vị trí chưa chính xác.</span>
+                        </div>
+                        <button type="button" id="btnGetLocation" class="btn" style="background: var(--light-bg); color: var(--text-primary); border: 2px solid #ccc; width: 100%; margin-bottom: 15px; font-weight: 600;">📍 Lấy Vị Trí Hiện Tại</button>
+                        <div id="victimMap" style="height: 250px; width: 100%; border-radius: 8px; margin-bottom: 15px; display: none; z-index: 1;"></div>
+                        <input type="hidden" id="latitude" name="latitude">
+                        <input type="hidden" id="longitude" name="longitude">
+                        <input type="hidden" id="address" name="address">
+                    </div>
                     <button type="submit" class="btn btn-primary">Gửi Yêu Cầu</button>
                 </form>
             </div>

@@ -862,3 +862,31 @@ body {
         font-size: 0.95rem;
     }
 }
+
+/* ===== QUICK TAGS & MAP ===== */
+.quick-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tag-btn {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--secondary-color);
+    background: rgba(6, 182, 212, 0.05);
+    color: var(--secondary-color);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tag-btn:hover {
+    background: var(--secondary-color);
+    color: var(--white);
+}
+
+.leaflet-container {
+    z-index: 1 !important;
+}

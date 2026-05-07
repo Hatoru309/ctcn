@@ -1,3 +1,94 @@
+// Quick Tags & Victim Map Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const quickTags = document.getElementById('quickTags');
+    const messageInput = document.getElementById('message');
+    
+    if (quickTags && messageInput) {
+        quickTags.addEventListener('click', (e) => {
+            if (e.target.classList.contains('tag-btn')) {
+                const tagText = e.target.textContent;
+                const currentVal = messageInput.value.trim();
+                if (currentVal) {
+                    messageInput.value = currentVal + ', ' + tagText;
+                } else {
+                    messageInput.value = tagText;
+                }
+            }
+        });
+    }
+    
+    const btnGetLocation = document.getElementById('btnGetLocation');
+    if (btnGetLocation) {
+        btnGetLocation.addEventListener('click', handleGetLocationWithMap);
+    }
+});
+
+let victimMap = null;
+let victimMarker = null;
+
+async function handleGetLocationWithMap() {
+    const btnGetLocation = document.getElementById('btnGetLocation');
+    btnGetLocation.disabled = true;
+    btnGetLocation.textContent = 'Đang lấy vị trí...';
+    
+    try {
+        const location = await getCurrentLocation();
+        showVictimMap(location.latitude, location.longitude, location.address);
+        btnGetLocation.style.display = 'none'; // Ẩn nút sau khi lấy thành công
+    } catch (e) {
+        console.error(e);
+    } finally {
+        btnGetLocation.disabled = false;
+        if (btnGetLocation.style.display !== 'none') {
+            btnGetLocation.textContent = '📍 Lấy Vị Trí Hiện Tại';
+        }
+    }
+}
+
+function showVictimMap(lat, lng, addressText) {
+    const mapContainer = document.getElementById('victimMap');
+    if (!mapContainer) return;
+    
+    mapContainer.style.display = 'block';
+    
+    if (!victimMap) {
+        victimMap = L.map('victimMap').setView([lat, lng], 16);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(victimMap);
+        
+        victimMarker = L.marker([lat, lng], { draggable: true }).addTo(victimMap);
+        victimMarker.bindPopup(addressText).openPopup();
+        
+        victimMarker.on('dragend', async function (event) {
+            const marker = event.target;
+            const position = marker.getLatLng();
+            
+            document.getElementById('latitude').value = position.lat;
+            document.getElementById('longitude').value = position.lng;
+            
+            try {
+                const newAddress = await reverseGeocode(position.lat, position.lng);
+                document.getElementById('address').value = newAddress;
+                marker.bindPopup(newAddress).openPopup();
+                
+                const locationStatus = document.getElementById('locationStatus');
+                if (locationStatus) {
+                    locationStatus.innerHTML = `<span class="success">✓ Đã cập nhật vị trí: ${newAddress}</span>`;
+                }
+            } catch(e) {}
+        });
+    } else {
+        victimMap.setView([lat, lng], 16);
+        victimMarker.setLatLng([lat, lng]);
+        victimMarker.bindPopup(addressText).openPopup();
+    }
+    
+    setTimeout(() => {
+        victimMap.invalidateSize();
+    }, 100);
+}
+
 // Custom Alert Function
 function showAlert(message, type = 'info', onOk = null) {
     // Remove existing alert if any
@@ -235,7 +326,15 @@ async function submitForm(event) {
     
     try {
         // Get location first
-        const location = await getCurrentLocation();
+        let lat = document.getElementById('latitude').value;
+        let lng = document.getElementById('longitude').value;
+        let address = document.getElementById('address').value || `${lat}, ${lng}`;
+        if (!lat || !lng) {
+            showAlert('Vui lòng nhấn nút "Lấy Vị Trí Hiện Tại" trước khi gửi yêu cầu!', 'error');
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+            return;
+        }
         
         // Update button text
         submitBtn.textContent = 'Đang gửi...';
@@ -247,9 +346,21 @@ async function submitForm(event) {
         const formData = {
             phone: document.getElementById('phone').value.trim(),
             message: `Họ tên: ${contactName}\n\nTình trạng: ${situationDesc}`,
-            lat: location.latitude,
-            lng: location.longitude
+            lat: parseFloat(document.getElementById('latitude').value),
+            lng: parseFloat(document.getElementById('longitude').value)
         };
+        
+        if (!navigator.onLine) {
+            const offlineRequests = JSON.parse(localStorage.getItem('offlineRequests') || '[]');
+            offlineRequests.push(formData);
+            localStorage.setItem('offlineRequests', JSON.stringify(offlineRequests));
+            showAlert(`Thiết bị đang ngoại tuyến. Yêu cầu của bạn đã được lưu tạm và sẽ tự động gửi đi khi có mạng trở lại.\n\nVị trí: ${address}`, 'success');
+            
+            event.target.reset();
+            locationStatus.style.display = 'none';
+            locationStatus.className = 'location-status';
+            return;
+        }
         
         // Call API
         const response = await fetch(`${API_BASE_URL}/api/report`, {
@@ -269,7 +380,7 @@ async function submitForm(event) {
         }
         
         // Show success message with location info
-        showAlert(`Cảm ơn bạn! Yêu cầu của bạn đã được gửi thành công.\n\nVị trí: ${location.address}\nTọa độ: ${location.latitude}, ${location.longitude}\n\nChúng tôi sẽ liên hệ với bạn sớm nhất có thể.`, 'success');
+        showAlert(`Cảm ơn bạn! Yêu cầu của bạn đã được gửi thành công.\n\nVị trí: ${address}\nTọa độ: ${lat}, ${lng}\n\nChúng tôi sẽ liên hệ với bạn sớm nhất có thể.`, 'success');
         
         // Reset form
         event.target.reset();
@@ -305,9 +416,43 @@ async function submitForm(event) {
     }
 }
 
+// Đăng ký Service Worker cho PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(registration => console.log('ServiceWorker đã đăng ký thành công:', registration.scope))
+            .catch(err => console.log('Đăng ký ServiceWorker thất bại:', err));
+    });
+}
 
-
-
-
-
-
+// Xử lý gửi lại dữ liệu khi có mạng (Offline Sync)
+window.addEventListener('online', async () => {
+    const offlineRequests = JSON.parse(localStorage.getItem('offlineRequests') || '[]');
+    if (offlineRequests.length > 0) {
+        showAlert('Đã kết nối mạng trở lại. Đang đồng bộ các yêu cầu chưa gửi...', 'info');
+        let successCount = 0;
+        const remainingRequests = [];
+        
+        for (const formData of offlineRequests) {
+            try {
+                const response = await fetch(`${API_BASE_URL}api/report`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                if (response.ok) {
+                    successCount++;
+                } else {
+                    remainingRequests.push(formData);
+                }
+            } catch (e) {
+                remainingRequests.push(formData);
+            }
+        }
+        
+        localStorage.setItem('offlineRequests', JSON.stringify(remainingRequests));
+        if (successCount > 0) {
+            showAlert(`Đã gửi thành công ${successCount} yêu cầu ngoại tuyến.`, 'success');
+        }
+    }
+});

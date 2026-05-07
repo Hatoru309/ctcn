@@ -1,0 +1,11 @@
+{
+  "name": "Cứu Hộ Mùa Lũ",
+  "short_name": "Cứu Hộ",
+  "description": "Ứng dụng gửi và quản lý yêu cầu cứu hộ khẩn cấp mùa lũ",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "icons": []
+}

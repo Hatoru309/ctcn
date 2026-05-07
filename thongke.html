@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="description" content="Theo dõi các nhiệm vụ cứu hộ đã hoàn thành">
     <title>Danh Sách Nhiệm Vụ Hoàn Thành</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
     <style>
         .page {
@@ -519,6 +520,14 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        // Đăng ký Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .catch(err => console.log('Đăng ký ServiceWorker thất bại:', err));
+            });
         }
     </script>
 </body>

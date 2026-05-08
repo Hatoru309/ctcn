@@ -19,21 +19,17 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const btnGetLocation = document.getElementById('btnGetLocation');
     if (btnGetLocation) {
-        btnGetLocation.addEventListener('click', handleGetLocationWithMap);
+        btnGetLocation.addEventListener('click', handleGetLocationOnly);
     }
 });
 
-let victimMap = null;
-let victimMarker = null;
-
-async function handleGetLocationWithMap() {
+async function handleGetLocationOnly() {
     const btnGetLocation = document.getElementById('btnGetLocation');
     btnGetLocation.disabled = true;
     btnGetLocation.textContent = 'Đang lấy vị trí...';
     
     try {
-        const location = await getCurrentLocation();
-        showVictimMap(location.latitude, location.longitude, location.address);
+        await getCurrentLocation();
         btnGetLocation.style.display = 'none'; // Ẩn nút sau khi lấy thành công
     } catch (e) {
         console.error(e);
@@ -43,50 +39,6 @@ async function handleGetLocationWithMap() {
             btnGetLocation.textContent = '📍 Lấy Vị Trí Hiện Tại';
         }
     }
-}
-
-function showVictimMap(lat, lng, addressText) {
-    const mapContainer = document.getElementById('victimMap');
-    if (!mapContainer) return;
-    
-    mapContainer.style.display = 'block';
-    
-    if (!victimMap) {
-        victimMap = L.map('victimMap').setView([lat, lng], 16);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(victimMap);
-        
-        victimMarker = L.marker([lat, lng], { draggable: true }).addTo(victimMap);
-        victimMarker.bindPopup(addressText).openPopup();
-        
-        victimMarker.on('dragend', async function (event) {
-            const marker = event.target;
-            const position = marker.getLatLng();
-            
-            document.getElementById('latitude').value = position.lat;
-            document.getElementById('longitude').value = position.lng;
-            
-            try {
-                const newAddress = await reverseGeocode(position.lat, position.lng);
-                document.getElementById('address').value = newAddress;
-                marker.bindPopup(newAddress).openPopup();
-                
-                const locationStatus = document.getElementById('locationStatus');
-                if (locationStatus) {
-                    locationStatus.innerHTML = `<span class="success">✓ Đã cập nhật vị trí: ${newAddress}</span>`;
-                }
-            } catch(e) {}
-        });
-    } else {
-        victimMap.setView([lat, lng], 16);
-        victimMarker.setLatLng([lat, lng]);
-        victimMarker.bindPopup(addressText).openPopup();
-    }
-    
-    setTimeout(() => {
-        victimMap.invalidateSize();
-    }, 100);
 }
 
 // Custom Alert Function
@@ -219,21 +171,22 @@ function getCurrentLocation() {
                 latitudeInput.value = lat;
                 longitudeInput.value = lng;
 
-                // Try to get address from coordinates (reverse geocoding)
+                // Resolve immediately for fast UX on weak networks.
+                const coordAddress = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                addressInput.value = coordAddress;
+                locationStatus.innerHTML = '<span class="success">✓ Đã lấy tọa độ thành công</span>';
+                locationStatus.className = 'location-status success';
+                resolve({ latitude: lat, longitude: lng, address: coordAddress });
+
+                // Best-effort reverse geocoding in background (with cache + timeout).
                 try {
                     const address = await reverseGeocode(lat, lng);
-                    addressInput.value = address;
-                    locationStatus.innerHTML = '<span class="success">✓ Đã lấy vị trí thành công</span>';
-                    locationStatus.className = 'location-status success';
-                    resolve({ latitude: lat, longitude: lng, address: address });
-                } catch (error) {
-                    // If reverse geocoding fails, use coordinates
-                    const coordAddress = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-                    addressInput.value = coordAddress;
-                    locationStatus.innerHTML = '<span class="success">✓ Đã lấy tọa độ thành công</span>';
-                    locationStatus.className = 'location-status success';
-                    resolve({ latitude: lat, longitude: lng, address: coordAddress });
-                }
+                    if (address && addressInput.value === coordAddress) {
+                        addressInput.value = address;
+                        locationStatus.innerHTML = '<span class="success">✓ Đã lấy vị trí thành công</span>';
+                        locationStatus.className = 'location-status success';
+                    }
+                } catch (_) {}
             },
             (error) => {
                 // Handle errors
@@ -258,9 +211,9 @@ function getCurrentLocation() {
                 reject(error);
             },
             {
-                enableHighAccuracy: true,
-                timeout: 15000,
-                maximumAge: 0
+                enableHighAccuracy: false,
+                timeout: 12000,
+                maximumAge: 60000
             }
         );
     });
@@ -269,15 +222,26 @@ function getCurrentLocation() {
 // Reverse geocoding to get address from coordinates
 async function reverseGeocode(lat, lng) {
     try {
+        const roundedLat = Number(lat.toFixed(6));
+        const roundedLng = Number(lng.toFixed(6));
+        const cacheKey = `revgeo:${roundedLat},${roundedLng}`;
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) return cached;
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 4500);
+
         // Using OpenStreetMap Nominatim API (free, no API key required)
         const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${roundedLat}&lon=${roundedLng}&zoom=18&addressdetails=1`,
             {
                 headers: {
                     'User-Agent': 'RescueApp/1.0'
-                }
+                },
+                signal: controller.signal
             }
         );
+        clearTimeout(timeoutId);
         
         if (!response.ok) {
             throw new Error('Reverse geocoding failed');
@@ -296,12 +260,16 @@ async function reverseGeocode(lat, lng) {
             if (addr.city || addr.town || addr.village) addressParts.push(addr.city || addr.town || addr.village);
             if (addr.state) addressParts.push(addr.state);
             
-            return addressParts.length > 0 
+            const result = addressParts.length > 0 
                 ? addressParts.join(', ') 
                 : data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+            sessionStorage.setItem(cacheKey, result);
+            return result;
         }
-        
-        return data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+        const fallback = data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+        sessionStorage.setItem(cacheKey, fallback);
+        return fallback;
     } catch (error) {
         console.error('Reverse geocoding error:', error);
         // Return coordinates as fallback
@@ -435,7 +403,7 @@ window.addEventListener('online', async () => {
         
         for (const formData of offlineRequests) {
             try {
-                const response = await fetch(`${API_BASE_URL}api/report`, {
+                const response = await fetch(`${API_BASE_URL}/api/report`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)

@@ -1,5 +1,5 @@
-const CACHE_NAME = 'cuuho-v1';
-const urlsToCache = [
+const CACHE_NAME = 'cuuho-v2';
+const APP_SHELL = [
   './',
   './index.html',
   './cuuho.html',
@@ -11,64 +11,66 @@ const urlsToCache = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        return cache.addAll(urlsToCache);
-      })
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      await cache.addAll(APP_SHELL);
+      await self.skipWaiting();
+    })()
   );
 });
 
 self.addEventListener('fetch', event => {
-  // Bỏ qua các request tới API
-  if (event.request.url.includes('api') || event.request.url.includes('http')) {
-      // Cho phép network thực hiện request
-      return;
+  const req = event.request;
+  if (req.method !== 'GET') return;
+
+  const url = new URL(req.url);
+
+  // Only handle same-origin assets/pages for instant load.
+  if (url.origin !== self.location.origin) return;
+
+  // Navigation: app-shell cache first, then refresh in background.
+  if (req.mode === 'navigate') {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const cached = await cache.match(req);
+      const fetchPromise = fetch(req)
+        .then(res => {
+          if (res && res.ok) cache.put(req, res.clone());
+          return res;
+        })
+        .catch(() => null);
+
+      return cached || (await fetchPromise) || (await cache.match('./index.html'));
+    })());
+    return;
   }
-  
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request).then(
-          function(response) {
-            // Check if we received a valid response
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
 
-            // Mở cache và lưu response mới
-            var responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then(function(cache) {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          }
-        );
-      }).catch(() => {
-          // Nếu mất mạng và không có cache, thử trả về trang chủ
-          if (event.request.mode === 'navigate') {
-              return caches.match('./index.html');
-          }
+  // Static assets: stale-while-revalidate.
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(req);
+    const fetchPromise = fetch(req)
+      .then(res => {
+        if (res && res.ok) cache.put(req, res.clone());
+        return res;
       })
-  );
+      .catch(() => null);
+
+    return cached || (await fetchPromise);
+  })());
 });
 
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
+    (async () => {
+      const cacheNames = await caches.keys();
+      await Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
+          if (!cacheWhitelist.includes(cacheName)) return caches.delete(cacheName);
         })
       );
-    })
+      await self.clients.claim();
+    })()
   );
 });

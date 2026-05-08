@@ -10,7 +10,7 @@
     <title>Danh Sách Yêu Cầu Cứu Hộ</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <link rel="stylesheet" href="style.css">
     <style>
         /* Rescuer-specific styles */
@@ -467,7 +467,12 @@
             </div>
             
             <div id="filterSection" style="margin-bottom: 20px; background: white; padding: 15px; border-radius: 12px; box-shadow: var(--shadow-md);">
-                <input type="text" id="searchInput" placeholder="Tìm theo số điện thoại hoặc tên..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px;" oninput="applyFilters()">
+                <div style="display:flex; gap:10px; align-items:center; margin-bottom: 10px;">
+                    <input type="text" id="searchInput" placeholder="Tìm theo số điện thoại hoặc tên..." style="flex:1; width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;" oninput="applyFilters()">
+                    <button class="refresh-btn" type="button" title="Thùng rác" onclick="openTrash()" style="padding: 0.55rem 0.85rem; border-radius: 10px; min-width: 44px; justify-content:center;">
+                        🗑️
+                    </button>
+                </div>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button onclick="setUrgencyFilter('')" class="filter-btn active" data-urgency="" style="padding: 5px 15px; border-radius: 20px; border: 1px solid #ccc; background: #eee; cursor:pointer;">Tất cả</button>
                     <button onclick="setUrgencyFilter('Critical')" class="filter-btn" data-urgency="Critical" style="padding: 5px 15px; border-radius: 20px; border: 1px solid #dc2626; color: #dc2626; background: #fee2e2; cursor:pointer;">Khẩn cấp</button>
@@ -501,6 +506,174 @@
         let knownIds = new Set();
         let isMapMode = false;
         let audioCtx = null;
+        let deletedIds = new Set();
+        let deletedBackup = new Map();
+
+        function loadDeletedIds() {
+            try {
+                const raw = localStorage.getItem('deletedReportIds');
+                const parsed = raw ? JSON.parse(raw) : [];
+                if (Array.isArray(parsed)) deletedIds = new Set(parsed.map(String));
+            } catch (_) {
+                deletedIds = new Set();
+            }
+        }
+
+        function persistDeletedIds() {
+            try {
+                localStorage.setItem('deletedReportIds', JSON.stringify(Array.from(deletedIds)));
+            } catch (_) {}
+        }
+
+        function loadDeletedBackup() {
+            try {
+                const raw = localStorage.getItem('deletedReportBackup');
+                const parsed = raw ? JSON.parse(raw) : {};
+                if (parsed && typeof parsed === 'object') {
+                    deletedBackup = new Map(Object.entries(parsed));
+                } else {
+                    deletedBackup = new Map();
+                }
+            } catch (_) {
+                deletedBackup = new Map();
+            }
+        }
+
+        function persistDeletedBackup() {
+            try {
+                const obj = Object.fromEntries(deletedBackup.entries());
+                localStorage.setItem('deletedReportBackup', JSON.stringify(obj));
+            } catch (_) {}
+        }
+
+        function ensureTrashUiMounted() {
+            if (document.getElementById('trashOverlay')) return;
+
+            const overlay = document.createElement('div');
+            overlay.id = 'trashOverlay';
+            overlay.style.cssText = [
+                'position:fixed',
+                'inset:0',
+                'background:rgba(0,0,0,0.55)',
+                'display:none',
+                'align-items:center',
+                'justify-content:center',
+                'padding:16px',
+                'z-index:9999'
+            ].join(';');
+
+            const modal = document.createElement('div');
+            modal.style.cssText = [
+                'width:min(900px, 100%)',
+                'max-height:min(80vh, 720px)',
+                'overflow:auto',
+                'background:#fff',
+                'border-radius:16px',
+                'box-shadow:0 25px 60px rgba(0,0,0,0.35)',
+                'padding:16px'
+            ].join(';');
+
+            modal.innerHTML = `
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;">
+                    <div style="font-weight:800; font-size:1.1rem; color:#0f172a;">🗑️ Thùng rác</div>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <button id="trashClearBtn" class="refresh-btn" style="padding:0.45rem 0.9rem; border-radius:999px;">Dọn thùng rác</button>
+                        <button id="trashCloseBtn" class="refresh-btn" style="padding:0.45rem 0.9rem; border-radius:999px;">Đóng</button>
+                    </div>
+                </div>
+                <div id="trashList"></div>
+            `;
+
+            overlay.appendChild(modal);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeTrash();
+            });
+
+            document.body.appendChild(overlay);
+
+            document.getElementById('trashCloseBtn').addEventListener('click', closeTrash);
+            document.getElementById('trashClearBtn').addEventListener('click', () => {
+                if (!confirm('Dọn sạch thùng rác? Các thẻ đã xóa sẽ không thể khôi phục trên thiết bị này.')) return;
+                deletedIds = new Set();
+                deletedBackup = new Map();
+                persistDeletedIds();
+                persistDeletedBackup();
+                renderTrashList();
+            });
+        }
+
+        function openTrash() {
+            ensureTrashUiMounted();
+            renderTrashList();
+            const overlay = document.getElementById('trashOverlay');
+            if (overlay) overlay.style.display = 'flex';
+        }
+
+        function closeTrash() {
+            const overlay = document.getElementById('trashOverlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        function renderTrashList() {
+            const list = document.getElementById('trashList');
+            if (!list) return;
+
+            const items = Array.from(deletedBackup.values())
+                .map(v => {
+                    try { return typeof v === 'string' ? JSON.parse(v) : v; } catch { return null; }
+                })
+                .filter(Boolean);
+
+            if (items.length === 0) {
+                list.innerHTML = `
+                    <div style="padding:18px; border-radius:14px; background:#f8fafc; border:1px solid #e2e8f0; color:#334155;">
+                        Không có thẻ nào trong thùng rác.
+                    </div>
+                `;
+                return;
+            }
+
+            items.sort((a, b) => {
+                const ta = new Date(a.deletedAt || a.created_at || 0).getTime() || 0;
+                const tb = new Date(b.deletedAt || b.created_at || 0).getTime() || 0;
+                return tb - ta;
+            });
+
+            list.innerHTML = `
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                    ${items.map(item => `
+                        <div style="border:1px solid #e2e8f0; border-radius:14px; padding:12px; background:#ffffff;">
+                            <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start;">
+                                <div style="min-width:0;">
+                                    <div style="font-weight:800; color:#0f172a; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                        📞 ${escapeHtml(item.phone || 'N/A')} ${item.contactName ? `- 👤 ${escapeHtml(item.contactName)}` : ''}
+                                    </div>
+                                    <div style="color:#64748b; font-size:0.9rem; margin-top:4px;">
+                                        ⚠️ ${escapeHtml(item.urgency || 'Medium')} • 🕒 ${escapeHtml(formatTimeAgo(item.created_at))}
+                                    </div>
+                                    <div style="margin-top:8px; padding:10px; background:#f8fafc; border-radius:12px; white-space:pre-wrap;">
+                                        ${escapeHtml(item.message || '')}
+                                    </div>
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+                                    <button class="refresh-btn" style="padding:0.45rem 0.9rem; border-radius:999px;" onclick="restoreDeleted('${String(item.id).replace(/'/g, "\\'")}')">♻️ Khôi phục</button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function restoreDeleted(reportId) {
+            const id = String(reportId);
+            deletedIds.delete(id);
+            deletedBackup.delete(id);
+            persistDeletedIds();
+            persistDeletedBackup();
+            renderTrashList();
+            loadRequests();
+        }
 
         function playBeep() {
             try {
@@ -536,6 +709,8 @@
 
         // Load requests on page load
         document.addEventListener('DOMContentLoaded', () => {
+            loadDeletedIds();
+            loadDeletedBackup();
             loadRequests();
             // Auto-refresh every 30 seconds
             setInterval(loadRequests, 30000);
@@ -581,10 +756,12 @@
 
         // Display requests in the UI
         function processAndDisplayRequests(reports) {
-            allReports = reports;
+            // Filter out locally-deleted IDs so they never reappear after refresh.
+            const filteredByDeleted = (reports || []).filter(r => !deletedIds.has(String(r.id)));
+            allReports = filteredByDeleted;
             const container = document.getElementById('requestsContainer');
 
-            if (!reports || reports.length === 0) {
+            if (!filteredByDeleted || filteredByDeleted.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">📋</div>
@@ -597,7 +774,7 @@
 
             // Play beep if there's a new ID
             let hasNew = false;
-            reports.forEach(r => {
+            filteredByDeleted.forEach(r => {
                 if (!knownIds.has(r.id)) {
                     // Only beep if knownIds is not completely empty (i.e. not the first load)
                     if (knownIds.size > 0) {
@@ -611,7 +788,7 @@
             }
 
             // Filter out "done" status
-            const pendingReports = reports.filter(r => r.status !== 'done');
+            const pendingReports = filteredByDeleted.filter(r => r.status !== 'done');
             
             // Group by phone number
             const groupedMap = new Map();
@@ -1087,6 +1264,25 @@
             if (!confirm('Bạn có chắc chắn muốn xóa yêu cầu này?')) {
                 return;
             }
+
+            // Persist local delete immediately (works even if API/network fails).
+            deletedIds.add(String(reportId));
+            persistDeletedIds();
+            knownIds.delete(reportId);
+            try {
+                const idStr = String(reportId);
+                const snapshot =
+                    allReports.find(r => String(r.id) === idStr) ||
+                    groupedReports.find(r => String(r.id) === idStr) ||
+                    null;
+
+                if (snapshot) {
+                    deletedBackup.set(idStr, JSON.stringify({ ...snapshot, deletedAt: new Date().toISOString() }));
+                } else {
+                    deletedBackup.set(idStr, JSON.stringify({ id: idStr, deletedAt: new Date().toISOString() }));
+                }
+                persistDeletedBackup();
+            } catch (_) {}
 
             const cardElement = document.getElementById(`request-${reportId}`);
             if (cardElement) {

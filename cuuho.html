@@ -554,7 +554,8 @@
             overlay.style.cssText = [
                 'position:fixed',
                 'inset:0',
-                'background:rgba(0,0,0,0.55)',
+                'background: rgba(15,23,42,0.55), var(--gradient-bg)',
+                'background-blend-mode: multiply',
                 'display:none',
                 'align-items:center',
                 'justify-content:center',
@@ -567,7 +568,7 @@
                 'width:min(900px, 100%)',
                 'max-height:min(80vh, 720px)',
                 'overflow:auto',
-                'background:#fff',
+                'background: var(--gradient-bg)',
                 'border-radius:16px',
                 'box-shadow:0 25px 60px rgba(0,0,0,0.35)',
                 'padding:16px'
@@ -575,10 +576,10 @@
 
             modal.innerHTML = `
                 <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;">
-                    <div style="font-weight:800; font-size:1.1rem; color:#0f172a;">🗑️ Thùng rác</div>
+                    <div style="font-weight:800; font-size:1.1rem; color:#ffffff;">🗑️ Thùng rác</div>
                     <div style="display:flex; gap:8px; align-items:center;">
-                        <button id="trashClearBtn" class="refresh-btn" style="padding:0.45rem 0.9rem; border-radius:999px;">Dọn thùng rác</button>
-                        <button id="trashCloseBtn" class="refresh-btn" style="padding:0.45rem 0.9rem; border-radius:999px;">Đóng</button>
+                        <button id="trashClearBtn" class="refresh-btn" style="padding:0.45rem 0.9rem; border-radius:999px; background:rgba(255,255,255,0.92); color:#0f172a; border-color:rgba(255,255,255,0.7);">Dọn thùng rác</button>
+                        <button id="trashCloseBtn" class="refresh-btn" style="padding:0.45rem 0.9rem; border-radius:999px; background:rgba(255,255,255,0.92); color:#0f172a; border-color:rgba(255,255,255,0.7);">Đóng</button>
                     </div>
                 </div>
                 <div id="trashList"></div>
@@ -624,16 +625,48 @@
                 })
                 .filter(Boolean);
 
+            const normalizeMessageForDisplay = (msg = '') => {
+                const text = String(msg ?? '');
+                return text
+                    .split('\n')
+                    .map(line => line.replace(/^\s+/, ''))
+                    .join('\n')
+                    .trim();
+            };
+
+            const extractNameFromMessage = (msg = '') => {
+                const text = String(msg ?? '');
+                const m = text.match(/^Họ tên:\s*(.*?)\n/m);
+                return (m && m[1]) ? m[1].trim() : '';
+            };
+
+            const normalizeTrashItem = (item) => {
+                const rawMessage = normalizeMessageForDisplay(item.message || '');
+                const extractedName = extractNameFromMessage(item.message || '');
+                const contactName = (item.contactName && String(item.contactName).trim()) ? String(item.contactName).trim() : extractedName;
+                const cleanMessage = rawMessage
+                    .replace(/^Họ tên:.*?\n+Tình trạng:\s*/m, '')
+                    .trim();
+
+                return {
+                    ...item,
+                    contactName,
+                    message: cleanMessage
+                };
+            };
+
             if (items.length === 0) {
                 list.innerHTML = `
-                    <div style="padding:18px; border-radius:14px; background:#f8fafc; border:1px solid #e2e8f0; color:#334155;">
+                    <div style="padding:18px; border-radius:14px; background:rgba(255,255,255,0.92); border:1px solid rgba(255,255,255,0.65); color:#0f172a;">
                         Không có thẻ nào trong thùng rác.
                     </div>
                 `;
                 return;
             }
 
-            items.sort((a, b) => {
+            const normalized = items.map(normalizeTrashItem);
+
+            normalized.sort((a, b) => {
                 const ta = new Date(a.deletedAt || a.created_at || 0).getTime() || 0;
                 const tb = new Date(b.deletedAt || b.created_at || 0).getTime() || 0;
                 return tb - ta;
@@ -641,23 +674,27 @@
 
             list.innerHTML = `
                 <div style="display:flex; flex-direction:column; gap:12px;">
-                    ${items.map(item => `
-                        <div style="border:1px solid #e2e8f0; border-radius:14px; padding:12px; background:#ffffff;">
-                            <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start;">
-                                <div style="min-width:0;">
-                                    <div style="font-weight:800; color:#0f172a; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                    ${normalized.map(item => `
+                        <div class="request-card status-${escapeHtml(item.status || 'pending')}" style="padding: 1rem; border-radius: 16px; box-shadow: var(--shadow-lg); margin: 0; animation: none; text-align:left; background: var(--white); border: none; overflow:hidden;">
+                            <button class="refresh-btn" title="Khôi phục" aria-label="Khôi phục" style="position:absolute; top:0.75rem; right:0.75rem; width:38px; height:38px; padding:0; border-radius:999px; font-size:1rem; display:flex; align-items:center; justify-content:center;" onclick="restoreDeleted('${String(item.id).replace(/'/g, "\\'")}')">♻️</button>
+                            <div class="request-header" style="margin-bottom:0.75rem; gap:0.75rem;">
+                                <div class="request-info" style="min-width:0;">
+                                    <div class="request-phone" style="font-size:1rem; margin-bottom:0.35rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
                                         📞 ${escapeHtml(item.phone || 'N/A')} ${item.contactName ? `- 👤 ${escapeHtml(item.contactName)}` : ''}
                                     </div>
-                                    <div style="color:#64748b; font-size:0.9rem; margin-top:4px;">
-                                        ⚠️ ${escapeHtml(item.urgency || 'Medium')} • 🕒 ${escapeHtml(formatTimeAgo(item.created_at))}
-                                    </div>
-                                    <div style="margin-top:8px; padding:10px; background:#f8fafc; border-radius:12px; white-space:pre-wrap;">
-                                        ${escapeHtml(item.message || '')}
+                                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+                                        <span class="request-urgency ${(item.urgency || 'Medium').toLowerCase()}" style="margin-top:0; font-size:0.75rem; padding:0.28rem 0.65rem;">
+                                            ⚠️ ${escapeHtml(item.urgency || 'Medium')}
+                                        </span>
+                                        <span class="request-time" style="font-size:0.8rem;">🕒 ${escapeHtml(formatTimeAgo(item.created_at))}</span>
                                     </div>
                                 </div>
-                                <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
-                                    <button class="refresh-btn" style="padding:0.45rem 0.9rem; border-radius:999px;" onclick="restoreDeleted('${String(item.id).replace(/'/g, "\\'")}')">♻️ Khôi phục</button>
-                                </div>
+                            </div>
+                            <div class="request-message" style="font-size:0.9rem; padding:0.75rem; margin-bottom:0.75rem; text-align:left; white-space:pre-line; background: var(--light-bg); border: none; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">
+                                ${escapeHtml(item.message || '')}
+                            </div>
+                            <div class="request-location" style="font-size:0.85rem; margin-bottom:0; padding:0.35rem 0; text-align:left;">
+                                📍 ${escapeHtml(item.meta?.address || item.address || `${item.lat ?? ''}${item.lng ? `, ${item.lng}` : ''}` || '')}
                             </div>
                         </div>
                     `).join('')}

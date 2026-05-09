@@ -1,4 +1,8 @@
 // Quick Tags & Victim Map Logic
+let _leafletMap = null;
+let _leafletMarker = null;
+let _userAdjustedLocation = false;
+
 document.addEventListener('DOMContentLoaded', () => {
     const quickTags = document.getElementById('quickTags');
     const messageInput = document.getElementById('message');
@@ -22,6 +26,90 @@ document.addEventListener('DOMContentLoaded', () => {
         btnGetLocation.addEventListener('click', handleGetLocationOnly);
     }
 });
+
+function ensureMapVisible() {
+    const wrap = document.getElementById('mapWrap');
+    if (wrap) wrap.style.display = 'block';
+}
+
+function initOrUpdateLeafletMap(lat, lng) {
+    if (typeof window.L === 'undefined') return; // Leaflet not available (offline/CDN blocked)
+
+    ensureMapVisible();
+
+    const mapEl = document.getElementById('map');
+    if (!mapEl) return;
+
+    const center = [lat, lng];
+
+    if (!_leafletMap) {
+        _leafletMap = window.L.map(mapEl, {
+            zoomControl: true,
+            attributionControl: true
+        }).setView(center, 16);
+
+        window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(_leafletMap);
+
+        _leafletMarker = window.L.marker(center, { draggable: true }).addTo(_leafletMap);
+
+        _leafletMarker.on('dragstart', () => {
+            _userAdjustedLocation = true;
+        });
+
+        _leafletMarker.on('dragend', async () => {
+            const pos = _leafletMarker.getLatLng();
+            await updateLocationFromMap(pos.lat, pos.lng);
+        });
+    } else {
+        _leafletMap.setView(center, _leafletMap.getZoom() || 16, { animate: true });
+        if (_leafletMarker) _leafletMarker.setLatLng(center);
+    }
+
+    // Fix render when map container becomes visible
+    setTimeout(() => {
+        try {
+            _leafletMap && _leafletMap.invalidateSize();
+        } catch (_) {}
+    }, 120);
+}
+
+async function updateLocationFromMap(lat, lng) {
+    const addressInput = document.getElementById('address');
+    const locationStatus = document.getElementById('locationStatus');
+    const latitudeInput = document.getElementById('latitude');
+    const longitudeInput = document.getElementById('longitude');
+
+    if (!latitudeInput || !longitudeInput) return;
+
+    latitudeInput.value = lat;
+    longitudeInput.value = lng;
+
+    const coordAddress = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    if (addressInput) addressInput.value = coordAddress;
+
+    if (locationStatus) {
+        locationStatus.innerHTML = '<span class="loading">🗺️ Đang cập nhật vị trí từ bản đồ...</span>';
+        locationStatus.style.display = 'block';
+        locationStatus.className = 'location-status loading';
+    }
+
+    try {
+        const address = await reverseGeocode(lat, lng);
+        if (addressInput) addressInput.value = address || coordAddress;
+        if (locationStatus) {
+            locationStatus.innerHTML = '<span class="success">✓ Đã cập nhật vị trí từ bản đồ</span>';
+            locationStatus.className = 'location-status success';
+        }
+    } catch (_) {
+        if (locationStatus) {
+            locationStatus.innerHTML = '<span class="success">✓ Đã cập nhật tọa độ từ bản đồ</span>';
+            locationStatus.className = 'location-status success';
+        }
+    }
+}
 
 async function handleGetLocationOnly() {
     const btnGetLocation = document.getElementById('btnGetLocation');
@@ -176,6 +264,10 @@ function getCurrentLocation() {
                 addressInput.value = coordAddress;
                 locationStatus.innerHTML = '<span class="success">✓ Đã lấy tọa độ thành công</span>';
                 locationStatus.className = 'location-status success';
+
+                // Show map with draggable marker for manual adjustment (optional).
+                _userAdjustedLocation = false;
+                initOrUpdateLeafletMap(lat, lng);
                 resolve({ latitude: lat, longitude: lng, address: coordAddress });
 
                 // Best-effort reverse geocoding in background (with cache + timeout).

@@ -9,14 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (quickTags && messageInput) {
         quickTags.addEventListener('click', (e) => {
-            if (e.target.classList.contains('tag-btn')) {
-                const tagText = e.target.textContent;
-                const currentVal = messageInput.value.trim();
-                if (currentVal) {
-                    messageInput.value = currentVal + ', ' + tagText;
-                } else {
-                    messageInput.value = tagText;
-                }
+            const btn = e.target.closest('.tag-btn');
+            if (!btn || !quickTags.contains(btn)) return;
+            const tagText = btn.textContent.trim();
+            const currentVal = messageInput.value.trim();
+            if (currentVal) {
+                messageInput.value = currentVal + ', ' + tagText;
+            } else {
+                messageInput.value = tagText;
             }
         });
     }

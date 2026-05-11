@@ -1267,7 +1267,7 @@
                 const data = await response.json();
 
                 if (data.ok && data.reports) {
-                    displayRequests(data.reports);
+                    processAndDisplayRequests(data.reports);
                     // Restore scroll position immediately
                     requestAnimationFrame(() => {
                         window.scrollTo(0, scrollPosition);

@@ -72,11 +72,11 @@
             const errorEl = document.getElementById('errorMessage');
 
             // Check hardcoded credentials
-            if (user === 'admin' && pass === 'Tumottoi9@') {
+            if (user === 'admin' && pass === '1234567890') {
                 errorEl.style.display = 'none';
                 sessionStorage.setItem('userRole', 'admin');
                 window.location.href = 'cuuho.html';
-            } else if (user === 'manager' && pass === '123456789@') {
+            } else if (user === 'manager' && pass === '1234567890') {
                 errorEl.style.display = 'none';
                 sessionStorage.setItem('userRole', 'manager');
                 window.location.href = 'thongke.html';

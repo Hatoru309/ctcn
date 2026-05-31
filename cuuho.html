@@ -862,6 +862,7 @@
                         existing.latestTime = rTime;
                         existing.urgency = r.urgency;
                         existing.created_at = r.created_at;
+                        existing.status = r.status;
                     }
                 }
             });
@@ -926,9 +927,14 @@
                 return matchSearch && matchUrgency;
             });
 
-            // Sort reports: priority first (critical > high > medium > low)
+            // Sort: urgency first; "holding" (hoãn) always at the end of the list
             const priorityOrder = { 'Critical': 1, 'High': 2, 'Medium': 3, 'Low': 4 };
             filtered = filtered.sort((a, b) => {
+                const aHolding = (a.status || 'pending') === 'holding';
+                const bHolding = (b.status || 'pending') === 'holding';
+                if (aHolding !== bHolding) {
+                    return aHolding ? 1 : -1;
+                }
                 const priorityA = priorityOrder[a.urgency || 'Medium'] || 3;
                 const priorityB = priorityOrder[b.urgency || 'Medium'] || 3;
                 return priorityA - priorityB;
@@ -1169,6 +1175,18 @@
                            (newStatus === 'holding' && btnText === 'Hoãn');
                 });
                 if (targetButton) targetButton.classList.add('active');
+
+                const grouped = groupedReports.find(r => String(r.id) === String(reportId));
+                if (grouped) grouped.status = newStatus;
+                allReports.forEach(r => {
+                    if (String(r.id) === String(reportId)) r.status = newStatus;
+                });
+
+                const wasHolding = oldStatus.includes('status-holding');
+                if (newStatus !== 'done' && (newStatus === 'holding' || wasHolding)) {
+                    renderUI();
+                    window.scrollTo(0, scrollPosition);
+                }
                 
                 // If status is "done", remove the card from the UI
                 if (newStatus === 'done') {
